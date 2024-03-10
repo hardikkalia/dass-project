@@ -7,7 +7,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
 
-  const CustomTextField({
+  const CustomTextField({super.key, 
     required this.controller,
     required this.hintText,
     required this.keyboardType,
@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               fontFamily: 'Nunito',
               fontSize: 16.0,
               fontWeight: FontWeight.w600,

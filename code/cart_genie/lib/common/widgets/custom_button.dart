@@ -9,20 +9,20 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(
-        text,
-        style :TextStyle(
-          fontFamily: 'Nunito',
-          fontSize: 22.0,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 50),
         foregroundColor: Colors.white, // change background color of button
         backgroundColor: GlobalVariables.secondaryColor,
-        padding: EdgeInsets.symmetric(horizontal: 145),
+        padding: const EdgeInsets.symmetric(horizontal: 145),
+      ),
+      child: Text(
+        text,
+        style :const TextStyle(
+          fontFamily: 'Nunito',
+          fontSize: 22.0,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

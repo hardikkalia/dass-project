@@ -2,7 +2,7 @@ import 'package:cart_genie/common/widgets/custom_bottom.dart';
 import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/common/widgets/form_validator.dart';
+import 'package:cart_genie/constants/form_validator.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 

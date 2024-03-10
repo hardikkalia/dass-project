@@ -18,12 +18,12 @@ class CustomBottom extends StatelessWidget {
         onTap();
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5.0),
-        margin: EdgeInsets.only(left: 2.0),
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        margin: const EdgeInsets.only(left: 2.0),
 
         child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: 'Nunito',
           fontSize: 16.0,
           fontWeight: FontWeight.w600,
