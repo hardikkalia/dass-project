@@ -22,11 +22,10 @@ class SignUpService {
         email: email,
         password: password,
         phone: phone,
+        token: '',
       );
-      var url = "http://10.0.2.2:3000/api/signup";
       http.Response res = await http.post(
-        // Uri.parse('$uri/api/signup'),
-        Uri.parse(url),
+        Uri.parse('$uri/api/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-type': 'application/json; charset=UTF-8'

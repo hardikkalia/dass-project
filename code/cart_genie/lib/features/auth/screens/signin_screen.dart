@@ -4,8 +4,8 @@ import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/constants/form_validator.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
+import 'package:cart_genie/features/auth/services/signin_service.dart';
 import 'package:flutter/material.dart';
-
 
 class SignInScreen extends StatefulWidget {
   static const String routeName = '/signin-screen';
@@ -21,6 +21,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
+  final SignInService signInService = SignInService();
+
   @override
   void dispose() {
     super.dispose();
@@ -28,92 +30,106 @@ class _SignInScreenState extends State<SignInScreen> {
     _passwordController.dispose();
   }
 
+  void signInUser() {
+    signInService.signInUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: GlobalVariables.backgroundColor,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 80),
-                const Center(
-                  child: Text(
+      backgroundColor: GlobalVariables.backgroundColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 80),
+              const Center(
+                child: Text(
                   'Sign In',
                   style: TextStyle(
-                  fontSize: 40.0,
-                  fontFamily: 'Inter',
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w900,
+                    fontSize: 40.0,
+                    fontFamily: 'Inter',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
               const SizedBox(height: 40),
               const Center(
                 child: Text(
-                'Enter your email id and password',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Nunito',
-                  color: GlobalVariables.grey,
-                  fontWeight: FontWeight.w600,
+                  'Enter your email id and password',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: 'Nunito',
+                    color: GlobalVariables.grey,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
               ),
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Form(
-                  key: _signInFormKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 100),
-                      CustomTextField(
-                        controller: _emailController,
-                        hintText: 'Email',
-                        keyboardType: TextInputType.emailAddress,
-                        validator: FormValidate.validateEmail,
-                      ),
-                      const SizedBox(height: 20),
-                      CustomTextField(
-                        controller: _passwordController,
-                        hintText: 'Password',
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: FormValidate.validatePassword,
-                      ),
-                    const SizedBox(height: 50),
-                    CustomButton(text: 'SIGN IN', onTap: () {
-                      _signInFormKey.currentState!.validate();
-                    }),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Dont have an account?',
-                            style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-
-                          ),
+                    key: _signInFormKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 100),
+                        CustomTextField(
+                          controller: _emailController,
+                          hintText: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: FormValidate.validateEmail,
                         ),
-                          CustomBottom(text: 'SignUp', onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => SignUpScreen()));
-                          },),
-                        ],
-
-                      )
-                    )
-
-                    ],
-                  )),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          keyboardType: TextInputType.visiblePassword,
+                          // validator: FormValidate.validatePassword,
+                        ),
+                        const SizedBox(height: 50),
+                        CustomButton(
+                            text: 'SIGN IN',
+                            onTap: () {
+                              if (_signInFormKey.currentState!.validate()) {
+                                signInUser();
+                              }
+                            }),
+                        const SizedBox(height: 20),
+                        Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Dont have an account?',
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            CustomBottom(
+                              text: 'Sign Up',
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignUpScreen()));
+                              },
+                            ),
+                          ],
+                        ))
+                      ],
+                    )),
               ),
-              ],
-            ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

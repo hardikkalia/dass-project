@@ -24,7 +24,7 @@ signUpRouter.post("/api/signup", async (req, res) => {
         .json({ msg: "An account with same phone number already exists!" });
     }
 
-    const hashedPassword = bcryptjs.hashSync(password, 0);
+    const hashedPassword = await bcryptjs.hash(password, 8);
 
     let user = new User({
       name,
@@ -38,7 +38,6 @@ signUpRouter.post("/api/signup", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-  // return ack to user
 });
 
 module.exports = signUpRouter;
