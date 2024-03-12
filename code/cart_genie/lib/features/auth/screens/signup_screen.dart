@@ -2,10 +2,11 @@ import 'package:cart_genie/common/widgets/custom_bottom.dart';
 import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/constants/form_validator.dart';
+import 'package:cart_genie/common/widgets/form_validator.dart';
+import 'package:cart_genie/features/auth/screens/otp_screen.dart';
 import 'package:cart_genie/features/auth/screens/signin_screen.dart';
-import 'package:cart_genie/features/auth/services/signup_service.dart';
 import 'package:flutter/material.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = '/signup-screen';
@@ -22,8 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  
-  final SignUpService signUpService = SignUpService();
 
   @override
   void dispose() {
@@ -34,23 +33,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _phoneController.dispose();
   }
 
-  void signUpUser() {
-    signUpService.signUpUser(
-      context: context,
-      email: _emailController.text,
-      name: _nameController.text,
-      password: _passwordController.text,
-      phone: _phoneController.text,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: GlobalVariables.backgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(height: 80),
@@ -62,19 +51,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontFamily: 'Inter',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w900,
+
                   ),
                 ),
               ),
               const SizedBox(height: 40),
-              const Center(
-                child: Text('Create an account to continue',
+                const Center(
+                  child: Text(
+                    'Create an account to continue',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontFamily: 'Nunito',
                       color: GlobalVariables.grey,
                       fontWeight: FontWeight.w600,
-                    )),
-              ),
+
+                    )
+                  ),
+                ),
+
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Form(
@@ -83,10 +77,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         const SizedBox(height: 100),
                         CustomTextField(
-                          controller: _nameController,
-                          hintText: 'Full Name',
-                          keyboardType: TextInputType.name,
-                          validator: FormValidate.validateName,
+                            controller: _nameController,
+                            hintText: 'Full Name',
+                            keyboardType: TextInputType.name,
+                            validator: FormValidate.validateName,
+                            // validator: (val){},
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
@@ -94,6 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: 'Email',
                           keyboardType: TextInputType.emailAddress,
                           validator: FormValidate.validateEmail,
+
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
@@ -101,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: 'Phone',
                           keyboardType: TextInputType.phone,
                           validator: FormValidate.validatePhoneNo,
+
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
@@ -108,40 +105,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: 'Password',
                           keyboardType: TextInputType.visiblePassword,
                           validator: FormValidate.validatePassword,
+                          // validator: (val){},
                         ),
                         const SizedBox(height: 50),
                         CustomButton(
-                            text: 'SIGN UP',
-                            onTap: () {
-                              if (_signUpFormKey.currentState!.validate()) {
-                                signUpUser();
-                              }
-                            }),
+                          text: 'SIGN UP',
+                          onTap: () {
+                            if (_signUpFormKey.currentState!.validate()) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => OTPScreen()),
+                              );
+                            }
+                          },
+                        ),
+
                         const SizedBox(height: 20),
                         Center(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Already have an account?',
-                              style: TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Already have an account?',
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+
+                                ),
                               ),
-                            ),
-                            CustomBottom(
-                              text: 'Login',
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignInScreen()));
-                              },
-                            ),
-                          ],
-                        ))
+                              CustomBottom(text: 'Login', onTap: (){
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => SignInScreen()));
+                              },),
+
+                            ],
+
+                          )
+                        )
+
                       ],
                     )),
               ),
