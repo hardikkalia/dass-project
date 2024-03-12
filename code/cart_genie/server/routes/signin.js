@@ -3,6 +3,8 @@ const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const signInRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const twilioClient = require("../features/otp/twilioconfig");
+const generateOTP=require("../features/otp/otpgenerator");
 
 signInRouter.post("/api/signin/email", async (req, res) => {
   try {
@@ -24,9 +26,24 @@ signInRouter.post("/api/signin/email", async (req, res) => {
   }
 });
 
-signInRouter.post("/api/signin/phone", async (req, res) => {
+signInRouter.post("/api/signin/phone/verify", async (req, res) => {
   try {
-  } catch (e) {}
+    const { phone } = req.body;
+    const user = await User.findOne({ phone });
+    if (!user) {
+      return res.status(400).json({ msg: "User not found!" });
+    }
+    const otp = generateOTP();
+    await twilioClient.messages.create({
+      body: `Your OTP is: ${otp}`,
+      from: "",
+      to: phone,
+    });
+
+    res.status(200).json({ msg: "OTP sent successfully" });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 module.exports = signInRouter;

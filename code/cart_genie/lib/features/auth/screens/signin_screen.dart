@@ -39,10 +39,15 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void signInUser() {
-    signInService.signInUser(
-        context: context,
-        email: _emailController.text,
-        password: _passwordController.text);
+    if (_mode == Mode.email) {
+      signInService.signInUserEmail(
+          context: context,
+          email: _emailController.text,
+          password: _passwordController.text);
+    } else {
+      signInService.signInUserPhone(
+          context: context, phone: _phoneController.text);
+    }
   }
 
   @override

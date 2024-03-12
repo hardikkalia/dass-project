@@ -4,6 +4,7 @@ import "dart:convert";
 
 import "package:cart_genie/constants/error_handling.dart";
 import "package:cart_genie/constants/global_variables.dart";
+import "package:cart_genie/features/auth/screens/otp_screen.dart";
 import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
 import "package:flutter/material.dart";
@@ -13,7 +14,7 @@ import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class SignInService {
-  void signInUser({
+  void signInUserEmail({
     required BuildContext context,
     required String email,
     required String password,
@@ -34,6 +35,35 @@ class SignInService {
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await preferences.setString(
               'auth-token', jsonDecode(res.body)['token']);
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void signInUserPhone({
+    required BuildContext context,
+    required String phone,
+  }) async {
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/signin/phone/verify'),
+        body: jsonEncode({'phone': phone}),
+        headers: <String, String>{
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const OTPScreen(),
+            ),
+          );
         },
       );
     } catch (e) {
