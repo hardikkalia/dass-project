@@ -2,9 +2,10 @@ import 'package:cart_genie/common/widgets/custom_bottom.dart';
 import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/common/widgets/form_validator.dart';
+import 'package:cart_genie/constants/form_validator.dart';
 import 'package:cart_genie/features/auth/screens/otp_screen.dart';
 import 'package:cart_genie/features/auth/screens/signin_screen.dart';
+import 'package:cart_genie/features/auth/services/signup_service.dart';
 import 'package:flutter/material.dart';
 
 
@@ -24,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
+  final SignUpService signUpService = SignUpService();
   @override
   void dispose() {
     super.dispose();
@@ -33,13 +35,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _phoneController.dispose();
   }
 
+  void signUpUser(){
+    signUpService.signUpUser(
+      context: context,
+      email: _emailController.text,
+      name: _nameController.text,
+      password: _passwordController.text,
+      phone: _phoneController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: GlobalVariables.backgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding:const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(height: 80),
@@ -112,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           text: 'SIGN UP',
                           onTap: () {
                             if (_signUpFormKey.currentState!.validate()) {
+                              signUpUser();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => OTPScreen()),
