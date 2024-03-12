@@ -7,6 +7,11 @@ import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
 import 'package:flutter/material.dart';
 
+enum Mode {
+  email,
+  phone,
+}
+
 class SignInScreen extends StatefulWidget {
   static const String routeName = '/signin-screen';
   const SignInScreen({Key? key}) : super(key: key);
@@ -16,10 +21,12 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  Mode _mode = Mode.email;
   final _signInFormKey = GlobalKey<FormState>();
 
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   final SignInService signInService = SignInService();
 
@@ -28,6 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _phoneController.dispose();
   }
 
   void signInUser() {
@@ -59,10 +67,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-              const Center(
+              Center(
                 child: Text(
-                  'Enter your email id and password',
-                  style: TextStyle(
+                  _mode == Mode.email
+                      ? 'Enter your email id and password'
+                      : 'Enter your phone number',
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontFamily: 'Nunito',
                     color: GlobalVariables.grey,
@@ -73,34 +83,43 @@ class _SignInScreenState extends State<SignInScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Form(
-                    key: _signInFormKey,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 100),
+                  key: _signInFormKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 100),
+                      if (_mode == Mode.email)
                         CustomTextField(
                           controller: _emailController,
                           hintText: 'Email',
                           keyboardType: TextInputType.emailAddress,
                           validator: FormValidate.validateEmail,
                         ),
-                        const SizedBox(height: 20),
+                      if (_mode == Mode.email) const SizedBox(height: 20),
+                      if (_mode == Mode.email)
                         CustomTextField(
                           controller: _passwordController,
                           hintText: 'Password',
                           keyboardType: TextInputType.visiblePassword,
                           // validator: FormValidate.validatePassword,
                         ),
-                        const SizedBox(height: 50),
-                        CustomButton(
-                            text: 'SIGN IN',
-                            onTap: () {
-                              if (_signInFormKey.currentState!.validate()) {
-                                signInUser();
-                              }
-                            }),
-                        const SizedBox(height: 20),
-                        Center(
-                            child: Row(
+                      if (_mode == Mode.phone)
+                        CustomTextField(
+                          controller: _phoneController,
+                          hintText: 'Phone No',
+                          keyboardType: TextInputType.phone,
+                          validator: FormValidate.validatePhoneNo,
+                        ),
+                      const SizedBox(height: 50),
+                      CustomButton(
+                          text: 'SIGN IN',
+                          onTap: () {
+                            if (_signInFormKey.currentState!.validate()) {
+                              signInUser();
+                            }
+                          }),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
@@ -115,16 +134,48 @@ class _SignInScreenState extends State<SignInScreen> {
                               text: 'Sign Up',
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpScreen()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpScreen(),
+                                  ),
+                                );
                               },
                             ),
                           ],
-                        ))
-                      ],
-                    )),
+                        ),
+                      ),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _mode == Mode.email
+                                  ? 'Sign in using phone no instead?'
+                                  : 'Sign in using email instead?',
+                              style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            CustomBottom(
+                              text: 'Click here',
+                              onTap: () {
+                                setState(() {
+                                  if (_mode == Mode.email) {
+                                    _mode = Mode.phone;
+                                  } else {
+                                    _mode = Mode.email;
+                                  }
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

@@ -24,4 +24,9 @@ signInRouter.post("/api/signin/email", async (req, res) => {
   }
 });
 
+signInRouter.post("/api/signin/phone", async (req, res) => {
+  try {
+  } catch (e) {}
+});
+
 module.exports = signInRouter;

@@ -21,11 +21,11 @@ class _OTPScreenState extends State<OTPScreen> {
       backgroundColor: GlobalVariables.backgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SizedBox(height: 80),
-              Center(
+              const SizedBox(height: 80),
+              const Center(
                 child: Text(
                   'Enter OTP',
                   style: TextStyle(
@@ -36,8 +36,8 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
-              Center(
+              const SizedBox(height: 40),
+              const Center(
                 child: Text(
                   'Enter OTP sent on your registered mobile no.',
                   style: TextStyle(
@@ -48,10 +48,10 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 90),
+                  padding: const EdgeInsets.symmetric(horizontal: 90),
                   child: PinCodeTextField(
                     appContext: context,
                     controller: controller,
@@ -75,9 +75,9 @@ class _OTPScreenState extends State<OTPScreen> {
                     onChanged: (value) {},
                   ),
                 ),),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 CustomBottom(text: 'Resend OTP', onTap: (){}),
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
                 CustomButton(
                 key: UniqueKey(), // Add a key here to avoid any potential issues
                 text: 'ENTER',
