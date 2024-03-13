@@ -1,15 +1,21 @@
+import 'package:cart_genie/common/widgets/upper_bar.dart';
+import 'package:cart_genie/constants/global_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:cart_genie/common/widgets/bottom_bar.dart'; // Importing BottomBar widget
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  static const String routeName = '/home-screen';
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  const HomeScreen({Key? key}) : super(key: key);
 
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: UpperBar(
+        title: "Home Page",
+      ),
+      bottomNavigationBar: BottomBar(), // Adding BottomBar widget
+    );
   }
 }
