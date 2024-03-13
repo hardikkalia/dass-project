@@ -6,6 +6,7 @@ import 'package:cart_genie/constants/form_validator.dart';
 import 'package:cart_genie/features/auth/screens/otp_screen.dart';
 import 'package:cart_genie/features/auth/screens/signin_screen.dart';
 import 'package:cart_genie/features/auth/services/signup_service.dart';
+import 'package:cart_genie/common/widgets/custom_hidefield.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,6 +19,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+
   final _signUpFormKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
@@ -26,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _phoneController = TextEditingController();
 
   final SignUpService signUpService = SignUpService();
+
   @override
   void dispose() {
     super.dispose();
@@ -35,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _phoneController.dispose();
   }
 
-  void signUpUser(){
+  void signUpUser() {
     signUpService.signUpUser(
       context: context,
       email: _emailController.text,
@@ -51,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: GlobalVariables.backgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding:const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               const SizedBox(height: 80),
@@ -68,8 +72,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-                const Center(
-                  child: Text(
+              const Center(
+                child: Text(
                     'Create an account to continue',
                     style: TextStyle(
                       fontSize: 16.0,
@@ -78,8 +82,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.w600,
 
                     )
-                  ),
                 ),
+              ),
 
               Container(
                 padding: const EdgeInsets.all(8),
@@ -89,11 +93,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         const SizedBox(height: 100),
                         CustomTextField(
-                            controller: _nameController,
-                            hintText: 'Full Name',
-                            keyboardType: TextInputType.name,
-                            validator: FormValidate.validateName,
-                            // validator: (val){},
+                          controller: _nameController,
+                          hintText: 'Full Name',
+                          keyboardType: TextInputType.name,
+                          validator: FormValidate.validateName,
+                          // validator: (val){},
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
@@ -112,13 +116,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         ),
                         const SizedBox(height: 20),
-                        CustomTextField(
+                        CustomHideField(
                           controller: _passwordController,
                           hintText: 'Password',
                           keyboardType: TextInputType.visiblePassword,
                           validator: FormValidate.validatePassword,
-                          // validator: (val){},
                         ),
+
+
                         const SizedBox(height: 50),
                         CustomButton(
                           text: 'SIGN UP',
@@ -127,7 +132,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               signUpUser();
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => OTPScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) => OTPScreen()),
                               );
                             }
                           },
@@ -135,25 +141,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         const SizedBox(height: 20),
                         Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Already have an account?',
-                                style: TextStyle(
-                                  fontFamily: 'Nunito',
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Already have an account?',
+                                  style: TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
 
+                                  ),
                                 ),
-                              ),
-                              CustomBottom(text: 'Login', onTap: (){
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => SignInScreen()));
-                              },),
+                                CustomBottom(text: 'Login', onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => SignInScreen()));
+                                },),
 
-                            ],
+                              ],
 
-                          )
+                            )
                         )
 
                       ],
@@ -166,3 +173,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
+
+

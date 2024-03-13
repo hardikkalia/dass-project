@@ -3,8 +3,10 @@ import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/constants/form_validator.dart';
+import 'package:cart_genie/features/auth/screens/otp_screen.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
+import 'package:cart_genie/common/widgets/custom_hidefield.dart';
 import 'package:flutter/material.dart';
 
 enum Mode {
@@ -101,11 +103,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       if (_mode == Mode.email) const SizedBox(height: 20),
                       if (_mode == Mode.email)
-                        CustomTextField(
+                        CustomHideField(
                           controller: _passwordController,
                           hintText: 'Password',
                           keyboardType: TextInputType.visiblePassword,
-                          // validator: FormValidate.validatePassword,
+                          validator: FormValidate.validatePassword,
                         ),
                       if (_mode == Mode.phone)
                         CustomTextField(
@@ -120,6 +122,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           onTap: () {
                             if (_signInFormKey.currentState!.validate()) {
                               signInUser();
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const OTPScreen(),
+                              ),
+                            );
                             }
                           }),
                       const SizedBox(height: 20),
