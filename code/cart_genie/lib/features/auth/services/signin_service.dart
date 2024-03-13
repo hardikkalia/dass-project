@@ -5,6 +5,7 @@ import "dart:convert";
 import "package:cart_genie/constants/error_handling.dart";
 import "package:cart_genie/constants/global_variables.dart";
 import "package:cart_genie/features/auth/screens/otp_screen.dart";
+import "package:cart_genie/features/home/screens/home_screen.dart";
 import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
 import "package:flutter/material.dart";
@@ -34,7 +35,14 @@ class SignInService {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await preferences.setString(
-              'auth-token', jsonDecode(res.body)['token']);
+            'auth-token',
+            jsonDecode(res.body)['token'],
+          );
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            HomeScreen.routeName,
+            (route) => false,
+          );
         },
       );
     } catch (e) {
@@ -66,6 +74,44 @@ class SignInService {
           );
         },
       );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void getUserData(
+    BuildContext context,
+  ) async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? token = preferences.getString('auth-token');
+
+      if (token == null) {
+        preferences.setString('auth-token', '');
+      }
+
+      var tokenRes = await http.post(
+        Uri.parse('$uri/tokenValid'),
+        headers: <String, String>{
+          'Content-type': 'application/json; charset=UTF-8',
+          'auth-token': token!
+        },
+      );
+
+      var response = jsonDecode(tokenRes.body);
+
+      if (response == true) {
+        http.Response userRes = await http.get(
+          Uri.parse('$uri/'),
+          headers: <String, String>{
+            'Content-type': 'application/json; charset=UTF-8',
+            'auth-token': token
+          },
+        );
+
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+      }
     } catch (e) {
       showSnackBar(context, e.toString());
     }

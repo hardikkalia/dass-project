@@ -26,7 +26,7 @@ class _BottomBarState extends State<BottomBar> {
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
         // Define the items for the bottom navigation bar
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: 'Orders',
