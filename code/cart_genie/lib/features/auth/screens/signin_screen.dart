@@ -123,12 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             if (_signInFormKey.currentState!.validate()) {
                               signInUser();
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const OTPScreen(),
-                              ),
-                            );
+                             
                             }
                           }),
                       const SizedBox(height: 20),
