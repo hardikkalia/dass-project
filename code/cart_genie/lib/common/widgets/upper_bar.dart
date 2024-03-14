@@ -1,51 +1,49 @@
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
-class UpperBar extends StatelessWidget implements PreferredSizeWidget{
+class UpperBar extends StatefulWidget implements PreferredSizeWidget {
   const UpperBar({
     Key? key,
     this.title = '',
     this.leading,
     this.titleWidget,
-}) : super(key: key);
+  }) : super(key: key);
 
   final String title;
   final Widget? leading;
   final Widget? titleWidget;
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 25,
-            vertical: 25 / 2.5),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                  child: titleWidget == null?
-                  Center(child: Text(title, style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black12,
-                  ),
-                  ),
-                  )
-               : Center(child: titleWidget!),
-              ),
-            ],
-          ),
-        )
-    );
-  }
+  _UpperBarState createState() => _UpperBarState();
 
   @override
   Size get preferredSize => const Size(
     double.maxFinite,
-    80
+    80,
   );
+}
+
+class _UpperBarState extends State<UpperBar> {
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: widget.titleWidget == null
+          ? Text(
+        widget.title,
+        style: TextStyle(
+          fontFamily: 'Inter',
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: Colors.black12,
+        ),
+      )
+          : widget.titleWidget,
+      leading: widget.leading,
+      automaticallyImplyLeading: false,
+    );
   }
+}
+
 
 // class UpperBar extends StatefulWidget {
 //   final String title;
