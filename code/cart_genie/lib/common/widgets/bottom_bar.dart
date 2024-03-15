@@ -1,4 +1,5 @@
 import 'package:cart_genie/constants/global_variables.dart';
+import 'package:cart_genie/features/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
@@ -16,15 +17,33 @@ class _BottomBarState extends State<BottomBar> {
   static const double bottomBarWidth = 42;
   static const double bottomBarBorderWidth = 5;
 
+  List<Widget> pages = [
+    const Center(
+      child: Text('Cart Page'),
+    ),
+    const Center(
+      child: Text("Search Page"),
+    ),
+    const ProfileScreen(),
+  ];
+
+  void updatePage(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
+        onTap: updatePage,
         // Define the items for the bottom navigation bar
         items: const [
           BottomNavigationBarItem(
@@ -40,25 +59,8 @@ class _BottomBarState extends State<BottomBar> {
             label: 'Account',
           ),
         ],
-        onTap: (index) {
 
-          setState(() {
-            _page = index;
-          });
-        },
-        // // Define text styles for selected and unselected labels
-        // selectedLabelStyle: TextStyle(
-        //   fontFamily: 'Inter',
-        //   color: Colors.black,
-        //   fontSize: 10,
-        //   fontWeight: FontWeight.w600,
-        // ),
-        // unselectedLabelStyle: TextStyle(
-        //   fontFamily: 'Inter',
-        //   color: GlobalVariables.unselectedNavBarColor,
-        //   fontSize: 10,
-        //   fontWeight: FontWeight.w600,
-        // ),
+
       ),
     );
   }
