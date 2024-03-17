@@ -1,11 +1,20 @@
 
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/features/profile/widgets/profile_button.dart';
+import 'package:cart_genie/features/profile/widgets/editprofile_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/form_validator.dart';
 import 'package:cart_genie/features/profile/widgets/profile_text.dart';
-import 'package:cart_genie/features/profile/screens/editprofile_screen.dart';
 
+import 'package:cart_genie/features/profile/widgets/profile_button.dart';
+
+enum Mode{
+  saved,
+  nameedit,
+  mailedit,
+  passwordedit,
+  phoneedit,
+
+}
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -14,7 +23,22 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+    Mode _mode = Mode.saved;
+    final _editprofileKey = GlobalKey<FormState>();
 
+    final TextEditingController _nameController = TextEditingController();
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _phoneController = TextEditingController();
+
+    @override
+    void dispose() {
+      super.dispose();
+      _nameController.dispose();
+      _emailController.dispose();
+      _passwordController.dispose();
+      _phoneController.dispose();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              Container(
-                height: 100,
-                padding: const EdgeInsets.only(left:35,top:40),
-                child: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EditProfileScreen()),
-                    );
-                  },
-                ),
-              )
+
 
             ],
           ),
@@ -92,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 40, 25, 0),
               child: Container(
-                height: 400,
+                height: 600,
                 width: 400,
                 decoration: BoxDecoration(
                   color: GlobalVariables.backgroundColor,
@@ -103,37 +115,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
 
                 ),
-                // child: Form(
-                //   key: _profileKey,
+                child: Form(
+                  key: _editprofileKey,
 
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      ProfileText(
-                        text: 'Username',
-                        data: 'Yanchui'
+                      if (_mode != Mode.nameedit)
+                        ProfileText(
+                          text: 'Username',
+                          data: 'Yanchui',
+                          icon: Icons.edit,
+                          onPressed: (){
+                            setState(() {
+                                _mode = Mode.nameedit;
+                              }
+                            );
+                          },
+                        ),
+                      if (_mode == Mode.nameedit)
+                        EditProfileText(
+                          text: 'Username',
+                          controller: _nameController,
+                          hintText: 'Full Name',
+                          keyboardType: TextInputType.name,
+                          validator: FormValidate.validateName,
+                        ),
 
-                      ),
                       const SizedBox(height: 20),
-                      ProfileText(
+
+                      if (_mode != Mode.mailedit)
+                        ProfileText(
+                          text: 'Email ID',
+                          data: 'yanchui@gmail.com',
+                          icon: Icons.edit,
+                          onPressed: (){
+                            setState(() {
+
+                                _mode = Mode.mailedit;
+                              }
+                            );
+                          },
+                        ),
+                      if (_mode == Mode.mailedit)
+                        EditProfileText(
                         text: 'Email ID',
-                        data: 'yanchui@gmail.com',
+                        controller: _emailController,
+                        hintText: 'Email',
+                        keyboardType: TextInputType.emailAddress,
+                        validator: FormValidate.validateEmail,
+                        ),
 
-                      ),
                       const SizedBox(height: 20),
-                      ProfileText(
-                        text: 'Password',
-                        data: 'evFTbyVVCd'
 
-                      ),
+                      if (_mode != Mode.passwordedit)
+                        ProfileText(
+                          text: 'Password',
+                          data: 'evFTbyVVCd',
+                          icon: Icons.edit,
+                          onPressed: (){
+                            setState(() {
+
+                                _mode = Mode.passwordedit;
+                              }
+                            );
+                          },
+                        ),
+                      if (_mode == Mode.passwordedit)
+                        EditProfileText(
+                          text: 'Password',
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          keyboardType: TextInputType.visiblePassword,
+                          validator: FormValidate.validatePassword,
+                        ),
+
                       const SizedBox(height: 20),
-                      ProfileText(
-                        text: 'Phone No.',
-                        data: '9878889991',
 
-                      ),
+                      if (_mode != Mode.phoneedit)
+                        ProfileText(
+                          text: 'Phone No.',
+                          data: '9878889991',
+                          icon: Icons.edit,
+                          onPressed: (){
+                            setState(() {
 
-                    ],
+                                _mode = Mode.phoneedit;
+
+                            });
+                          },
+                        ),
+                      if (_mode == Mode.phoneedit)
+                        EditProfileText(
+                          text: 'Phone No.',
+                          controller: _phoneController,
+                          hintText: 'Phone No.',
+                          keyboardType: TextInputType.phone ,
+                          validator: FormValidate.validatePhoneNo,
+                        ),
+
+                      const SizedBox(height: 80),
+                      if (_mode != Mode.saved)
+                        // const SizedBox(height: 80),
+                        ProfileButton(
+                          text: 'Update',
+                          onTap: () {
+                            if(_editprofileKey.currentState!.validate()) {
+                              setState(() {
+                                _mode = Mode.saved;
+                              });
+                            }
+
+                          },
+                        ),
+
+                      ],
 
 
                   ),
@@ -142,8 +238,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             ),
 
-
+          ),
         ],
+
       ),
 
     );
