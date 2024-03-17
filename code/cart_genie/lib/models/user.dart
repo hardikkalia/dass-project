@@ -43,4 +43,22 @@ class User {
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+   User copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? password,
+    String? phone,
+    String? token,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      phone: phone ?? this.phone,
+      token: token ?? this.token,
+    );
+  }
 }

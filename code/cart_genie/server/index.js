@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 //Import from files
 const signUpRouter = require("./routes/signup.js");
 const signInRouter = require("./routes/signin.js");
+const profileRouter = require("./routes/profile.js");
 
 // Init
 const PORT = 3000;
@@ -16,6 +17,7 @@ const DB =
 app.use(express.json())
 app.use(signUpRouter);
 app.use(signInRouter);
+app.use(profileRouter);
 
 mongoose
   .connect(DB)
