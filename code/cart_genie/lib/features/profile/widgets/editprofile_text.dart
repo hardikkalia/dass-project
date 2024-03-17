@@ -29,7 +29,7 @@ class EditProfileText extends StatelessWidget {
             text,
             style: const TextStyle(
               fontFamily: 'Inter',
-              fontSize: 16.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
