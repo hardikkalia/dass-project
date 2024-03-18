@@ -2,7 +2,7 @@
 
 import 'package:cart_genie/common/widgets/bottom_bar.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/features/profile/services/edit_profile_service.dart';
+import 'package:cart_genie/features/profile/services/profile_service.dart';
 import 'package:cart_genie/features/profile/widgets/editprofile_text.dart';
 import 'package:cart_genie/providers/user_providers.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,6 @@ enum Mode {
   nameedit,
   mailedit,
   passwordedit,
-  
 }
 
 class ProfileScreen extends StatefulWidget {
@@ -54,10 +53,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       editProfileService.editName(context: context, name: _nameController.text);
     }
     if (_mode == Mode.mailedit) {
-      editProfileService.editEmail(context: context, email:_emailController.text);
+      editProfileService.editEmail(
+          context: context, email: _emailController.text);
     }
     if (_mode == Mode.passwordedit) {
-      editProfileService.editPassword(context: context, oldPassword: _oldpasswordController.text,newPassword: _newpasswordController.text );
+      editProfileService.editPassword(
+          context: context,
+          oldPassword: _oldpasswordController.text,
+          newPassword: _newpasswordController.text);
     }
   }
 
@@ -113,7 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Semicircle(
                 radius: 325, // Adjust the height as per your requirement
-                color: GlobalVariables.greyBackgroundColor, // Set the color of the semicircle
+                color: GlobalVariables
+                    .greyBackgroundColor, // Set the color of the semicircle
               ),
             ],
           ),
@@ -121,7 +125,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(25, 40, 25, 0),
               child: Container(
-                height: 700,
+                // height: 720,
+                padding: const EdgeInsets.all(20.0),
                 width: 400,
                 decoration: BoxDecoration(
                   color: GlobalVariables.backgroundColor,
@@ -202,7 +207,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               keyboardType: TextInputType.visiblePassword,
                               validator: FormValidate.validatePassword,
                             ),
-                            SizedBox(height: 20), // Provides spacing between the input fields
+                            SizedBox(
+                                height:
+                                    20), // Provides spacing between the input fields
                             EditProfileText(
                               text: 'New Password',
                               controller: _newpasswordController,
@@ -213,15 +220,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       const SizedBox(height: 20),
-                      
+
                       ProfileText(
-                          text: 'Phone No.',
-                          data: user.phone,
-                          icon: Icons.edit,
-                          colour: Colors.transparent,
-                          onPressed: () {
-                          },
-                        ),
+                        text: 'Phone No.',
+                        data: user.phone,
+                        icon: Icons.edit,
+                        colour: Colors.transparent,
+                        onPressed: () {},
+                      ),
                       // if (_mode == Mode.phoneedit)
                       //   EditProfileText(
                       //     text: 'Phone No.',
@@ -244,12 +250,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             }
                           },
                         ),
-                      
+
                       if (_mode == Mode.saved)
                         ProfileButton(
-                          text: 'Sign Out',
-                          onTap: (){}
-                        ),
+                            text: 'Sign Out',
+                            onTap: () {
+                              editProfileService.signOut(context: context);
+                            }),
                     ],
                   ),
                 ),
