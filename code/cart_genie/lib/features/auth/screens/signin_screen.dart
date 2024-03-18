@@ -122,8 +122,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           onTap: () {
                             if (_signInFormKey.currentState!.validate()) {
                               signInUser();
-
-                             
                             }
                           }),
                       const SizedBox(height: 20),

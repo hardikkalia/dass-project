@@ -4,22 +4,19 @@ const profileRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 
-profileRouter.post("/api/profile/edit/name",auth, async (req,res)=>{
-    try {
-        console.log(req.body);
-        const {id, name}=req.body;
-        const user=await User.findById(id);
-        if(!user){
-            return res.status(400).json({msg:'User not found!'});
-        }
-        console.log(user);
-        user.name=name;
-        user=await user.save();
-        res.json(user);
+profileRouter.post("/api/profile/edit/name", auth, async (req, res) => {
+  try {
+    const { id, name } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(400).json({ msg: "User not found!" });
     }
-    catch(e){
-        res.status(500).json({ error: e.message });
-    }
+    user.name = name;
+    const newUser = await user.save();
+    res.json(newUser);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-module.exports=profileRouter;
+module.exports = profileRouter;

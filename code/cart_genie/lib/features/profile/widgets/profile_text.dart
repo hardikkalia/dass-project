@@ -55,7 +55,7 @@ class ProfileText extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               data,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Nunito',
                 fontSize: 16.0,
                 fontWeight: FontWeight.normal,

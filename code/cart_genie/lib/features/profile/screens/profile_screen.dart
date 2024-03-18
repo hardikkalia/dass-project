@@ -1,5 +1,6 @@
 // import 'dart:js';
 
+import 'package:cart_genie/common/widgets/bottom_bar.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/profile/services/edit_profile_service.dart';
 import 'package:cart_genie/features/profile/widgets/editprofile_text.dart';
@@ -167,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (_mode != Mode.passwordedit)
                         ProfileText(
                           text: 'Password',
-                          data: 'evFTbyVVCd',
+                          data: user.password,
                           icon: Icons.edit,
                           onPressed: () {
                             setState(() {

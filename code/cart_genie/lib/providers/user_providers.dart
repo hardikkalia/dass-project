@@ -19,4 +19,5 @@ class UserProvider extends ChangeNotifier {
     _user = user;
     notifyListeners();
   }
+  
 }

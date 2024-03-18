@@ -1,3 +1,4 @@
+import 'package:cart_genie/common/widgets/bottom_bar.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const SignUpScreen(),
     );
   }

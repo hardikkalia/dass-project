@@ -1,3 +1,4 @@
+import 'package:cart_genie/common/widgets/bottom_bar.dart';
 import 'package:cart_genie/features/auth/screens/signin_screen.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/home/screens/home_screen.dart';
@@ -19,6 +20,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const HomeScreen(),
+      );
+    case BottomBar.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const BottomBar(),
       );
     default:
       return MaterialPageRoute(
