@@ -6,6 +6,7 @@ class ProfileText extends StatelessWidget {
   final String data;
   final IconData icon;
   final VoidCallback onPressed;
+  final Color colour;
 
   const ProfileText({
     Key? key,
@@ -13,6 +14,7 @@ class ProfileText extends StatelessWidget {
     required this.data,
     required this.icon,
     required this.onPressed,
+    required this.colour,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,7 @@ class ProfileText extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(
                       icon,
-                      color: Colors.black,
+                      color:colour,
                     ),
                     onPressed: onPressed,
                   ),

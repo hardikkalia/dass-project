@@ -44,4 +44,65 @@ class EditProfileService {
       showSnackBar(context, e.toString());
     }
   }
+
+  void editEmail({
+    required BuildContext context,
+    required String email,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/profile/edit/email'),
+        body: jsonEncode({'id': userProvider.user.id, 'email': email}),
+        headers: <String, String>{
+          'Content-type': 'application/json; charset=UTF-8',
+          'auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          User user =
+              userProvider.user.copyWith(email: jsonDecode(res.body)['email']);
+          userProvider.setUserFromModel(user);
+          showSnackBar(context, "Email address updated successfully");
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void editPassword({
+    required BuildContext context,
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/profile/edit/password'),
+        body: jsonEncode({'id': userProvider.user.id, 'oldPassword':oldPassword, 'newPassword': newPassword}),
+        headers: <String, String>{
+          'Content-type': 'application/json; charset=UTF-8',
+          'auth-token': userProvider.user.token,
+        },
+      );
+      
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          User user =
+              userProvider.user.copyWith(password: jsonDecode(res.body)['newPassword']);
+          userProvider.setUserFromModel(user);
+          showSnackBar(context, "Password updated successfully");
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }
