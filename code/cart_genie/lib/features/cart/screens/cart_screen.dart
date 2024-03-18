@@ -29,7 +29,7 @@ class _CartScreenState extends State<CartScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 40, right: 50),
               child: Text(
-                'Cart Screen',
+                'Order Summary',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontFamily: 'Inter',

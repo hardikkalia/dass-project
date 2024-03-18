@@ -11,6 +11,7 @@ import 'package:cart_genie/features/profile/widgets/profile_text.dart';
 import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/features/profile/widgets/profile_button.dart';
 import 'package:provider/provider.dart';
+import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 
 enum Mode {
   saved,
@@ -64,6 +65,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Widget buildLeadingIcon() {
+    if (_mode == Mode.saved) {
+      return Builder(
+          builder: (BuildContext context)
+      {
+        return IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        );
+      }
+      );
+    } else {
+      return IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          setState(() {
+            _mode = Mode.saved;
+          });
+        },
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -73,43 +98,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: GlobalVariables.backgroundColor,
             ),
           ),
-          title: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: 100,
-                padding: const EdgeInsets.only(right: 90, top: 40),
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _mode = Mode.saved;
-                    });
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
-              ),
-              Container(
-                height: 100,
-                padding: const EdgeInsets.only(top: 60, right: 50),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Profile Screen',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: 'Inter',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ),
-            ],
+          // centerTitle: true,
+          title: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 40, right: 50),
+              child: Text(
+              'Profile Screen', // Adjust title as needed
+            style: TextStyle(
+              fontSize: 16.0,
+              fontFamily: 'Inter',
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+            ),
+          ),
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 30, left: 10), // Adjust padding as needed
+            child: buildLeadingIcon(),
           ),
         ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: GlobalVariables.backgroundColor,
+              ),
+              child: Text(
+                'Drawer Header',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('FAQs'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FAQScreen()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+
       body: Stack(
         children: [
           Column(

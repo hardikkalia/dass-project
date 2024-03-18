@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/constants/global_variables.dart';
+import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routename = '/search';
@@ -27,9 +28,9 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           title: Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 40, right: 20),
               child: Text(
-                'Search Screen',
+                'Search         ',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontFamily: 'Inter',
@@ -38,6 +39,51 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
+          ),
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 30, left: 10), // Adjust top and left padding as needed
+            child: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+      drawer: Padding(
+        padding: const EdgeInsets.only(top: 0), // Adjust the top padding as needed
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: GlobalVariables.backgroundColor,
+                ),
+                child: Text(
+                  'Drawer Header',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text('FAQs'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FAQScreen()),
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
