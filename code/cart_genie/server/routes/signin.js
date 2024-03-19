@@ -8,13 +8,14 @@ const twilioClient = require("../features/otp/twilioconfig");
 const startVerify = require("../features/functions/start-verify");
 const checkVerify = require("../features/functions/check-verify");
 const auth = require("../middleware/auth");
-const axios = require('axios');
+const axios = require("axios");
 // const signInRouter = require('express').Router();
 
 // Replace 'your-twilio-function-url' with the actual URL of your deployed 'start-verify' Twilio Function
-const START_VERIFY_URL = 'https://otp-verify-cart-genie-3367-dev.twil.io/start-verify'
-const CHECK_VERIFY_URL = 'https://otp-verify-cart-genie-3367-dev.twil.io/check-verify'
-
+const START_VERIFY_URL =
+  "https://otp-verify-cart-genie-3367-dev.twil.io/start-verify";
+const CHECK_VERIFY_URL =
+  "https://otp-verify-cart-genie-3367-dev.twil.io/check-verify";
 
 signInRouter.post("/api/signin/email", async (req, res) => {
   try {
@@ -36,7 +37,6 @@ signInRouter.post("/api/signin/email", async (req, res) => {
   }
 });
 
-
 signInRouter.post("/api/signin/phone/verify", async (req, res) => {
   try {
     const { phone } = req.body;
@@ -46,13 +46,20 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
     }
 
     // Call the start-verify Twilio Function
-    const verifyResponse = await axios.post(START_VERIFY_URL, { to:"+91"+phone, channel: 'sms' });
+    const verifyResponse = await axios.post(START_VERIFY_URL, {
+      to: "+91" + phone,
+      channel: "sms",
+    });
     if (!verifyResponse.data.success) {
-      return res.status(400).json({ msg: "Failed to send OTP", error: verifyResponse.data.error });
+      return res
+        .status(400)
+        .json({ msg: "Failed to send OTP", error: verifyResponse.data.error });
     }
 
     // If OTP sent successfully
-    res.status(200).json({ msg: "OTP sent successfully. Please verify to continue." });
+    res
+      .status(200)
+      .json({ msg: "OTP sent successfully. Please verify to continue." });
   } catch (e) {
     // console.log(e);
     res.status(500).json({ error: e.message });
@@ -66,7 +73,7 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
 //     if (!user) {
 //       return res.status(400).json({ msg: "User not found!" });
 //     }
-    
+
 //     const otp = generateOTP();
 //     await twilioClient.messages.create({
 //       body: `Your OTP is: ${otp}`,
@@ -85,13 +92,18 @@ signInRouter.post("/api/signin/phone/verify/submit", async (req, res) => {
 
   try {
     // Call the check-verify Twilio Function
-    const checkResponse = await axios.post(CHECK_VERIFY_URL, { to: phone, code });
+    const checkResponse = await axios.post(CHECK_VERIFY_URL, {
+      to: "+91" + phone,
+      code,
+    });
     if (checkResponse.data.success) {
       // Verification successful, proceed with sign-in
-      res.status(200).json({ msg: "Verification successful. Sign-in complete." });
+      const user = await User.findOne({ phone });
+      const token = jwt.sign({ id: user._id }, "passwordKey");
+      res.json({ token, ...user._doc });
     } else {
       // Verification failed
-      res.status(400).json({ msg: "Incorrect OTP. Please try again.", error: checkResponse.data.message });
+      res.status(400).json({ msg: "Incorrect OTP. Please try again." });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });

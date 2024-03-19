@@ -80,7 +80,7 @@ class SignInService {
     }
   }
 
- void sendOTP({
+  void sendOTP({
     required BuildContext context,
     required String phone,
     required String code,
@@ -88,7 +88,7 @@ class SignInService {
     try {
       http.Response res = await http.post(
         Uri.parse('$uri/api/signin/phone/verify/submit'),
-        body: jsonEncode({'phone': phone,'code':code}),
+        body: jsonEncode({'phone': phone, 'code': code}),
         headers: <String, String>{
           'Content-type': 'application/json; charset=UTF-8'
         },
@@ -97,11 +97,16 @@ class SignInService {
         response: res,
         context: context,
         onSuccess: () async {
-          Navigator.push(
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+          await preferences.setString(
+            'auth-token',
+            jsonDecode(res.body)['token'],
+          );
+          Navigator.pushNamedAndRemoveUntil(
             context,
-            MaterialPageRoute(
-              builder: (context) => const BottomBar(),
-            ),
+            BottomBar.routeName,
+            (route) => false,
           );
         },
       );

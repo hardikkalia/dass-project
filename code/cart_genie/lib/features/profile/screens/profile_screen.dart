@@ -67,17 +67,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget buildLeadingIcon() {
     if (_mode == Mode.saved) {
-      return Builder(
-          builder: (BuildContext context)
-      {
+      return Builder(builder: (BuildContext context) {
         return IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
         );
-      }
-      );
+      });
     } else {
       return IconButton(
         icon: Icon(Icons.arrow_back),
@@ -89,6 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -118,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(top: 30, left: 10), 
+            padding: const EdgeInsets.only(top: 30, left: 10),
             child: buildLeadingIcon(),
           ),
         ),
@@ -151,7 +149,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-
       body: Stack(
         children: [
           Column(
@@ -249,7 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               keyboardType: TextInputType.visiblePassword,
                               validator: FormValidate.validatePassword,
                             ),
-                            SizedBox(
+                            const SizedBox(
                                 height:
                                     20),
                             EditProfileText(

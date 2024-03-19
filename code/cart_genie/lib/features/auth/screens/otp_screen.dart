@@ -17,7 +17,7 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   TextEditingController controller = TextEditingController();
-  SignInService signInService=SignInService();
+  SignInService signInService = SignInService();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     controller: controller,
                     keyboardType: TextInputType.number,
                     length: 4,
-                    obscureText: false ,
+                    obscureText: false,
                     enableActiveFill: true,
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
@@ -79,15 +79,19 @@ class _OTPScreenState extends State<OTPScreen> {
                     onChanged: (value) {},
                   ),
                 ),
-                ),
-                const SizedBox(height: 40),
-                CustomBottom(text: 'Resend OTP', onTap: (){}),
-                const SizedBox(height: 100),
-                CustomButton(
-                key: UniqueKey(), // Add a key here to avoid any potential issues
+              ),
+              const SizedBox(height: 40),
+              CustomBottom(text: 'Resend OTP', onTap: () {}),
+              const SizedBox(height: 100),
+              CustomButton(
+                key:
+                    UniqueKey(), // Add a key here to avoid any potential issues
                 text: 'ENTER',
                 onTap: () {
-                  signInService.sendOTP(context: context, phone: widget.phone, code: controller.text);
+                  signInService.sendOTP(
+                      context: context,
+                      phone: widget.phone,
+                      code: controller.text);
                 },
               ),
             ],
