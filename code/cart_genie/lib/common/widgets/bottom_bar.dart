@@ -1,5 +1,8 @@
 import 'package:cart_genie/constants/global_variables.dart';
+import 'package:cart_genie/features/cart/screens/cart_screen.dart';
+import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 import 'package:cart_genie/features/profile/screens/profile_screen.dart';
+import 'package:cart_genie/features/search/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
@@ -18,12 +21,10 @@ class _BottomBarState extends State<BottomBar> {
   static const double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const Center(
-      child: Text('Cart Page'),
-    ),
-    const Center(
-      child: Text("Search Page"),
-    ),
+    const CartScreen(),
+
+    const SearchScreen(),
+
     const ProfileScreen(),
   ];
 
@@ -62,7 +63,6 @@ class _BottomBarState extends State<BottomBar> {
 
 
       ),
-
     );
   }
 }

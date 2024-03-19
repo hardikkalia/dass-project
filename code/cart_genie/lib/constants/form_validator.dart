@@ -41,7 +41,11 @@ class FormValidate {
     if (password?.isEmpty ?? true) {
       return 'Password required';
     }
-    final passwordPattern = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+    // final passwordPattern = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+    // final passwordPattern =
+    //     RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
+    final passwordPattern =
+        RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$');
     if (!passwordPattern.hasMatch(password ?? '')) {
       return 'Password must contain at least 8 characters including one letter and one number';
     }
