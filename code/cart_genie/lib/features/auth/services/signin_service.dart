@@ -70,7 +70,37 @@ class SignInService {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const OTPScreen(),
+              builder: (context) => OTPScreen(phone: phone),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+ void sendOTP({
+    required BuildContext context,
+    required String phone,
+    required String code,
+  }) async {
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/signin/phone/verify/submit'),
+        body: jsonEncode({'phone': phone,'code':code}),
+        headers: <String, String>{
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BottomBar(),
             ),
           );
         },

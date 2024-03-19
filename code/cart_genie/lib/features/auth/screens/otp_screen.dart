@@ -1,12 +1,15 @@
 import 'package:cart_genie/common/widgets/custom_button.dart';
+import 'package:cart_genie/features/auth/services/signin_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:cart_genie/common/widgets/custom_bottom.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 
 class OTPScreen extends StatefulWidget {
   static const String routeName = '/otp-screen';
-  const OTPScreen({Key? key}) : super(key: key);
+  final String phone;
+  const OTPScreen({Key? key, required this.phone}) : super(key: key);
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -14,6 +17,7 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   TextEditingController controller = TextEditingController();
+  SignInService signInService=SignInService();
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +78,17 @@ class _OTPScreenState extends State<OTPScreen> {
                     ),
                     onChanged: (value) {},
                   ),
-                ),),
+                ),
+                ),
                 const SizedBox(height: 40),
                 CustomBottom(text: 'Resend OTP', onTap: (){}),
                 const SizedBox(height: 100),
                 CustomButton(
                 key: UniqueKey(), // Add a key here to avoid any potential issues
                 text: 'ENTER',
-                onTap: () {},
+                onTap: () {
+                  signInService.sendOTP(context: context, phone: widget.phone, code: controller.text);
+                },
               ),
             ],
           ),

@@ -10,7 +10,6 @@ const checkVerify = require("../features/functions/check-verify");
 const auth = require("../middleware/auth");
 const axios = require('axios');
 // const signInRouter = require('express').Router();
-const User = require('../models/user');
 
 // Replace 'your-twilio-function-url' with the actual URL of your deployed 'start-verify' Twilio Function
 const START_VERIFY_URL = 'https://otp-verify-cart-genie-3367-dev.twil.io/start-verify'
@@ -47,7 +46,7 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
     }
 
     // Call the start-verify Twilio Function
-    const verifyResponse = await axios.post(START_VERIFY_URL, { to: phone, channel: 'sms' });
+    const verifyResponse = await axios.post(START_VERIFY_URL, { to:"+91"+phone, channel: 'sms' });
     if (!verifyResponse.data.success) {
       return res.status(400).json({ msg: "Failed to send OTP", error: verifyResponse.data.error });
     }
@@ -55,6 +54,7 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
     // If OTP sent successfully
     res.status(200).json({ msg: "OTP sent successfully. Please verify to continue." });
   } catch (e) {
+    // console.log(e);
     res.status(500).json({ error: e.message });
   }
 });
@@ -91,7 +91,7 @@ signInRouter.post("/api/signin/phone/verify/submit", async (req, res) => {
       res.status(200).json({ msg: "Verification successful. Sign-in complete." });
     } else {
       // Verification failed
-      res.status(400).json({ msg: "Verification failed. Please try again.", error: checkResponse.data.message });
+      res.status(400).json({ msg: "Incorrect OTP. Please try again.", error: checkResponse.data.message });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });

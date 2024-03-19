@@ -15,9 +15,9 @@ import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 
 enum Mode {
   saved,
-  nameedit,
-  mailedit,
-  passwordedit,
+  nameEdit,
+  mailEdit,
+  passwordEdit,
 }
 
 class ProfileScreen extends StatefulWidget {
@@ -50,14 +50,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void editProfile() {
-    if (_mode == Mode.nameedit) {
+    if (_mode == Mode.nameEdit) {
       editProfileService.editName(context: context, name: _nameController.text);
     }
-    if (_mode == Mode.mailedit) {
+    if (_mode == Mode.mailEdit) {
       editProfileService.editEmail(
           context: context, email: _emailController.text);
     }
-    if (_mode == Mode.passwordedit) {
+    if (_mode == Mode.passwordEdit) {
       editProfileService.editPassword(
           context: context,
           oldPassword: _oldpasswordController.text,
@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 40, right: 50),
               child: Text(
-              'Profile Screen', // Adjust title as needed
+              'Profile', 
             style: TextStyle(
               fontSize: 16.0,
               fontFamily: 'Inter',
@@ -118,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(top: 30, left: 10), // Adjust padding as needed
+            padding: const EdgeInsets.only(top: 30, left: 10), 
             child: buildLeadingIcon(),
           ),
         ),
@@ -157,9 +157,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
             children: [
               Semicircle(
-                radius: 325, // Adjust the height as per your requirement
+                radius: 325, 
                 color: GlobalVariables
-                    .greyBackgroundColor, // Set the color of the semicircle
+                    .greyBackgroundColor, 
               ),
             ],
           ),
@@ -173,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: BoxDecoration(
                   color: GlobalVariables.backgroundColor,
                   borderRadius:
-                      BorderRadius.circular(15), // Make it round-shaped
+                      BorderRadius.circular(15), 
                   border: Border.all(
                     // Add borders
                     color: GlobalVariables.grey, // Border color
@@ -185,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      if (_mode != Mode.nameedit)
+                      if (_mode != Mode.nameEdit)
                         ProfileText(
                           text: 'Name',
                           data: user.name,
@@ -193,11 +193,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           colour: Colors.black,
                           onPressed: () {
                             setState(() {
-                              _mode = Mode.nameedit;
+                              _mode = Mode.nameEdit;
                             });
                           },
                         ),
-                      if (_mode == Mode.nameedit)
+                      if (_mode == Mode.nameEdit)
                         EditProfileText(
                           text: 'Name',
                           controller: _nameController,
@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           validator: FormValidate.validateName,
                         ),
                       const SizedBox(height: 20),
-                      if (_mode != Mode.mailedit)
+                      if (_mode != Mode.mailEdit)
                         ProfileText(
                           text: 'Email ID',
                           data: user.email,
@@ -214,11 +214,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           colour: Colors.black,
                           onPressed: () {
                             setState(() {
-                              _mode = Mode.mailedit;
+                              _mode = Mode.mailEdit;
                             });
                           },
                         ),
-                      if (_mode == Mode.mailedit)
+                      if (_mode == Mode.mailEdit)
                         EditProfileText(
                           text: 'Email ID',
                           controller: _emailController,
@@ -227,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           validator: FormValidate.validateEmail,
                         ),
                       const SizedBox(height: 20),
-                      if (_mode != Mode.passwordedit)
+                      if (_mode != Mode.passwordEdit)
                         ProfileText(
                           text: 'Password',
                           data: '********',
@@ -235,11 +235,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           colour: Colors.black,
                           onPressed: () {
                             setState(() {
-                              _mode = Mode.passwordedit;
+                              _mode = Mode.passwordEdit;
                             });
                           },
                         ),
-                      if (_mode == Mode.passwordedit)
+                      if (_mode == Mode.passwordEdit)
                         Column(
                           children: [
                             EditProfileText(
@@ -251,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             SizedBox(
                                 height:
-                                    20), // Provides spacing between the input fields
+                                    20),
                             EditProfileText(
                               text: 'New Password',
                               controller: _newpasswordController,

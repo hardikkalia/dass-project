@@ -40,7 +40,7 @@ exports.handler = async function (context, event, callback) {
      */
     if (event.channel === 'call') {
       throw new Error(
-        'Calls disabled by default. Update the code in <code>start-verify.js</code> to enable.'
+        'Calls disabled by default.'
       );
     }
 

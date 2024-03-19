@@ -157,7 +157,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           children: [
                             Text(
                               _mode == Mode.email
-                                  ? 'Sign in using phone no instead?'
+                                  ? 'Sign in using phone numbere instead?'
                                   : 'Sign in using email instead?',
                               style: const TextStyle(
                                 fontFamily: 'Nunito',
