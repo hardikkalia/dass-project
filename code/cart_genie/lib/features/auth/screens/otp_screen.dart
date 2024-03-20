@@ -1,5 +1,6 @@
 import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
+import 'package:cart_genie/features/auth/services/signup_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -9,7 +10,19 @@ import 'package:cart_genie/constants/global_variables.dart';
 class OTPScreen extends StatefulWidget {
   static const String routeName = '/otp-screen';
   final String phone;
-  const OTPScreen({Key? key, required this.phone}) : super(key: key);
+  final String email;
+  final String password;
+  final bool signup;
+  final String name;
+
+  const OTPScreen({
+    Key? key,
+    required this.phone,
+    this.email = '',
+    this.password = '',
+    this.signup = false,
+    this.name = '',
+  }) : super(key: key);
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -18,6 +31,22 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   TextEditingController controller = TextEditingController();
   SignInService signInService = SignInService();
+  SignUpService signUpService = SignUpService();
+
+  void sendOTP() {
+    if (widget.signup) {
+      signUpService.sendOTP(
+          context: context,
+          phone: widget.phone,
+          code: controller.text,
+          email: widget.email,
+          name: widget.name,
+          password: widget.password);
+    } else {
+      signInService.sendOTP(
+          context: context, phone: widget.phone, code: controller.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +117,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     UniqueKey(), // Add a key here to avoid any potential issues
                 text: 'ENTER',
                 onTap: () {
-                  signInService.sendOTP(
-                      context: context,
-                      phone: widget.phone,
-                      code: controller.text);
+                  sendOTP();
                 },
               ),
             ],

@@ -130,11 +130,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onTap: () {
                             if (_signUpFormKey.currentState!.validate()) {
                               signUpUser();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OTPScreen(phone: _phoneController.text,)),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => OTPScreen(phone: _phoneController.text,)),
+                              // );
                             }
                           },
                         ),

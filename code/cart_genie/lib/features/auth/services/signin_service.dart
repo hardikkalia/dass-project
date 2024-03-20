@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import "dart:async";
 import "dart:convert";
 
 import "package:cart_genie/common/widgets/bottom_bar.dart";
@@ -70,7 +71,10 @@ class SignInService {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => OTPScreen(phone: phone),
+              builder: (context) => OTPScreen(
+                phone: phone,
+                signup: false,
+              ),
             ),
           );
         },

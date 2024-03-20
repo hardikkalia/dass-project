@@ -8,6 +8,7 @@ enum Mode {
   question,
   answer,
 }
+
 class FAQScreen extends StatefulWidget {
   static const String routename = '/faq';
   const FAQScreen({super.key});
@@ -43,7 +44,7 @@ class _FAQScreenState extends State<FAQScreen> {
               // ),
               Container(
                 height: 100,
-                padding: const EdgeInsets.only(top: 40,left: 110, right: 50),
+                padding: const EdgeInsets.only(top: 40, left: 110, right: 50),
                 alignment: Alignment.topLeft,
                 child: Text(
                   'FAQs',
@@ -65,9 +66,9 @@ class _FAQScreenState extends State<FAQScreen> {
             children: [
               Semicircle(
                 radius: 325, // Adjust the height as per your requirement
-                color: GlobalVariables.greyBackgroundColor, // Set the color of the semicircle
+                color: GlobalVariables
+                    .greyBackgroundColor, // Set the color of the semicircle
               ),
-
             ],
           ),
           SingleChildScrollView(
@@ -78,33 +79,34 @@ class _FAQScreenState extends State<FAQScreen> {
                   const SizedBox(height: 20),
                   if (_q1 == Mode.question)
                     QText(
-                        question: "Who Are We ??",
-                        icon: Icons.keyboard_arrow_down,
-                        onPressed: (){
-                          setState(() {
-                            _q1 = Mode.answer;
-                          });
-                        },
-                        height: 60,
+                      question: "Who Are We ??",
+                      icon: Icons.keyboard_arrow_down,
+                      onPressed: () {
+                        setState(() {
+                          _q1 = Mode.answer;
+                        });
+                      },
+                      height: 60,
                     ),
                   if (_q1 == Mode.answer)
                     AnsText(
-                        question: "Who Are We ??",
-                        answer: "Cart Genie addresses the problem of tracking deliveries and returns across\n multiple e-commerce platforms. Our application will address this problem by scraping details\n from text messages and provide an organized infographic.",
-                        icon: Icons.keyboard_arrow_up,
-                        onPressed: (){
-                          setState(() {
-                            _q1 = Mode.question;
-                          });
-                        },
-                        height: 250,
+                      question: "Who Are We ?",
+                      answer:
+                          "Cart Genie addresses the problem of tracking deliveries and returns across\n multiple e-commerce platforms. Our application will address this problem by scraping details\n from text messages and provide an organized infographic.",
+                      icon: Icons.keyboard_arrow_up,
+                      onPressed: () {
+                        setState(() {
+                          _q1 = Mode.question;
+                        });
+                      },
+                      height: 250,
                     ),
                   const SizedBox(height: 20),
                   if (_q2 == Mode.question)
                     QText(
                       question: "Contributors",
                       icon: Icons.keyboard_arrow_down,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q2 = Mode.answer;
                         });
@@ -114,9 +116,10 @@ class _FAQScreenState extends State<FAQScreen> {
                   if (_q2 == Mode.answer)
                     AnsText(
                       question: "Contributors",
-                      answer: " Hardik Kalia\n Chinmay Sharma\n Kushagra Dhingra\n Samagra Bharti ",
+                      answer:
+                          " Hardik Kalia\n Chinmay Sharma\n Kushagra Dhingra\n Samagra Bharti ",
                       icon: Icons.keyboard_arrow_up,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q2 = Mode.question;
                         });
@@ -126,9 +129,9 @@ class _FAQScreenState extends State<FAQScreen> {
                   const SizedBox(height: 20),
                   if (_q3 == Mode.question)
                     QText(
-                      question: "Contributors",
+                      question: "Lorem Ipsum",
                       icon: Icons.keyboard_arrow_down,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q3 = Mode.answer;
                         });
@@ -137,10 +140,11 @@ class _FAQScreenState extends State<FAQScreen> {
                     ),
                   if (_q3 == Mode.answer)
                     AnsText(
-                      question: "Contributors",
-                      answer: " Hardik Kalia\n Chinmay Sharma\n Kushagra Dhingra\n Samagra Bharti ",
+                      question: "Lorem Ipsum",
+                      answer:
+                          " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                       icon: Icons.keyboard_arrow_up,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q3 = Mode.question;
                         });
@@ -150,9 +154,9 @@ class _FAQScreenState extends State<FAQScreen> {
                   const SizedBox(height: 20),
                   if (_q4 == Mode.question)
                     QText(
-                      question: "Contributors",
+                      question: "Lorem Ipsum",
                       icon: Icons.keyboard_arrow_down,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q4 = Mode.answer;
                         });
@@ -161,10 +165,11 @@ class _FAQScreenState extends State<FAQScreen> {
                     ),
                   if (_q4 == Mode.answer)
                     AnsText(
-                      question: "Contributors",
-                      answer: " Hardik Kalia\n Chinmay Sharma\n Kushagra Dhingra\n Samagra Bharti ",
+                      question: "Lorem Ipsum",
+                      answer:
+                          " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                       icon: Icons.keyboard_arrow_up,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q4 = Mode.question;
                         });
@@ -174,9 +179,9 @@ class _FAQScreenState extends State<FAQScreen> {
                   const SizedBox(height: 20),
                   if (_q5 == Mode.question)
                     QText(
-                      question: "Contributors",
+                      question: "Lorem Ipsum",
                       icon: Icons.keyboard_arrow_down,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q5 = Mode.answer;
                         });
@@ -185,18 +190,17 @@ class _FAQScreenState extends State<FAQScreen> {
                     ),
                   if (_q5 == Mode.answer)
                     AnsText(
-                      question: "Contributors",
-                      answer: " Hardik Kalia\n Chinmay Sharma\n Kushagra Dhingra\n Samagra Bharti ",
+                      question: "Lorem Ipsum",
+                      answer:
+                          " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                       icon: Icons.keyboard_arrow_up,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           _q5 = Mode.question;
                         });
                       },
                       height: 180,
                     ),
-
-
                 ],
               ),
             ),

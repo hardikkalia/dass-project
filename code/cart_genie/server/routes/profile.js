@@ -23,14 +23,14 @@ profileRouter.post("/api/profile/edit/name", auth, async (req, res) => {
 profileRouter.post("/api/profile/edit/email", auth, async (req, res) => {
   try {
     const { id, email } = req.body;
-    console.log(req);
+    // console.log(req);
     const user = await User.findById(id);
     if (!user) {
       return res.status(400).json({ msg: "User not found!" });
     }
     user.email = email;
     const newUser = await user.save();
-    console.log(user)
+    // console.log(user)
     res.json(newUser);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -55,7 +55,7 @@ profileRouter.post("/api/profile/edit/password", auth, async (req, res) => {
 
     user.password = hashedPassword;
     const newUser = await user.save();
-    
+
     res.json(newUser);
   } catch (e) {
     res.status(500).json({ error: e.message });

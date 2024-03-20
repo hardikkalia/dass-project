@@ -105,14 +105,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 40, right: 50),
               child: Text(
-              'Profile', 
-            style: TextStyle(
-              fontSize: 16.0,
-              fontFamily: 'Inter',
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
+                'Profile',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontFamily: 'Inter',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
             ),
           ),
           leading: Padding(
@@ -154,9 +154,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
             children: [
               Semicircle(
-                radius: 325, 
-                color: GlobalVariables
-                    .greyBackgroundColor, 
+                radius: 325,
+                color: GlobalVariables.greyBackgroundColor,
               ),
             ],
           ),
@@ -169,8 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 400,
                 decoration: BoxDecoration(
                   color: GlobalVariables.backgroundColor,
-                  borderRadius:
-                      BorderRadius.circular(15), 
+                  borderRadius: BorderRadius.circular(15),
                   border: Border.all(
                     // Add borders
                     color: GlobalVariables.grey, // Border color
@@ -246,9 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               keyboardType: TextInputType.visiblePassword,
                               validator: FormValidate.validatePassword,
                             ),
-                            const SizedBox(
-                                height:
-                                    20),
+                            const SizedBox(height: 20),
                             EditProfileText(
                               text: 'New Password',
                               controller: _newpasswordController,
@@ -292,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       if (_mode == Mode.saved)
                         ProfileButton(
-                            text: 'Sign Out',
+                            text: 'SIGN OUT',
                             onTap: () {
                               editProfileService.signOut(context: context);
                             }),
