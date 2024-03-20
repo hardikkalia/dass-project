@@ -92,10 +92,7 @@ signInRouter.post("/api/signin/phone/verify/submit", async (req, res) => {
 
   try {
     // Call the check-verify Twilio Function
-    const checkResponse = await axios.post(CHECK_VERIFY_URL, {
-      to: "+91" + phone,
-      code,
-    });
+    const checkResponse = await axios.post(CHECK_VERIFY_URL, { to: phone, code });
     if (checkResponse.data.success) {
       // Verification successful, proceed with sign-in
       const user = await User.findOne({ phone });
