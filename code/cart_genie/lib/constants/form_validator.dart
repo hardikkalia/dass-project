@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FormValidate {
   static String? validateEmail(String? email) {
     if (email?.isEmpty ?? true) {
-      return 'Email required';
+      return 'E-mail required';
     }
     RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     final isEmailValid = emailRegex.hasMatch(email ?? '');
@@ -15,7 +15,7 @@ class FormValidate {
 
   static String? validatePhoneNo(String? phone) {
     if (phone?.isEmpty ?? true) {
-      return 'Phone no required';
+      return 'Phone number required';
     }
     RegExp phoneRegex = RegExp(r'^[0-9]{10}$');
     final isPhoneValid = phoneRegex.hasMatch(phone ?? '');
@@ -37,18 +37,29 @@ class FormValidate {
     return null;
   }
 
-  static String? validatePassword(String? password) {
+  static String? validatePassword(String? password) 
+  {
     if (password?.isEmpty ?? true) {
       return 'Password required';
     }
-    // final passwordPattern = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
-    // final passwordPattern =
-    //     RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
-    final passwordPattern =
-        RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$');
-    if (!passwordPattern.hasMatch(password ?? '')) {
-      return 'Password must contain at least 8 characters including one letter and one number';
+    if (password!.length < 8) {
+      return 'Password must be at least 8 characters long';
     }
+    
+    final hasLetter = RegExp(r'[A-Za-z]').hasMatch(password);
+    if (!hasLetter) {
+      return 'Password must contain at least one letter';
+    }
+
+    final hasDigit = RegExp(r'\d').hasMatch(password);
+    if (!hasDigit) {
+      return 'Password must contain at least one number';
+    }
+
+    // final hasSpecialCharacter = RegExp(r'[@$!%*?&]').hasMatch(password);
+    // if (!hasSpecialCharacter) {
+    //   return 'Password must contain at least one special character';
+    // }
     return null;
   }
 }
