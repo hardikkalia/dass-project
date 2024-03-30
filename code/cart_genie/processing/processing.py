@@ -1,9 +1,9 @@
 import re
 
 def extract_order_info(message):
-    order_number_pattern = r'\b[0-9, \-]+\b'
+    order_number_pattern = r'\b[0-9]+-[0-9]+-[0-9]+\b'
     order_status_pattern = r'(dispatched|out\sfor\sdelivery|delivered|failed)'
-    company_name_pattern = r'(Amazon|Delhivery)'
+    company_name_pattern = r'(Amazon|Delhivery|Blue\sDart)'
 
     order_number = re.search(order_number_pattern, message)
     order_status = re.search(order_status_pattern, message)
@@ -15,7 +15,7 @@ def extract_order_info(message):
 
     return order_number, order_status, company_name
 
-text_message = "Your order AB1234 with Amazon has been dispatched."
+text_message = "Your order 123-12324-1232 with Amazon has been dispatched."
 
 order_number, order_status, company_name = extract_order_info(text_message)
 
