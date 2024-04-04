@@ -37,11 +37,6 @@ class _FAQScreenState extends State<FAQScreen> {
           title: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // Container(
-              //   height: 100,
-              //   padding: const EdgeInsets.only(left: 05, right: 145, top: 40),
-              //   child: Icon(Icons.arrow_back),
-              // ),
               Container(
                 height: 100,
                 padding: const EdgeInsets.only(top: 40, left: 110, right: 50),

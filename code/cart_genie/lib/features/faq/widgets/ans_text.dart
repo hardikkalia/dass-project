@@ -25,11 +25,14 @@ class AnsText extends StatelessWidget {
           color: GlobalVariables.backgroundColor,
           borderRadius:
           BorderRadius.circular(15), // Make it round-shaped
-      border: Border.all(
-    // Add borders
-      color: GlobalVariables.grey, // Border color
-      width: 1, // Border width
-      ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5), // Shadow color
+              spreadRadius: 5, // Spread radius
+              blurRadius: 7, // Blur radius
+              offset: Offset(0, 3), // Offset from the container
+            ),
+          ],
     ),
       child: Container(
       width: 400,
