@@ -1,3 +1,6 @@
+import 'package:cart_genie/common/widgets/drawer.dart';
+import 'package:cart_genie/features/cart/widgets/no_order.dart';
+import 'package:cart_genie/features/cart/widgets/orders.dart';
 import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/background.dart';
@@ -12,6 +15,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  int n = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(top: 30, left: 10), // Adjust top and left padding as needed
+            padding: const EdgeInsets.only(top: 30, left: 10),
             child: Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -54,50 +58,45 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      drawer: Padding(
-        padding: const EdgeInsets.only(top: 0), // Adjust the top padding as needed
-        child: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: GlobalVariables.backgroundColor,
-                ),
-                child: Text(
-                  'Drawer Header',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text('FAQs'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FAQScreen()),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+
+      drawer: DrawerWidget(),
       body: Stack(
         children: [
           Column(
             children: [
               Semicircle(
-                radius: 325, // Adjust the height as per your requirement
-                color: GlobalVariables.greyBackgroundColor, // Set the color of the semicircle
+                radius: 325,
+                color: GlobalVariables.greyBackgroundColor,
               ),
             ],
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+              child: n > 0
+                  ? Column(
+                  children: [
+                  for (int i = 1; i <= n; i++)
+                    Column(
+                      children: [
+                        const SizedBox(height: 30),
+                        Orders(
+                          onPressed: () {},
+                          product: "Product $i",
+                          delivery: "Delhivery",
+                          status: "Status $i",
+                        ),
+                      ],
+                    ),
+                ],
+              )
+                  : NoOrders(),
+            ),
           ),
         ],
       ),
     );
   }
 }
+
+

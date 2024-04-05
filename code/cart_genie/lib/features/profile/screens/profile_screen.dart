@@ -1,6 +1,7 @@
 // import 'dart:js';
 
 import 'package:cart_genie/common/widgets/bottom_bar.dart';
+import 'package:cart_genie/common/widgets/drawer.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/profile/services/profile_service.dart';
 import 'package:cart_genie/features/profile/widgets/editprofile_text.dart';
@@ -121,34 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: GlobalVariables.backgroundColor,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('FAQs'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FAQScreen()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerWidget(),
       body: Stack(
         children: [
           Column(
@@ -169,11 +143,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: BoxDecoration(
                   color: GlobalVariables.backgroundColor,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    // Add borders
-                    color: GlobalVariables.grey, // Border color
-                    width: 1, // Border width
-                  ),
+
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: 5, // Spread radius
+                      blurRadius: 7, // Blur radius
+                      offset: Offset(0, 3), // Offset from the container
+                    ),
+                  ],
                 ),
                 child: Form(
                   key: _editprofileKey,
@@ -263,14 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         colour: Colors.transparent,
                         onPressed: () {},
                       ),
-                      // if (_mode == Mode.phoneedit)
-                      //   EditProfileText(
-                      //     text: 'Phone No.',
-                      //     controller: _phoneController,
-                      //     hintText: 'Phone No.',
-                      //     keyboardType: TextInputType.phone,
-                      //     validator: FormValidate.validatePhoneNo,
-                      //   ),
+
                       const SizedBox(height: 80),
                       if (_mode != Mode.saved)
                         // const SizedBox(height: 80),
