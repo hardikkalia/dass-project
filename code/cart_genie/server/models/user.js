@@ -1,5 +1,37 @@
 const mongoose = require("mongoose");
-const userSchema = mongoose.Schema({
+
+const orderSchema = new mongoose.Schema({
+  provided_order_id: { //order id mentioned in the 
+    type: String,
+    required: true,
+    index: true, 
+    unique: true 
+  },
+  current_status: { //out for delivery, dispatched, delivered
+    type: String,
+    required: true,
+  },
+  order_type: { //delivery or return
+    type: String,
+    required: true,
+  },
+  full_messages: [{ //used to display detailed order info
+    content: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    }
+  }],
+  company_name: {
+    type: String,
+    required: true,
+  }
+});
+
+const userSchema = new mongoose.Schema({
   name: {
     required: true,
     type: String,
@@ -19,28 +51,28 @@ const userSchema = mongoose.Schema({
     },
   },
   phone: {
-      required: true,
-      type: String,
-      validate: {
-          validator: (value) => {
-              const re = /^[0-9]{10}$/;
-              return value.match(re);
-            },
-            message: "Please enter a valid phone number",
-        },
+    required: true,
+    type: String,
+    validate: {
+      validator: (value) => {
+        const re = /^[0-9]{10}$/;
+        return value.match(re);
+      },
+      message: "Please enter a valid phone number",
     },
-    password: {
-      required: true,
-      type: String,
-      // validate: {
-      //   validator: (value) => {
-      //     const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      //     return value.match(re);
-      //   },
-      //   message: "Please enter a valid password",
-      // },
-    },
+  },
+  password: {
+    required: true,
+    type: String,
+  },
+  // address: {
+  //   street: { type: String, required: true },
+  //   city: { type: String, required: true },
+  //   zip: { type: String, required: true },
+  // },
+  orders: [orderSchema] // written seperately to improve readibilty 
 });
 
 const User = mongoose.model("User", userSchema);
+
 module.exports = User;
