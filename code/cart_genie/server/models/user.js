@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema({
               const re = /^[0-9]{10}$/;
               return value.match(re);
             },
-            message: "Please enter a valid phoine number",
+            message: "Please enter a valid phone number",
         },
     },
     password: {
