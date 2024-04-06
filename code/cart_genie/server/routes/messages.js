@@ -7,10 +7,11 @@ const bcryptjs = require("bcryptjs");
 
 messageRouter.post("/api/messages", auth, async(req, res)=>{
     try{
-        
+        const {lastUpdate, messages}=req.body;
+        console.log(messages);
     }
     catch(e){
-
+        res.status(500).json({ error: e.message });
     }
 });
 

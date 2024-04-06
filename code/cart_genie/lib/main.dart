@@ -5,6 +5,7 @@ import 'package:cart_genie/features/auth/services/signin_service.dart';
 import 'package:cart_genie/features/home/screens/home_screen.dart';
 import 'package:cart_genie/providers/user_providers.dart';
 import 'package:cart_genie/router.dart';
+import 'package:cart_genie/scraping/scrape_messages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,11 +26,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final SignInService signInService = SignInService();
-
+  final SmsReaderService smsReaderService = SmsReaderService();
   @override
   void initState() {
     super.initState();
     signInService.getUserData(context);
+    smsReaderService.checkPermissionsAndReadSms();
   }
 
   // This widget is the root of your application.

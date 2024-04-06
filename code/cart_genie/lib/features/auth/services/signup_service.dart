@@ -13,6 +13,7 @@ import "package:http/http.dart" as http;
 import "package:cart_genie/constants/utils.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
+import "package:cart_genie/scraping/scrape_messages.dart";
 
 class SignUpService {
   void signUpUser({
