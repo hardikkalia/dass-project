@@ -36,7 +36,11 @@ dependencies:
   provider: ^6.1.2
   shared_preferences: ^2.2.2
   pin_code_fields: ^8.0.1
-  sms_advanced: ^1.0.1
+  # sms_advanced: ^1.0.1
+  sms_advanced:
+    git:
+      url: https://github.com/EddieKamau/sms_advanced.git
+      ref: master
   permission_handler: ^11.3.1
 dev_dependencies:
   flutter_test:
