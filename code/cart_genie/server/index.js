@@ -6,18 +6,20 @@ const mongoose = require("mongoose");
 const signUpRouter = require("./routes/signup.js");
 const signInRouter = require("./routes/signin.js");
 const profileRouter = require("./routes/profile.js");
+const messageRouter = require("./routes/messages.js");
 
 // Init
 const PORT = 3000;
 const app = express();
 const DB =
-  "mongodb+srv://hardik:webcaptive%403%21tH@cluster0.rjbrbkt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+  // "mongodb+srv://@cluster0.uhu8czi.mongodb.net/";
+  "mongodb+srv://hardik:webcaptive%403%21tH@cluster0.uhu8czi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 // Middleware
 app.use(express.json())
 app.use(signUpRouter);
 app.use(signInRouter);
 app.use(profileRouter);
+app.use(messageRouter);
 
 mongoose
   .connect(DB)

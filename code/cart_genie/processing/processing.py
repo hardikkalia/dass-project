@@ -15,7 +15,7 @@ def extract_order_info(message):
 
     return order_number, order_status, company_name
 
-text_message = "Your order 123-12324-1232 with Amazon has been dispatched."
+text_message = "Your order with Blue Dart AWB# 81327729910 was delivered to NILGRI SECURITY . Please Rate our Service on https://t4w6.page.link/9hNKa "
 
 order_number, order_status, company_name = extract_order_info(text_message)
 

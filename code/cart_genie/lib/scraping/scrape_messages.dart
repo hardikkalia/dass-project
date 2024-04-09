@@ -7,13 +7,21 @@ import 'package:cart_genie/constants/global_variables.dart';
 
 class SmsReaderService {
   Future<void> checkPermissionsAndReadSms() async {
+      print("hi");
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.sms,
+      Permission.contacts,
+    ].request();
+    print(statuses[Permission.location]);
     if (await Permission.sms.request().isGranted &&
         await Permission.contacts.request().isGranted) {
       DateTime lastUpdate = DateTime(
           2024, 4, 1); // This could be fetched from preferences or your backend
       await _readSmsMessages(lastUpdate);
+      print("hii");
     } else {
       print("Necessary permissions not granted");
+
     }
   }
 
@@ -21,9 +29,13 @@ class SmsReaderService {
     SmsQuery query = SmsQuery();
     List<SmsMessage> messages =
         await query.querySms(kinds: [SmsQueryKind.Inbox]);
-
+   	print(messages);
+    print("readsms");
     messages = messages.where((msg) {
+      print(msg.sender);
+      print(msg.body);
       var msgDate = msg.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
+      print(msgDate);
       return msgDate.isAfter(startDate) || msgDate.isAtSameMomentAs(startDate);
     }).toList();
 
@@ -32,7 +44,8 @@ class SmsReaderService {
       var bDate = b.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
       return bDate.compareTo(aDate);
     });
-
+  	print(messages);
+    print("read sms complete");
     updateLastReadAndMessages(messages);
   }
 
@@ -40,11 +53,11 @@ class SmsReaderService {
     http.Response res = await http.post(
       Uri.parse('$uri/api/messages'),
       body: jsonEncode({
-        'lastUpdate': DateTime.now().toString(),
+        'lastUpdate': DateTime.now().toIso8601String(),
         'messages': messages
             .map((msg) => {
                   'content': msg.body,
-                  'date': msg.dateSent,
+                  'date': msg.dateSent?.toIso8601String() ??DateTime.now().toIso8601String() ,
                   'sender': msg.address,
                 })
             .toList(),

@@ -9,6 +9,7 @@ const User = require("../models/user"); // Assuming you have a 'User' model
 
 messageRouter.post("/api/messages", auth, async (req, res) => {
   try {
+    console.log(hi1);
     const token = req.header("auth-token");
     const isVerified = jwt.verify(token, "passwordKey");
     req.user = isVerified.id;
