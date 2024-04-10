@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     signInService.getUserData(context);
-    smsReaderService.checkPermissionsAndReadSms();
+    smsReaderService.checkPermissionsAndReadSms(context);
   }
 
   // This widget is the root of your application.

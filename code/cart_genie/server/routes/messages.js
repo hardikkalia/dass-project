@@ -13,6 +13,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
     const token = req.header("auth-token");
     const isVerified = jwt.verify(token, "passwordKey");
     req.user = isVerified.id;
+    
     const { lastUpdate, messages } = req.body;
     const processedMessages = [];
     messages.forEach(msg => {
@@ -27,6 +28,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
     // Forward the request to the /api/messages/submit route
     req.method = "POST";
     messageRouter.handle(req, res, "/api/messages/submit");
+
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
