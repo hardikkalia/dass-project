@@ -17,107 +17,103 @@ class Orders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 400,
-      height: 250,
-      decoration: BoxDecoration(
-        color: GlobalVariables.backgroundColor,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
+    return GestureDetector(
+      onTap: onPressed,
       child: Container(
         width: 400,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 8.0),
-              child: Text(
-                'Product Name',
-                style: TextStyle(
-                  fontFamily: 'Cabin',
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
-                  color: GlobalVariables.textgrey,
-                ),
-              ),
+        height: 250,
+        decoration: BoxDecoration(
+          color: GlobalVariables.backgroundColor,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: TextButton(
-                onPressed: onPressed,
+          ],
+        ),
+        child: Container(
+          width: 400,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 8.0),
                 child: Text(
-                  product,
+                  'Product ID',
                   style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black,
+                    fontFamily: 'Cabin',
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: GlobalVariables.textgrey,
                   ),
                 ),
               ),
-            ),
-            Divider(
-              color: GlobalVariables.textgrey,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Icon(Icons.local_shipping, color: GlobalVariables.shippingColor), // Icon for "From"
-                  SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'From :',
-                        style: TextStyle(
-                          fontFamily: 'Cabin',
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.normal,
-                          color: GlobalVariables.textgrey,
-                        ),
-                      ),
-                      Text(
-                        delivery,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  )
-
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TextButton(
+                  onPressed: onPressed,
+                  child: Text(
+                    product,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            //   child:
-            // ),
-            const SizedBox(height: 30),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Icon(Icons.location_on, color: GlobalVariables.locationColor), // Icon for "Delivery"
-                  SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+              Divider(
+                color: GlobalVariables.textgrey,
+                thickness: 1,
+                indent: 20,
+                endIndent: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.local_shipping, color: GlobalVariables.shippingColor),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'From :',
+                          style: TextStyle(
+                            fontFamily: 'Cabin',
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.normal,
+                            color: GlobalVariables.textgrey,
+                          ),
+                        ),
+                        Text(
+                          delivery,
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on, color: GlobalVariables.locationColor),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
                           'Status :',
                           style: TextStyle(
@@ -127,33 +123,29 @@ class Orders extends StatelessWidget {
                             color: GlobalVariables.textgrey,
                           ),
                         ),
-                      Text(
-                        status,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                        Text(
+                          status,
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
-              ],
-            ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 52.0),
-            //   child:
-            // ),
-            const SizedBox (height: 10),
-            Divider(
-              color: GlobalVariables.textgrey,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-            ),
-          ],
+              SizedBox(height: 10),
+              Divider(
+                color: GlobalVariables.textgrey,
+                thickness: 1,
+                indent: 20,
+                endIndent: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

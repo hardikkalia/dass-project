@@ -1,4 +1,5 @@
 import 'package:cart_genie/common/widgets/drawer.dart';
+import 'package:cart_genie/features/cart/screens/detailed_screen.dart';
 import 'package:cart_genie/features/cart/widgets/no_order.dart';
 import 'package:cart_genie/features/cart/widgets/orders.dart';
 import 'package:cart_genie/features/faq/screens/faq_screen.dart';
@@ -15,7 +16,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int n = 4;
+  int n = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +82,10 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         const SizedBox(height: 30),
                         Orders(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => DetailedScreen()));
+                            },
                           product: "Product $i",
                           delivery: "Delhivery",
                           status: "Status $i",
