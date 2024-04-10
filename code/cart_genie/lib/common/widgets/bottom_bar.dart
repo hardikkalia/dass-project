@@ -22,9 +22,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const CartScreen(),
-
     const SearchScreen(),
-
     const ProfileScreen(),
   ];
 

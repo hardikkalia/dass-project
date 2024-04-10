@@ -21,4 +21,5 @@ class GlobalVariables {
   static const appBarColor = Color(0xFF0081FB);
   static const shippingColor = Color(0xFF0EBC93);
   static const locationColor = Color(0xFF5251FA);
+  static const inactivestatus = Color(0xFFE5E5FE);
 }

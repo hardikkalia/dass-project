@@ -8,6 +8,7 @@ import 'package:cart_genie/router.dart';
 import 'package:cart_genie/scraping/scrape_messages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cart_genie/features/cart/screens/cart_screen.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
