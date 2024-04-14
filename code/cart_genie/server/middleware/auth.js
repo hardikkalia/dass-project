@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) => {
   try {
-    print(req.header);
     const token = req.header("auth-token");
     if (!token)
       return res.status(401).json({ msg: "No auth token, access denied" });
@@ -12,7 +11,6 @@ const auth = async (req, res, next) => {
         .status(401)
         .json({ msg: "Token verification failed, access denied" });
     req.user = isVerified.id;
-    console.log(isVerified.id);
     req.token = token;
     next();
   } catch (e) {

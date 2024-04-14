@@ -10,6 +10,7 @@ import "package:cart_genie/features/auth/screens/otp_screen.dart";
 import "package:cart_genie/features/home/screens/home_screen.dart";
 import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
+import "package:cart_genie/scraping/scrape_messages.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "package:cart_genie/constants/utils.dart";
@@ -122,6 +123,7 @@ class SignInService {
   void getUserData(
     BuildContext context,
   ) async {
+    final SmsReaderService smsReaderService = SmsReaderService();
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? token = preferences.getString('auth-token');
@@ -151,6 +153,7 @@ class SignInService {
 
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
+        smsReaderService.checkPermissionsAndReadSms(context);
       }
     } catch (e) {
       showSnackBar(context, e.toString());

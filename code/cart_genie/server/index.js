@@ -1,6 +1,7 @@
 // Import from packages
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
 
 //Import from files
 const signUpRouter = require("./routes/signup.js");

@@ -5,31 +5,37 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const bcryptjs = require("bcryptjs");
 const extractOrderInfo = require("../processing/processing");
-const User = require("../models/user"); // Assuming you have a 'User' model
+const User = require("../models/user");
 
 messageRouter.post("/api/messages", auth, async (req, res) => {
   try {
-    console.log(hi1);
-    const token = req.header("auth-token");
-    const isVerified = jwt.verify(token, "passwordKey");
-    req.user = isVerified.id;
-    
-    const { lastUpdate, messages } = req.body;
+    // console.log(hi1);
+    // const token = req.header("auth-token");
+    // const isVerified = jwt.verify(token, "passwordKey");
+    // req.user = isVerified.id;
+    const lastUpdate = req.body["lastUpdate"];
+    const messages = JSON.parse(req.body["messages"]);
+    console.log(messages);
     const processedMessages = [];
-    messages.forEach(msg => {
+    messages.forEach((msg) => {
       const { content, date, sender } = msg;
-      const { orderNumber, orderStatus, companyName } = extractOrderInfo(content);
-      processedMessages.push({ orderNumber, orderStatus, companyName, date, sender });
+      const { orderNumber, orderStatus, companyName } =
+        extractOrderInfo(content);
+      processedMessages.push({
+        orderNumber,
+        orderStatus,
+        companyName,
+        date,
+        sender,
+      });
     });
-
+    console.log(processedMessages);
     // Add the processed messages, last update, and userID to the request body
     req.body = { processedMessages, lastUpdate, userId: req.user };
-
     // Forward the request to the /api/messages/submit route
-    req.method = "POST";
     messageRouter.handle(req, res, "/api/messages/submit");
-
   } catch (e) {
+    console.log(e.message);
     res.status(500).json({ error: e.message });
   }
 });
@@ -37,7 +43,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
 messageRouter.post("/api/messages/submit", auth, async (req, res) => {
   try {
     const { processedMessages, lastUpdate, userId } = req.body;
-
+    console.log(processedMessages);
     // Find the user document
     const user = await User.findById(userId);
     if (!user) {
@@ -45,18 +51,20 @@ messageRouter.post("/api/messages/submit", auth, async (req, res) => {
     }
 
     // Update the user's orders and lastUpdate
-    user.orders.push(...processedMessages.map(processedMessage => ({
-      provided_order_id: processedMessage.orderNumber,
-      current_status: processedMessage.orderStatus,
-      order_type: processedMessage.orderType, // Assuming it's a delivery order
-      full_messages: [
-        {
-          content: processedMessage.content,
-          date: processedMessage.date
-        }
-      ],
-      company_name: processedMessage.companyName
-    })));
+    user.orders.push(
+      ...processedMessages.map((processedMessage) => ({
+        provided_order_id: processedMessage.orderNumber,
+        current_status: processedMessage.orderStatus,
+        order_type: processedMessage.orderType, // Assuming it's a delivery order
+        full_messages: [
+          {
+            content: processedMessage.content,
+            date: processedMessage.date,
+          },
+        ],
+        company_name: processedMessage.companyName,
+      }))
+    );
     user.last_update = lastUpdate;
 
     // Save the updated user document
