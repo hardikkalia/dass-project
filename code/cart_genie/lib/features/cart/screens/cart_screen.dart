@@ -1,12 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/drawer.dart';
 import 'package:cart_genie/features/cart/screens/detailed_screen.dart';
 import 'package:cart_genie/features/cart/widgets/no_order.dart';
 import 'package:cart_genie/features/cart/widgets/orders.dart';
-import 'package:cart_genie/features/faq/screens/faq_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-
+import 'package:cart_genie/common/widgets/background.dart';
 class CartScreen extends StatefulWidget {
   static const String routename = '/cart';
   const CartScreen({Key? key}) : super(key: key);
@@ -16,11 +14,30 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int n = 3;
+  List<Orders> orders = []; // Initialize as empty list
+
+  @override
+  void initState() {
+    super.initState();
+    fetchOrders();
+  }
+
+  Future<void> fetchOrders() async {
+    // Simulated async call to fetch orders from backend
+    // Replace this with your actual backend API call
+    await Future.delayed(Duration(seconds: 1)); // Simulating delay
+    setState(() {
+      // Update orders with fetched data (replace this with your actual data)
+      orders = [
+        Orders(onPressed: () {}, product: "Product A", delivery: "Delhivery", status: "Delivered"),
+        Orders(onPressed: () {}, product: "Product B", delivery: "DHL", status: "Processing"),
+        // Add more orders as needed
+      ];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
@@ -60,6 +77,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
 
+
       drawer: DrawerWidget(),
       body: Stack(
         children: [
@@ -71,36 +89,38 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ],
           ),
+// Background elements or decorations can be placed here
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
-              child: n > 0
-                  ? Column(
-                  children: [
-                  for (int i = 1; i <= n; i++)
-                    Column(
-                      children: [
-                        const SizedBox(height: 30),
-                        Orders(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => DetailedScreen()));
-                            },
-                          product: "Product $i",
-                          delivery: "Delhivery",
-                          status: "Status $i",
-                        ),
-                      ],
+            padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+
+              child: orders.isNotEmpty
+                ? Column(
+              children: [
+                for (int i = 0; i < orders.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Orders(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailedScreen(),
+                          ),
+                        );
+                      },
+                      product: orders[i].product,
+                      delivery: orders[i].delivery,
+                      status: orders[i].status,
                     ),
-                ],
-              )
-                  : NoOrders(),
-            ),
+                  ),
+              ],
+            )
+                : NoOrders(),
+          ),
           ),
         ],
       ),
     );
   }
 }
-
-
