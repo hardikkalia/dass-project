@@ -15,25 +15,56 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
     // req.user = isVerified.id;
     const lastUpdate = req.body["lastUpdate"];
     const messages = JSON.parse(req.body["messages"]);
-    console.log(messages);
+    // console.log(messages);
     const processedMessages = [];
     messages.forEach((msg) => {
       const { content, date, sender } = msg;
       const { orderNumber, orderStatus, companyName } =
         extractOrderInfo(content);
-      processedMessages.push({
-        orderNumber,
-        orderStatus,
-        companyName,
-        date,
-        sender,
-      });
+      if (
+        !(orderNumber == null && orderStatus == null && companyName == null)
+      ) {
+        processedMessages.push({
+          orderNumber,
+          orderStatus,
+          companyName,
+          date,
+          sender,
+          content,
+        });
+      }
     });
     console.log(processedMessages);
     // Add the processed messages, last update, and userID to the request body
-    req.body = { processedMessages, lastUpdate, userId: req.user };
+    // req.body = { processedMessages, lastUpdate, userId: req.user };
     // Forward the request to the /api/messages/submit route
-    messageRouter.handle(req, res, "/api/messages/submit");
+    // messageRouter.handle(req, res, "/api/messages/submit");
+
+    console.log(req.user);
+    const user = await User.findById(req.user);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.orders.push(
+      ...processedMessages.map((processedMessage) => ({
+        provided_order_id: processedMessage.orderNumber,
+        current_status: processedMessage.orderStatus,
+        order_type: processedMessage.orderType, // Assuming it's a delivery order
+        full_messages: [
+          {
+            content: processedMessage.content,
+            date: processedMessage.date,
+          },
+        ],
+        company_name: processedMessage.companyName,
+      }))
+    );
+    user.last_update = lastUpdate;
+
+    await user.save();
+
+    res.json({ message: "Orders updated successfully" });
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ error: e.message });

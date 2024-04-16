@@ -14,18 +14,15 @@ import 'package:cart_genie/constants/utils.dart';
 class SmsReaderService {
   void checkPermissionsAndReadSms(BuildContext context) async {
     try {
-      print("hi");
       Map<Permission, PermissionStatus> statuses = await [
         Permission.sms,
         Permission.contacts,
       ].request();
-      print(statuses[Permission.location]);
       if (await Permission.sms.request().isGranted &&
           await Permission.contacts.request().isGranted) {
         DateTime lastUpdate = DateTime(2024, 4,
             1); // This could be fetched from preferences or your backend
         await _readSmsMessages(lastUpdate, context);
-        print("hii");
       } else {
         print("Necessary permissions not granted");
       }
