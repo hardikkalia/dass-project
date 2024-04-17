@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 
 class Orders extends StatelessWidget {
+  final String id;
+  final String ordertype;
   final VoidCallback onPressed;
   final String product;
   final String delivery;
@@ -9,6 +11,8 @@ class Orders extends StatelessWidget {
 
   const Orders({
     Key? key,
+    required this.ordertype,
+    required this.id,
     required this.onPressed,
     required this.product,
     required this.delivery,
