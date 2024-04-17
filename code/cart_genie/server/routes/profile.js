@@ -61,4 +61,49 @@ profileRouter.post("/api/profile/edit/password", auth, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+profileRouter.post("/api/profile/edit/age",auth,async(req,res) => {
+  try {
+    const { id, age } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(400).json({ msg: "User not found!" });
+    }
+    user.age = age;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+profileRouter.post("/api/profile/edit/address", auth, async (req, res) => {
+  try {
+    const { id, address } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(400).json({ msg: "User not found!" });
+    }
+    user.address = address;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+profileRouter.post("/api/profile/edit/gender", auth, async (req, res) => {
+  try {
+    const { id, gender } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(400).json({ msg: "User not found!" });
+    }
+    user.gender = gender;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 module.exports = profileRouter;

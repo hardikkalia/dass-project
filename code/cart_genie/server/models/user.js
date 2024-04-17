@@ -69,11 +69,15 @@ const userSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  // address: {
-  //   street: { type: String, required: true },
-  //   city: { type: String, required: true },
-  //   zip: { type: String, required: true },
-  // },
+  address: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  age: {
+    type: String,
+  },
   orders: [orderSchema], // written seperately to improve readibilty 
   lastUpdates: {type: Date}
 });
