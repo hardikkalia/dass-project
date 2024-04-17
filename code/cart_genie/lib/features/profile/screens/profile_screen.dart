@@ -1,6 +1,5 @@
 // import 'dart:js';
 
-import 'package:cart_genie/common/widgets/bottom_bar.dart';
 import 'package:cart_genie/common/widgets/drawer.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/profile/services/profile_service.dart';
@@ -12,7 +11,6 @@ import 'package:cart_genie/features/profile/widgets/profile_text.dart';
 import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/features/profile/widgets/profile_button.dart';
 import 'package:provider/provider.dart';
-import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 
 enum Mode {
   saved,
@@ -78,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     } else {
       return IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           setState(() {
             _mode = Mode.saved;
@@ -97,14 +95,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: GlobalVariables.backgroundColor,
             ),
           ),
           // centerTitle: true,
-          title: Center(
+          title: const Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 40, right: 50),
+              padding: EdgeInsets.only(top: 40, right: 50),
               child: Text(
                 'Profile',
                 style: TextStyle(
@@ -149,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: Colors.grey.withOpacity(0.5), // Shadow color
                       spreadRadius: 5, // Spread radius
                       blurRadius: 7, // Blur radius
-                      offset: Offset(0, 3), // Offset from the container
+                      offset: const Offset(0, 3), // Offset from the container
                     ),
                   ],
                 ),

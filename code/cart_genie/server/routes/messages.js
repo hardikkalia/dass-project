@@ -107,4 +107,19 @@ messageRouter.post("/api/messages/submit", auth, async (req, res) => {
   }
 });
 
+messageRouter.post("/api/messages/retrieve", auth, (req, res) => {
+  try {
+    const userID = req.user;
+    const user = user.findById(userID);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const orders = user.orders;
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = messageRouter;

@@ -4,9 +4,7 @@ import "dart:convert";
 
 import "package:cart_genie/constants/error_handling.dart";
 import "package:cart_genie/constants/global_variables.dart";
-import "package:cart_genie/features/auth/screens/otp_screen.dart";
 import "package:cart_genie/features/auth/screens/signup_screen.dart";
-import "package:cart_genie/features/home/screens/home_screen.dart";
 import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
 import "package:flutter/material.dart";

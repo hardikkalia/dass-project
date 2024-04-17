@@ -2,7 +2,6 @@ import 'package:cart_genie/common/widgets/drawer.dart';
 import 'package:cart_genie/features/cart/screens/detailed_screen.dart';
 import 'package:cart_genie/features/cart/widgets/no_order.dart';
 import 'package:cart_genie/features/cart/widgets/orders.dart';
-import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/constants/global_variables.dart';
@@ -26,13 +25,13 @@ class _CartScreenState extends State<CartScreen> {
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: GlobalVariables.backgroundColor,
             ),
           ),
-          title: Center(
+          title: const Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 40, right: 50),
+              padding: EdgeInsets.only(top: 40, right: 50),
               child: Text(
                 'Order Summary',
                 style: TextStyle(
@@ -94,7 +93,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                 ],
               )
-                  : NoOrders(),
+                  : const NoOrders(),
             ),
           ),
         ],

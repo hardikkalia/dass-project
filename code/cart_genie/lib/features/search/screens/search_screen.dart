@@ -3,7 +3,6 @@ import 'package:cart_genie/common/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routename = '/search';
@@ -23,13 +22,13 @@ class _SearchScreenState extends State<SearchScreen> {
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: GlobalVariables.backgroundColor,
             ),
           ),
-          title: Center(
+          title: const Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 40, right: 20),
+              padding: EdgeInsets.only(top: 40, right: 20),
               child: Text(
                 'Search         ',
                 style: TextStyle(
