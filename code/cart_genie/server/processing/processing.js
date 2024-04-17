@@ -1,5 +1,5 @@
 function extractOrderInfo(message) {
-    const orderNumberPattern = /\b[0-9]+-[0-9]+-[0-9]+\b/;
+    const orderNumberPattern = /\b[0-9]+[0-9]+[0-9]+\b/;
     const orderStatusWords = {
         dispatched: ['dispatched', 'dispatch'],
         outForDelivery: ['out for delivery', 'out for deliveries'],

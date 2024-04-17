@@ -23,6 +23,7 @@ class SignInService {
     required String email,
     required String password,
   }) async {
+    final SmsReaderService smsReaderService = SmsReaderService();
     try {
       http.Response res = await http.post(
         Uri.parse('$uri/api/signin/email'),
@@ -41,6 +42,7 @@ class SignInService {
             'auth-token',
             jsonDecode(res.body)['token'],
           );
+          smsReaderService.checkPermissionsAndReadSms(context);
           Navigator.pushNamedAndRemoveUntil(
             context,
             BottomBar.routeName,
@@ -120,7 +122,7 @@ class SignInService {
     }
   }
 
-  void getUserData(
+  Future<void> getUserData(
     BuildContext context,
   ) async {
     final SmsReaderService smsReaderService = SmsReaderService();

@@ -60,7 +60,7 @@ class Orders extends StatelessWidget {
                 child: TextButton(
                   onPressed: onPressed,
                   child: Text(
-                    product,
+                    id,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 18.0,
@@ -80,7 +80,8 @@ class Orders extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   children: [
-                    Icon(Icons.local_shipping, color: GlobalVariables.shippingColor),
+                    Icon(Icons.local_shipping,
+                        color: GlobalVariables.shippingColor),
                     SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +114,8 @@ class Orders extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   children: [
-                    Icon(Icons.location_on, color: GlobalVariables.locationColor),
+                    Icon(Icons.location_on,
+                        color: GlobalVariables.locationColor),
                     SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
