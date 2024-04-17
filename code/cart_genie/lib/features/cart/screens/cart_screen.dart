@@ -29,8 +29,8 @@ class _CartScreenState extends State<CartScreen> {
     setState(() {
       // Update orders with fetched data (replace this with your actual data)
       orders = [
-        Orders(onPressed: () {}, product: "Product A", delivery: "Delhivery", status: "Delivered"),
-        Orders(onPressed: () {}, product: "Product B", delivery: "DHL", status: "Processing"),
+        Orders(id: "ABC123",ordertype: "Delivery", onPressed: () {}, product: "Product A", delivery: "Delhivery", status: "Delivered"),
+        Orders(id: "XYZ789",ordertype: "Return", onPressed: () {}, product: "Product B", delivery: "DHL", status: "Processing"),
         // Add more orders as needed
       ];
     });
@@ -101,13 +101,17 @@ class _CartScreenState extends State<CartScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
                     child: Orders(
+                      id: orders[i].id,
+                      ordertype: orders[i].ordertype,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailedScreen(),
-                          ),
-                        );
+                        if (orders[i].ordertype == "Delivery") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailedScreen(),
+                            ),
+                          );
+                        }
                       },
                       product: orders[i].product,
                       delivery: orders[i].delivery,
