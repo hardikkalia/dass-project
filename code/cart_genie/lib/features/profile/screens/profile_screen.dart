@@ -19,6 +19,9 @@ enum Mode {
   nameEdit,
   mailEdit,
   passwordEdit,
+  ageEdit,
+  genderEdit,
+  addressEdit,
 }
 
 class ProfileScreen extends StatefulWidget {
@@ -36,6 +39,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _oldpasswordController = TextEditingController();
   final TextEditingController _newpasswordController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   // final TextEditingController _phoneController = TextEditingController();
 
   final EditProfileService editProfileService = EditProfileService();
@@ -47,6 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _emailController.dispose();
     _oldpasswordController.dispose();
     _newpasswordController.dispose();
+    _ageController.dispose();
+    _genderController.dispose();
+    _addressController.dispose();
     // _phoneController.dispose();
   }
 
@@ -233,6 +242,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       const SizedBox(height: 20),
+                      if (_mode != Mode.ageEdit)
+                        ProfileText(
+                          text: 'Age',
+                          data: user.email,
+                          icon: Icons.edit,
+                          colour: Colors.black,
+                          onPressed: () {
+                            setState(() {
+                              _mode = Mode.ageEdit;
+                            });
+                          },
+                        ),
+                      if (_mode == Mode.ageEdit)
+                        EditProfileText(
+                          text: 'Age',
+                          controller: _ageController,
+                          hintText: 'Age',
+                          keyboardType: TextInputType.number,
+                          validator: FormValidate.validateAge,
+                        ),
+                      const SizedBox(height: 20),
+                      if (_mode != Mode.genderEdit)
+                        ProfileText(
+                          text: 'Gender',
+                          data: user.email,
+                          icon: Icons.edit,
+                          colour: Colors.black,
+                          onPressed: () {
+                            setState(() {
+                              _mode = Mode.genderEdit;
+                            });
+                          },
+                        ),
+                      if (_mode == Mode.genderEdit)
+                        EditProfileText(
+                          text: 'Gender',
+                          controller: _genderController,
+                          hintText: 'Gender',
+                          keyboardType: TextInputType.text,
+                          validator: FormValidate.validateGender,
+                        ),
+                      const SizedBox(height: 20),
+                      if (_mode != Mode.addressEdit)
+                        ProfileText(
+                          text: 'Address',
+                          data: user.email,
+                          icon: Icons.edit,
+                          colour: Colors.black,
+                          onPressed: () {
+                            setState(() {
+                              _mode = Mode.addressEdit;
+                            });
+                          },
+                        ),
+                      if (_mode == Mode.addressEdit)
+                        EditProfileText(
+                          text: 'Address',
+                          controller: _addressController,
+                          hintText: 'Address',
+                          keyboardType: TextInputType.streetAddress,
+                          validator: FormValidate.validateAddress,
+                        ),
 
                       ProfileText(
                         text: 'Phone No.',

@@ -62,4 +62,38 @@ class FormValidate {
     // }
     return null;
   }
+
+  static String? validateAge(String? ageStr) {
+    // if (ageStr?.isEmpty ?? true) {
+    //   return 'Age required';
+    // }
+    int? age;
+    try {
+      age = int.parse(ageStr!);
+    } catch (e) {
+      return 'Please enter a valid age';
+    }
+    if (age <= 0 || age > 150) {
+      return 'Please enter a valid age between 1 and 150';
+    }
+    return null;
+  }
+
+  static String? validateGender(String? gender) {
+    // if (gender == null || gender.isEmpty) {
+    //   return 'Please select a gender';
+    // }
+    // gender = gender.toLowerCase();
+    if (gender != 'male' && gender != 'female' && gender != 'other') {
+      return 'Please select a valid gender';
+    }
+    return null;
+  }
+
+  static String? validateAddress(String? address) {
+    // if (address?.isEmpty ?? true) {
+    //   return 'Address required';
+    // }
+    return null;
+  }
 }

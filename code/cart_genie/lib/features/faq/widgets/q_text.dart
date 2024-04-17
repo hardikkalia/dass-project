@@ -5,20 +5,20 @@ class QText extends StatelessWidget {
   final String question;
   final IconData icon;
   final VoidCallback onPressed;
-  final double height;
+  // final double height;
 
   const QText({
     Key? key,
     required this.question,
     required this.icon,
     required this.onPressed,
-    required this.height,
+    // required this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
+      // height: height,
       width: 400,
       decoration: BoxDecoration(
         color: GlobalVariables.backgroundColor,
@@ -37,7 +37,7 @@ class QText extends StatelessWidget {
       child: Container(
         width: 400,
         child:Padding(
-          padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
+          padding: const EdgeInsets.only(left: 20.0, bottom: 8.0,top: 8.0),
           child: Row(
             children: [
               Expanded(
