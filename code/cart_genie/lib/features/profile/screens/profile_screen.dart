@@ -71,8 +71,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           oldPassword: _oldpasswordController.text,
           newPassword: _newpasswordController.text);
     }
+    if (_mode == Mode.addressEdit) {
+      editProfileService.editAddress(
+          context: context, address: _addressController.text);
+    }
+    if (_mode == Mode.ageEdit) {
+      editProfileService.editAge(
+          context: context, age: _ageController.text);
+    }
+    if (_mode == Mode.genderEdit) {
+      editProfileService.editGender(
+          context: context, gender: _genderController.text);
+    }
   }
-
+  
   Widget buildLeadingIcon() {
     if (_mode == Mode.saved) {
       return Builder(builder: (BuildContext context) {
@@ -98,7 +110,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-
+    String ageText = user.age ?? "Enter Age";
+    if (user.age!=null) {
+      ageText = user.age!;
+    }
+    else{
+      ageText="Enter Age";
+      }
+    String genderText = user.gender ?? "Enter your Gender";
+    String addressText = user.address ?? "Enter Address";
+    
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
@@ -243,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (_mode != Mode.ageEdit)
                         ProfileText(
                           text: 'Age',
-                          data: user.email,
+                          data: ageText,
                           icon: Icons.edit,
                           colour: Colors.black,
                           onPressed: () {
@@ -264,7 +285,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (_mode != Mode.genderEdit)
                         ProfileText(
                           text: 'Gender',
-                          data: user.email,
+                          data: genderText,
                           icon: Icons.edit,
                           colour: Colors.black,
                           onPressed: () {
@@ -285,7 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (_mode != Mode.addressEdit)
                         ProfileText(
                           text: 'Address',
-                          data: user.email,
+                          data: addressText,
                           icon: Icons.edit,
                           colour: Colors.black,
                           onPressed: () {

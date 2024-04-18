@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class User {
@@ -8,6 +7,10 @@ class User {
   final String password;
   final String phone;
   final String token;
+  final String? age;       
+  final String? gender;    
+  final String? address;   
+
   User({
     required this.id,
     required this.name,
@@ -15,8 +18,10 @@ class User {
     required this.password,
     required this.phone,
     required this.token,
+    this.age,      
+    this.gender,   
+    this.address,  
   });
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -26,6 +31,9 @@ class User {
       'password': password,
       'phone': phone,
       'token': token,
+      'age': age,        
+      'gender': gender,  
+      'address': address 
     };
   }
 
@@ -37,6 +45,9 @@ class User {
       password: map['password'] as String,
       phone: map['phone'] as String,
       token: map['token'] as String,
+      age: map['age'] as String?,       
+      gender: map['gender'] as String?, 
+      address: map['address'] as String?
     );
   }
 
@@ -44,13 +55,16 @@ class User {
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
 
-   User copyWith({
+  User copyWith({
     String? id,
     String? name,
     String? email,
     String? password,
     String? phone,
     String? token,
+    String? age,
+    String? gender,
+    String? address,
   }) {
     return User(
       id: id ?? this.id,
@@ -59,6 +73,10 @@ class User {
       password: password ?? this.password,
       phone: phone ?? this.phone,
       token: token ?? this.token,
+      age: age ?? this.age,
+      gender: gender ?? this.gender,
+      address: address ?? this.address,
     );
   }
 }
+
