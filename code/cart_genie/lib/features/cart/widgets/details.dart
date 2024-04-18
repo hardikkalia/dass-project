@@ -16,7 +16,7 @@ class Details extends StatefulWidget {
   final Color colour3;
   final DateTime date;
   final TimeOfDay time;
-  final int number; // Number of messages
+  final List<Messages> messages;
 
   const Details({
     Key? key,
@@ -28,7 +28,7 @@ class Details extends StatefulWidget {
     required this.colour3,
     required this.date,
     required this.time,
-    required this.number,
+    required this.messages,
   }) : super(key: key);
 
   @override
@@ -125,52 +125,11 @@ class _DetailsState extends State<Details> {
                 ),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Last Message Update:',
-                  style: TextStyle(
-                    fontFamily: 'Cabin',
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.normal,
-                    color: GlobalVariables.textgrey,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '${_formatDate(widget.date)}',
-                      style: TextStyle(
-                        fontFamily: 'Cabin',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.normal,
-                        color: GlobalVariables.textgrey,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      '${_formatTime(widget.time)}',
-                      style: TextStyle(
-                        fontFamily: 'Cabin',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.normal,
-                        color: GlobalVariables.textgrey,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
             SizedBox(height: 20),
             TextButton(
               onPressed: () {
                 setState(() {
-                  if (_mode == Mode.hide) {
-                    _mode = Mode.display;
-                  } else {
-                    _mode = Mode.hide;
-                  }
+                  _mode = _mode == Mode.hide ? Mode.display : Mode.hide;
                 });
               },
               child: Text(
@@ -183,27 +142,21 @@ class _DetailsState extends State<Details> {
                 ),
               ),
             ),
-            if (_mode == Mode.display) ..._buildMessagesList(),
+            if (_mode == Mode.display)
+              SingleChildScrollView(
+                child: Column(
+                  children: widget.messages.map((message) {
+                    return Messages(
+                      content: message.content,
+                      date: message.date,
+                    );
+                  }).toList(),
+                ),
+              ),
           ],
         ),
       ),
     );
-  }
-
-  String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
-  }
-
-  String _formatTime(TimeOfDay time) {
-    return '${time.hour}:${time.minute}';
-  }
-
-  List<Widget> _buildMessagesList() {
-    List<Widget> messages = [];
-    for (int i = 0; i < widget.number; i++) {
-      messages.add(Messages());
-    }
-    return messages;
   }
 
   Widget _buildStatusItem(String label, Color color) {

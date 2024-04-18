@@ -1,3 +1,4 @@
+import 'package:cart_genie/features/cart/widgets/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/cart/widgets/details.dart';
@@ -19,8 +20,16 @@ class DetailedScreen extends StatefulWidget {
 
 class _DetailedScreenState extends State<DetailedScreen> {
   Mode _mode = Mode.dispatched;
-  int _messageCount = 3; // Default number of messages to display
-
+  List<Messages> messages = []; // Default number of messages to display
+  @override
+  void initState() {
+    super.initState();
+    // Populate initial messages list
+    messages = [
+      Messages(content: "Hello", date: DateTime(2024, 8, 14)),
+      Messages(content: "content", date: DateTime(2014, 8, 14)),
+    ];
+  }
   @override
   Widget build(BuildContext context) {
     Color? colour1;
@@ -93,7 +102,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                     colour3: colour3 ?? GlobalVariables.inactivestatus,
                     date: DateTime(2024, 4, 15),
                     time: TimeOfDay(hour: 10, minute: 30),
-                    number: _messageCount,
+                    messages: messages,
                   ),
                   SizedBox(height: 20),
                 ],
