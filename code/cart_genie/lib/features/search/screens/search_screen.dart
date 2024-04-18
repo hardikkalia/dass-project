@@ -55,7 +55,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     FilterSection(
                       heading: "Shipping Company",
-                      options: ['Delhivery', 'DTDC', 'BlueDart'],
+                      options: ['Delhivery', 'DTDC', 'BlueDart','Amazon'],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedShippingCompany = selectedOption;
