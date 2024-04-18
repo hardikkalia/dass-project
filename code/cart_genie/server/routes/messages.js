@@ -48,7 +48,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
 
     user.orders.push(
       ...processedMessages.map((processedMessage) => ({
-        provided_order_id: processedMessage.orderNumber,
+        productId: processedMessage.orderNumber,
         current_status: processedMessage.orderStatus,
         order_type: processedMessage.orderType, // Assuming it's a delivery order
         full_messages: [
@@ -58,10 +58,11 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
           },
         ],
         company_name: processedMessage.companyName,
+        // lastUpdate:processedMessage.date,
       }))
     );
-    user.last_update = lastUpdate;
-
+    user.lastUpdate = lastUpdate;
+    console.log(lastUpdate);
     await user.save();
 
     res.json({ message: "Orders updated successfully" });
@@ -84,7 +85,7 @@ messageRouter.post("/api/messages/submit", auth, async (req, res) => {
     // Update the user's orders and lastUpdate
     user.orders.push(
       ...processedMessages.map((processedMessage) => ({
-        provided_order_id: processedMessage.orderNumber,
+        productId: processedMessage.orderNumber,
         current_status: processedMessage.orderStatus,
         order_type: processedMessage.orderType, // Assuming it's a delivery order
         full_messages: [
@@ -96,7 +97,7 @@ messageRouter.post("/api/messages/submit", auth, async (req, res) => {
         company_name: processedMessage.companyName,
       }))
     );
-    user.last_update = lastUpdate;
+    user.lastUpdate = lastUpdate;
 
     // Save the updated user document
     await user.save();

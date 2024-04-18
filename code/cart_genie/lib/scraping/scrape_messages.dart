@@ -1,18 +1,21 @@
 import 'dart:async';
+import "dart:convert";
 import 'package:cart_genie/constants/error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sms_advanced/sms_advanced.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/providers/user_providers.dart';
 import 'package:provider/provider.dart';
 import 'package:cart_genie/constants/utils.dart';
+import "package:cart_genie/models/user.dart";
+
 
 class SmsReaderService {
   void checkPermissionsAndReadSms(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       Map<Permission, PermissionStatus> statuses = await [
         Permission.sms,
@@ -20,8 +23,8 @@ class SmsReaderService {
       ].request();
       if (await Permission.sms.request().isGranted &&
           await Permission.contacts.request().isGranted) {
-        DateTime lastUpdate = DateTime(2024, 4,
-            1); // This could be fetched from preferences or your backend
+
+        DateTime lastUpdate = userProvider.user.lastUpdate; // This could be fetched from preferences or your backend
         await _readSmsMessages(lastUpdate, context);
       } else {
         print("Necessary permissions not granted");
@@ -43,7 +46,7 @@ class SmsReaderService {
         print(msg.sender);
         print(msg.body);
         var msgDate = msg.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
-        print(msgDate);
+        // print(msgDate);
         return msgDate.isAfter(startDate) ||
             msgDate.isAtSameMomentAs(startDate);
       }).toList();

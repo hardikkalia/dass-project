@@ -8,7 +8,7 @@ function extractOrderInfo(message) {
     };
     let orderStatus = null;
 
-    const companyNamePattern = /(Amazon|Delhivery|Blue\sDart)/;
+    const companyNamePattern = /(Amazon|Delhivery|Blue\sDart|DTDC)/;
     const orderTypePattern = /(Delivery| Return)/;
 
     const orderNumberMatch = message.match(orderNumberPattern);

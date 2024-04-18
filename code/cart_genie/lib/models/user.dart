@@ -10,6 +10,7 @@ class User {
   final String? age;       
   final String? gender;    
   final String? address;   
+  final DateTime lastUpdate;
 
   User({
     required this.id,
@@ -21,6 +22,7 @@ class User {
     this.age,      
     this.gender,   
     this.address,  
+    required this.lastUpdate,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,7 +35,8 @@ class User {
       'token': token,
       'age': age,        
       'gender': gender,  
-      'address': address 
+      'address': address,
+      'lastUpdate': lastUpdate.toIso8601String(),
     };
   }
 
@@ -47,7 +50,8 @@ class User {
       token: map['token'] as String,
       age: map['age'] as String?,       
       gender: map['gender'] as String?, 
-      address: map['address'] as String?
+      address: map['address'] as String?,
+      lastUpdate: DateTime.parse(map['lastUpdate'] as String)
     );
   }
 
@@ -65,6 +69,7 @@ class User {
     String? age,
     String? gender,
     String? address,
+    DateTime? lastUpdate,
   }) {
     return User(
       id: id ?? this.id,
@@ -76,6 +81,7 @@ class User {
       age: age ?? this.age,
       gender: gender ?? this.gender,
       address: address ?? this.address,
+      lastUpdate: lastUpdate ?? this.lastUpdate,
     );
   }
 }
