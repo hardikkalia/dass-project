@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  provided_order_id: { //order id mentioned in the 
+  productId: { //order id mentioned in the 
     type: String,
     // required: true,
     index: true, 
@@ -79,7 +79,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   orders: [orderSchema], // written seperately to improve readibilty 
-  lastUpdates: {type: Date}
+  lastUpdate: {type: Date}
 });
 
 const User = mongoose.model("User", userSchema);
