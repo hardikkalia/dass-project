@@ -22,7 +22,7 @@ class _FilterSectionState extends State<FilterSection> {
   void initState() {
     super.initState();
     // Initialize selectedOption with the default choose value
-    selectedOption = widget.options.first;
+    selectedOption = '';
   }
 
   @override

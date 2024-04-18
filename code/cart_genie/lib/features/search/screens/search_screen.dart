@@ -8,6 +8,7 @@ import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 import 'package:cart_genie/features/search/widgets/filters.dart';
 import 'package:cart_genie/features/search/widgets/dates.dart';
 import 'package:cart_genie/features/search/widgets/options.dart';
+import 'package:cart_genie/features/search/services/search_api_service.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routename = '/search';
@@ -21,12 +22,22 @@ class _SearchScreenState extends State<SearchScreen> {
   bool _isFilterOpened = false;
 
   List<Options> selected = [];
-  // GlobalKey to access the ScaffoldState for opening the drawer
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
+    // Populate initial messages list
+    selected = [
+      Options(company: "BlueDart",ordertype:  "Delivery", status: "Ordered", start: DateTime(2024, 4, 14), end: DateTime(2024,4,21),),
+
+    ];
+
+  // GlobalKey to access the ScaffoldState for opening the drawer
+
+
+  // @override
+  // void initState() {
+  //   super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _openFilterScreen(context);
     });
@@ -110,10 +121,29 @@ class _SearchScreenState extends State<SearchScreen> {
                             )
                           ];
                         });
+                        print('Selected Options:');
+                        print('Company: ${selected[0].company}');
+                        print('Order Type: ${selected[0].ordertype}');
+                        print('Status: ${selected[0].status}');
+                        print('Start Date: ${selected[0].start}');
+                        print('End Date: ${selected[0].end}');
+
+                        // _searchApiService.sendSearchRequest(selected);
                         Navigator.pop(context); // Close the bottom sheet
                       },
                       text: 'APPLY',
                     ),
+                    // Text(
+                    //   selected[0].company,
+                    // ),
+                    // Text(
+                    //   selected[0].ordertype,
+                    // ),
+                    // Text(
+                    //   selected[0].status,
+                    // ),
+
+
                     SizedBox(height: 20),
                   ],
                 ),

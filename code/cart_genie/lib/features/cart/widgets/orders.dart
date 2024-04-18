@@ -72,7 +72,7 @@ class Orders extends StatelessWidget {
                 child: TextButton(
                   onPressed: onPressed,
                   child: Text(
-                    id,
+                    product,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 18.0,
