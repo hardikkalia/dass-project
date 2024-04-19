@@ -2,6 +2,7 @@ import 'package:cart_genie/common/widgets/bottom_bar.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
+import 'package:cart_genie/features/cart/screens/detailed_screen.dart';
 import 'package:cart_genie/features/home/screens/home_screen.dart';
 import 'package:cart_genie/providers/user_providers.dart';
 import 'package:cart_genie/router.dart';

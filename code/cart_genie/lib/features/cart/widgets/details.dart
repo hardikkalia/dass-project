@@ -14,6 +14,7 @@ class Details extends StatefulWidget {
   final Color colour1;
   final Color colour2;
   final Color colour3;
+  final Color colour4;
   final DateTime date;
   final TimeOfDay time;
   final List<Messages> messages;
@@ -26,6 +27,7 @@ class Details extends StatefulWidget {
     required this.colour1,
     required this.colour2,
     required this.colour3,
+    required this.colour4,
     required this.date,
     required this.time,
     required this.messages,
@@ -89,6 +91,7 @@ class _DetailsState extends State<Details> {
                 _buildStatusItem('Ordered', widget.colour1),
                 _buildStatusItem('Dispatched', widget.colour2),
                 _buildStatusItem('Out for Delivery', widget.colour3),
+                _buildStatusItem(' Delivered', widget.colour4),
               ],
             ),
             Divider(
@@ -174,7 +177,7 @@ class _DetailsState extends State<Details> {
         ),
         SizedBox(height: 8),
         Container(
-          width: 100,
+          width: 80,
           height: 40,
           decoration: BoxDecoration(
             color: color,

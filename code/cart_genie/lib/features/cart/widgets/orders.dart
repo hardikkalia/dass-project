@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
+import 'package:cart_genie/features/cart/widgets/messages.dart';
 
 // class Messages {
 //   final String content;
@@ -18,7 +19,7 @@ class Orders extends StatelessWidget {
   final String product;
   final String delivery;
   final String status;
-  // final List<Messages> messages;
+  final List<Messages> messages;
 
   const Orders({
     Key? key,
@@ -28,7 +29,7 @@ class Orders extends StatelessWidget {
     required this.product,
     required this.delivery,
     required this.status,
-    // required this.messages,
+    required this.messages,
   }) : super(key: key);
 
   @override

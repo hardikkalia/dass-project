@@ -1,3 +1,5 @@
+// import 'dart:js_util';
+
 import 'package:cart_genie/features/cart/services/cart_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/drawer.dart';
@@ -135,6 +137,7 @@ class _CartScreenState extends State<CartScreen> {
                               product: orders[i].product,
                               delivery: orders[i].delivery,
                               status: orders[i].status,
+                              messages: orders[i].messages,
                             ),
                           ),
                       ],

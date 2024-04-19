@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:cart_genie/constants/utils.dart';
+import 'package:cart_genie/features/cart/widgets/messages.dart';
 import 'package:cart_genie/features/cart/widgets/orders.dart';
 import 'package:cart_genie/providers/user_providers.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class CartService {
   Future<List<Orders>> getMessages({required BuildContext context}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
+      print("we are here");
       http.Response res = await http.get(
         Uri.parse('$uri/api/messages/retrieve'),
         headers: <String, String>{
@@ -21,24 +23,32 @@ class CartService {
           'auth-token': userProvider.user.token,
         },
       );
-      // print(res.body);
-      List<Orders> orders = (jsonDecode(res.body) as List<dynamic>)
-          .map(
-            (order) => Orders(
-                ordertype: "Delivery",
-                id: order["provided_order_id"] ?? '',
-                onPressed: () {},
-                product: '',
-                delivery: order["company_name"] ?? '',
-                status: order["current_status"] ?? ''),
-          )
-          .toList();
-      print("YO");
-      // print(orders[0].id);
-      return orders;
-      // print(orders.runtimeType);
+      List<dynamic> jsonResponse = jsonDecode(res.body);
+      print(res.body);
+      List<Orders> orders = jsonResponse.map((order) {
+        List<dynamic> messageList = order["full_messages"] ?? [];
+        List<Messages> parsedMessages = messageList.map((message) {
+          return Messages(
+            content: message["content"] ?? '',
+            date: message["date"] != null? DateTime.parse(message["date"]): DateTime.now(),
+              // print("Error"),
+              // 'date': msg.dateSent?.toIso8601String() ??
+              // DateTime.now().toIso8601String(),
+          );
+        }).toList();
+        print("eroorrrrrr");
+        return Orders(
+          ordertype: "Delivery",
+          id: order["productId"] ?? '',
+          onPressed: () {},
+          product: '',
+          delivery: order["company_name"] ?? '',
+          status: order["current_status"] ?? '',
+          messages: parsedMessages,
+        );
+      }).toList();
 
-      // List<Orders> orders=res.body.map()
+      return orders;
     } catch (e) {
       print(e.toString());
       showSnackBar(context, e.toString());
