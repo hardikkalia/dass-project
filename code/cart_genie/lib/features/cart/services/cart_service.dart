@@ -15,7 +15,6 @@ class CartService {
   Future<List<Orders>> getMessages({required BuildContext context}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      print("we are here");
       http.Response res = await http.get(
         Uri.parse('$uri/api/messages/retrieve'),
         headers: <String, String>{
@@ -23,7 +22,6 @@ class CartService {
           'auth-token': userProvider.user.token,
         },
       );
-      // print(res.body);
       List<Orders> orders = (jsonDecode(res.body) as List<dynamic>)
           .map(
             (order) => Orders(
@@ -49,9 +47,6 @@ class CartService {
       print(orders[0].productid);
       return orders;
       // print(orders.runtimeType);
-
-
-      return orders;
     } catch (e) {
       print(e.toString());
       showSnackBar(context, e.toString());

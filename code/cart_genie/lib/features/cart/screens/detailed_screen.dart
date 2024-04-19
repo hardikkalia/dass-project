@@ -22,24 +22,9 @@ class DetailedScreen extends StatefulWidget {
 
 class _DetailedScreenState extends State<DetailedScreen> {
   Mode _mode = Mode.dispatched;
-  List<Orders> orders = [];
-  // List<Messages> messages = []; // Default number of messages to display
   @override
   void initState() {
     super.initState();
-    // Populate initial messages list
-    // messages = [
-    //   Messages(content: "Hello", date: DateTime(2024, 8, 14)),
-    //   Messages(content: "content", date: DateTime(2014, 8, 14)),
-    // ];
-    // orders = [
-    //   Orders(productid: "ABC123", ordertype: "Delivery",onPressed: (){},company: "Delhivery",status: "Delivered",
-    //   messages: [
-    //     Messages(content: "Hello", date: DateTime(2024, 8, 14)),
-    //     Messages(content: "content", date: DateTime(2014, 8, 14)),
-    //   ],
-    //   )
-    // ];
 
   }
 
@@ -117,7 +102,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                 children: [
                   Details(
                     product: widget.order.productid,
-                    delivery: "Delivery",
+                    delivery: widget.order.ordertype,
                     status: widget.order.status,
                     colour1: colour1 ?? GlobalVariables.inactivestatus,
                     colour2: colour2 ?? GlobalVariables.inactivestatus,

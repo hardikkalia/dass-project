@@ -13,29 +13,49 @@ import "package:shared_preferences/shared_preferences.dart";
 import 'package:cart_genie/features/search/screens/search_screen.dart';
 import 'package:cart_genie/features/search/widgets/options.dart';
 
-
 class SearchAPIService {
   void filter({
     required BuildContext context,
-    required List<Options> searchCriteria,
+    required Options searchCriteria,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      print("filter functoin was called");
+      print("filter function was called");
+
+      // List<Map<String, dynamic>> searchCriteriaMapList =
+      //     searchCriteria.map((option) {
+      //   return {
+      //     'company': option.company,
+      //     'ordertype': option.ordertype,
+      //     'status': option.status,
+      //     'start': option.start
+      //         ?.toIso8601String(), // Convert DateTime to ISO 8601 string
+      //     'end': option.end
+      //         ?.toIso8601String(), // Convert DateTime to ISO 8601 string
+      //   };
+      // }).toList();
+
       http.Response res = await http.post(
         Uri.parse('$uri/api/filter'),
-        body: jsonEncode({'id': userProvider.user.id}),
+        body: jsonEncode({
+          'queryParams': {
+            'company': searchCriteria.company,
+            'ordertype': searchCriteria.ordertype,
+            'status': searchCriteria.status,
+            'start': searchCriteria.start?.toIso8601String(),
+            'end': searchCriteria.end?.toIso8601String(),
+          }
+        }),
         headers: <String, String>{
           'Content-type': 'application/json; charset=UTF-8',
           'auth-token': userProvider.user.token,
         },
       );
-
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
         onSuccess: () {
-          
           // User user =
           //     userProvider.user.copyWith(name: jsonDecode(res.body)['name']);
           // userProvider.setUserFromModel(user);
@@ -43,6 +63,7 @@ class SearchAPIService {
         },
       );
     } catch (e) {
+      print(e.toString());
       showSnackBar(context, e.toString());
     }
   }

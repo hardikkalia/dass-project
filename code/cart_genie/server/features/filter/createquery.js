@@ -1,6 +1,7 @@
 function createQuery(queryParams) {
     const query = {};
-  
+    console.log(queryParams);
+
     if (queryParams.date) {
       query["orders.full_messages.date"] = queryParams.date;
     }
@@ -15,3 +16,5 @@ function createQuery(queryParams) {
   
     return query;
   }
+
+  module.exports=createQuery;

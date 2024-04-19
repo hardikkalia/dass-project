@@ -20,7 +20,7 @@ class Details extends StatefulWidget {
   final List<Messages> messages;
 
   const Details({
-    Key? key,
+    super.key,
     required this.product,
     required this.delivery,
     required this.status,
@@ -31,7 +31,7 @@ class Details extends StatefulWidget {
     required this.date,
     required this.time,
     required this.messages,
-  }) : super(key: key);
+  });
 
   @override
   _DetailsState createState() => _DetailsState();
@@ -52,7 +52,7 @@ class _DetailsState extends State<Details> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -61,7 +61,7 @@ class _DetailsState extends State<Details> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Product ID',
               style: TextStyle(
                 fontFamily: 'Cabin',
@@ -70,17 +70,17 @@ class _DetailsState extends State<Details> {
                 color: GlobalVariables.textgrey,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               widget.product,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 18.0,
                 fontWeight: FontWeight.w900,
                 color: Colors.black,
               ),
             ),
-            Divider(
+            const Divider(
               color: GlobalVariables.textgrey,
               thickness: 1,
               height: 30,
@@ -94,19 +94,19 @@ class _DetailsState extends State<Details> {
                 _buildStatusItem(' Delivered', widget.colour4),
               ],
             ),
-            Divider(
+            const Divider(
               color: GlobalVariables.textgrey,
               thickness: 1,
               height: 30,
             ),
             Row(
               children: [
-                Icon(Icons.location_on, color: GlobalVariables.locationColor),
-                SizedBox(width: 10),
+                const Icon(Icons.location_on, color: GlobalVariables.locationColor),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Status :',
                       style: TextStyle(
                         fontFamily: 'Cabin',
@@ -117,7 +117,7 @@ class _DetailsState extends State<Details> {
                     ),
                     Text(
                       widget.status,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ class _DetailsState extends State<Details> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextButton(
               onPressed: () {
                 setState(() {
@@ -139,7 +139,7 @@ class _DetailsState extends State<Details> {
                 _mode == Mode.hide
                     ? "View all Message Updates"
                     : "Hide Message Updates",
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 18.0,
                   fontWeight: FontWeight.w900,
@@ -170,14 +170,14 @@ class _DetailsState extends State<Details> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'Cabin',
             fontSize: 12.0,
             fontWeight: FontWeight.normal,
             color: GlobalVariables.textgrey,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           width: 70,
           height: 40,

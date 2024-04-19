@@ -34,17 +34,15 @@ class _SearchScreenState extends State<SearchScreen> {
     //
     // ];
 
-  // GlobalKey to access the ScaffoldState for opening the drawer
+    // GlobalKey to access the ScaffoldState for opening the drawer
 
-
-  // @override
-  // void initState() {
-  //   super.initState();
+    // @override
+    // void initState() {
+    //   super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _openFilterScreen(context);
     });
   }
-
 
   void _openFilterScreen(BuildContext context) {
     // Define variables to store selected options
@@ -60,7 +58,8 @@ class _SearchScreenState extends State<SearchScreen> {
           builder: (BuildContext context, StateSetter setState) {
             return SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 color: Colors.white, // Background color of the bottom sheet
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,14 +67,14 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     FilterSection(
                       heading: "Shipping Company",
-                      options: ['Delhivery', 'DTDC', 'BlueDart','Amazon'],
+                      options: ['Delhivery', 'DTDC', 'BlueDart', 'Amazon'],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedShippingCompany = selectedOption;
                         });
                       },
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FilterSection(
                       heading: "Order Type",
                       options: ['Delivery', 'Return'],
@@ -85,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FilterSection(
                       heading: "Order Status",
                       options: ['Ordered', 'Dispatched', 'Out for Delivery'],
@@ -95,7 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     DateRange(
                         heading: 'Date Range',
                         onRangeSelected: (DateTimeRange? selectedRange) {
@@ -103,29 +102,26 @@ class _SearchScreenState extends State<SearchScreen> {
                             setState(() {
                               selectedStart = selectedRange.start;
                               selectedEnd = selectedRange.end;
-                            }
-                            );
-                          }
-                            else {}
-                        }
-                    ),
-                    SizedBox(height: 20),
+                            });
+                          } else {}
+                        }),
+                    const SizedBox(height: 20),
                     CustomButton(
                       onTap: () {
-                        setState((){
-                          selected  = [
+                        setState(() {
+                          selected = [
                             Options(
-                              company:selectedShippingCompany,
-                              ordertype:selectedOrderType,
-                              status:selectedOrderStatus,
-                              start:selectedStart,
-                              end:selectedEnd,
+                              company: selectedShippingCompany,
+                              ordertype: selectedOrderType,
+                              status: selectedOrderStatus,
+                              start: selectedStart,
+                              end: selectedEnd,
                             )
                           ];
                         });
-              
 
-                        searchAPIService.filter(context:context, searchCriteria:selected);
+                        searchAPIService.filter(
+                            context: context, searchCriteria: selected[0]);
                         Navigator.pop(context); // Close the bottom sheet
                       },
                       text: 'APPLY',
@@ -140,8 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     //   selected[0].status,
                     // ),
 
-
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -152,8 +147,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,13 +155,13 @@ class _SearchScreenState extends State<SearchScreen> {
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: GlobalVariables.backgroundColor,
             ),
           ),
-          title: Center(
+          title: const Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 40, right: 20),
+              padding: EdgeInsets.only(top: 40, right: 20),
               child: Text(
                 'Search',
                 style: TextStyle(
@@ -194,7 +187,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 30, right: 10),
               child: IconButton(
-                icon: Icon(Icons.filter_list),
+                icon: const Icon(Icons.filter_list),
                 onPressed: () {
                   _openFilterScreen(context);
                 },
