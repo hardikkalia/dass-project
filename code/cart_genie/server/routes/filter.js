@@ -1,13 +1,16 @@
 const express = require("express");
-const router = express.Router();
+const filterRouter = express.Router();
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const auth = require("../middleware/auth");
+// const filterRouter = require("./filter");
 
 
 
-router.get("/api/filter", auth, async (req, res) => {
+filterRouter.post("/api/filter", auth, async (req, res) => {
   try {
-    const queryParams = req.query;
-    const userId = req.user;
+    console.log("hi from filter js")
+    const userId = req.body;
     const query = createQuery(queryParams);
     const user = await User.findById(userId).populate({
       path: "orders",
@@ -24,4 +27,4 @@ router.get("/api/filter", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = filterRouter;

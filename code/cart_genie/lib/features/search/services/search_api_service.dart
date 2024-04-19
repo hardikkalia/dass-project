@@ -1,34 +1,49 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+// ignore_for_file: use_build_context_synchronously
+import "dart:convert";
+import "package:cart_genie/constants/error_handling.dart";
+import "package:cart_genie/constants/global_variables.dart";
+import "package:cart_genie/features/auth/screens/signup_screen.dart";
+import "package:cart_genie/models/user.dart";
+import "package:cart_genie/providers/user_providers.dart";
+import "package:flutter/material.dart";
+import "package:http/http.dart" as http;
+import "package:cart_genie/constants/utils.dart";
+import "package:provider/provider.dart";
+import "package:shared_preferences/shared_preferences.dart";
 import 'package:cart_genie/features/search/screens/search_screen.dart';
 import 'package:cart_genie/features/search/widgets/options.dart';
-class SearchApiService {
-  static const String baseUrl = 'https://your-api-url.com/api';
 
-  Future<void> sendSearchRequest(List<Options> selectedOptions) async {
-    final url = Uri.parse('$baseUrl/search');
 
+class SearchAPIService {
+  void filter({
+    required BuildContext context,
+    required List<Options> searchCriteria,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      final response = await http.post(
-        url,
-        // body: jsonEncode(selectedOptions.map((option) => option.toJson()).toList()),
+      print("filter functoin was called");
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/filter'),
+        body: jsonEncode({'id': userProvider.user.id}),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-type': 'application/json; charset=UTF-8',
+          'auth-token': userProvider.user.token,
         },
       );
 
-      // Check the response status
-      if (response.statusCode == 200) {
-        // Request successful
-        print('Search request successful!');
-        print('Response: ${response.body}');
-      } else {
-        // Request failed
-        print('Failed to send search request. Status code: ${response.statusCode}');
-      }
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          
+          // User user =
+          //     userProvider.user.copyWith(name: jsonDecode(res.body)['name']);
+          // userProvider.setUserFromModel(user);
+          showSnackBar(context, "Query sent successfully");
+        },
+      );
     } catch (e) {
-      // Handle network or server errors
-      print('Error sending search request: $e');
+      showSnackBar(context, e.toString());
     }
   }
 }

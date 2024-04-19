@@ -23,6 +23,7 @@ class CartService {
           'auth-token': userProvider.user.token,
         },
       );
+
       List<dynamic> jsonResponse = jsonDecode(res.body);
       print(res.body);
       List<Orders> orders = jsonResponse.map((order) {
@@ -47,6 +48,24 @@ class CartService {
           messages: parsedMessages,
         );
       }).toList();
+      // print(res.body);
+      // List<Orders> orders = (jsonDecode(res.body) as List<dynamic>)
+      //     .map(
+      //       (order) => Orders(
+      //           ordertype: "Delivery",
+      //           id: order["productId"] ?? '',
+      //           onPressed: () {},
+      //           product: '',
+      //           delivery: order["company_name"] ?? '',
+      //           status: order["current_status"] ?? ''),
+      //
+      //     )
+      //     .toList();
+      // print("YO");
+      // print(orders[0].id);
+      return orders;
+      // print(orders.runtimeType);
+
 
       return orders;
     } catch (e) {
