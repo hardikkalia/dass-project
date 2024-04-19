@@ -74,6 +74,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
         user.orders.push({
           productId: processedMessage.orderNumber,
           current_status: processedMessage.orderStatus,
+          date: processedMessage.date,
           order_type: processedMessage.orderType, // Assuming it's a delivery order
           full_messages: [
             {

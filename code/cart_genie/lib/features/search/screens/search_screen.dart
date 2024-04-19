@@ -95,7 +95,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       options: const [
                         'Ordered',
                         'Dispatched',
-                        'Out for Delivery'
+                        'Out for Delivery',
+                        'Delivered',
                       ],
                       onSelect: (selectedOption) {
                         setState(() {
