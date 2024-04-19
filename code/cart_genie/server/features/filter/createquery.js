@@ -1,28 +1,32 @@
-function createQuery(queryParams) {
-    const query = {};
-    console.log(queryParams);
-
-    if (queryParams.startdate) {
-      query["orders.full_messages.startdate"] = queryParams.startDate;
-    }
-
-    if (queryParams.enddate) {
-      query["orders.full_messages.enddate"] = queryParams.endDate;
-    }
-
-    if (queryParams.company) {
-      query["orders.company_name"] = queryParams.company;
-    }
-  
-    if (queryParams.orderStatus) {
-      query["orders.current_status"] = queryParams.orderStatus;
-    }
-  
-    if (queryParams.orderType) {
-      query["orders.type"] = queryParams.orderType;
-    }
-
-    return query;
+function generateFilterString(startDate, endDate, company, orderStatus, orderType) {
+  const filters = [];
+ 
+  // Add filters for startDate and endDate if provided
+  if (startDate) {
+    filters.push(`date >= ${startDate}`);
   }
-
-  module.exports=createQuery;
+  if (endDate) {
+    filters.push(`date <= ${endDate}`);
+  }
+ 
+  // Add filters for company, orderStatus, and orderType if provided
+  if (company) {
+    filters.push(`company_name === '${company}'`);
+  }
+  if (orderStatus) {
+    filters.push(`current_status === '${orderStatus}'`);
+  }
+  if (orderType) {
+    filters.push(`order_type === '${orderType}'`);
+  }
+ 
+  // Join all filters with " && " to create the final filter string
+  const filterString = filters.join(" && ");
+  
+  return filterString;
+}
+ 
+ 
+const filterString = generateFilterString(startDate, endDate, company, orderStatus, orderType);
+ 
+const amazonOrders = user.orders.filter(order => eval(filterString)); // Using eval to evaluate the dynamic filter string

@@ -13,18 +13,30 @@ filterRouter.post("/api/filter", auth, async (req, res) => {
     console.log(req.body);
     const query = createQuery(req.body["queryParams"]);
     console.log(query);
-    const user = await User.findById(userId)
-      .populate({
-        path: "orders",
-        match: query,
-      })
-      .exec();
-    console.log(user);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    User.findById(userId)
+      .then((user) => {
+        if (!user) {
+          // Handle case where user doesn't exist
+          console.log("User Not found");
+          return [];
+        }
 
-    res.json(user.orders);
+        // Filter orders where company_name is Amazon
+        const amazonOrders = user.orders.filter(
+          (order) => order.company_name === "Amazon"
+        );
+
+        // Do something with amazonOrders, like return or log them
+        console.log(amazonOrders);
+        res.json(amazonOrders);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error("Error:", error);
+        // Return empty array or handle error as per your application logic
+        return [];
+      });
+      
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
