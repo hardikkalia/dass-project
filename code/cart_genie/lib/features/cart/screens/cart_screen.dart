@@ -11,8 +11,8 @@ import 'package:cart_genie/common/widgets/background.dart';
 
 class CartScreen extends StatefulWidget {
   static const String routename = '/cart';
-  final bool filter;
-  const CartScreen({super.key, required this.filter});
+
+  const CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
