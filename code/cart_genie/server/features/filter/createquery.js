@@ -27,6 +27,4 @@ function generateFilterString(startDate, endDate, company, orderStatus, orderTyp
 }
  
  
-const filterString = generateFilterString(startDate, endDate, company, orderStatus, orderType);
- 
-const amazonOrders = user.orders.filter(order => eval(filterString)); // Using eval to evaluate the dynamic filter string
+ module.exports = generateFilterString;

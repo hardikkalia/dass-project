@@ -20,10 +20,10 @@ filterRouter.post("/api/filter", auth, async (req, res) => {
           console.log("User Not found");
           return [];
         }
-
-        // Filter orders where company_name is Amazon
+        
+        const filterString = generateFilterString(req.body["start"], req.body["end"], req.body["company"], req.body["status"], req.body["ordertype"]);
         const amazonOrders = user.orders.filter(
-          (order) => order.company_name === "Amazon"
+          (order) => eval(filterString)
         );
 
         // Do something with amazonOrders, like return or log them
@@ -36,7 +36,7 @@ filterRouter.post("/api/filter", auth, async (req, res) => {
         // Return empty array or handle error as per your application logic
         return [];
       });
-      
+
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
