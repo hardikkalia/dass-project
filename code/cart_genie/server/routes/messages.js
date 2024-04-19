@@ -9,10 +9,6 @@ const User = require("../models/user");
 
 messageRouter.post("/api/messages", auth, async (req, res) => {
   try {
-    // console.log(hi1);
-    // const token = req.header("auth-token");
-    // const isVerified = jwt.verify(token, "passwordKey");
-    // req.user = isVerified.id;
     const lastUpdate = req.body["lastUpdate"];
     const messages = JSON.parse(req.body["messages"]);
     // console.log(messages);
@@ -35,10 +31,6 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
       }
     });
     console.log(processedMessages);
-    // Add the processed messages, last update, and userID to the request body
-    // req.body = { processedMessages, lastUpdate, userId: req.user };
-    // Forward the request to the /api/messages/submit route
-    // messageRouter.handle(req, res, "/api/messages/submit");
 
     console.log(req.user);
     const user = await User.findById(req.user);
@@ -46,21 +38,52 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    user.orders.push(
-      ...processedMessages.map((processedMessage) => ({
-        productId: processedMessage.orderNumber,
-        current_status: processedMessage.orderStatus,
-        order_type: processedMessage.orderType, // Assuming it's a delivery order
-        full_messages: [
-          {
-            content: processedMessage.content,
-            date: processedMessage.date,
-          },
-        ],
-        company_name: processedMessage.companyName,
-        // lastUpdate:processedMessage.date,
-      }))
-    );
+    // user.orders.push(
+    //   ...processedMessages.map((processedMessage) => ({
+    //     productId: processedMessage.orderNumber,
+    //     current_status: processedMessage.orderStatus,
+    //     order_type: processedMessage.orderType, // Assuming it's a delivery order
+    //     full_messages: [
+    //       {
+    //         content: processedMessage.content,
+    //         date: processedMessage.date,
+    //       },
+    //     ],
+    //     company_name: processedMessage.companyName,
+    //     // lastUpdate:processedMessage.date,
+    //   }))
+    // );
+    processedMessages.forEach((processedMessage) => {
+      // Check if an order with the same productId and company_name already exists
+      const existingOrderIndex = user.orders.findIndex(
+        (order) =>
+          order.productId === processedMessage.orderNumber &&
+          order.company_name === processedMessage.companyName
+      );
+
+      if (existingOrderIndex !== -1) {
+        // If the order exists, push the message to its full_messages array
+        user.orders[existingOrderIndex].full_messages.push({
+          content: processedMessage.content,
+          date: processedMessage.date,
+        });
+      } else {
+        // If the order doesn't exist, create a new order object and push it to user.orders
+        user.orders.push({
+          productId: processedMessage.orderNumber,
+          current_status: processedMessage.orderStatus,
+          order_type: processedMessage.orderType, // Assuming it's a delivery order
+          full_messages: [
+            {
+              content: processedMessage.content,
+              date: processedMessage.date,
+            },
+          ],
+          company_name: processedMessage.companyName,
+        });
+      }
+    });
+    user.lastUpdate = lastUpdate;
     user.lastUpdate = lastUpdate;
     console.log(lastUpdate);
     await user.save();
@@ -83,20 +106,50 @@ messageRouter.post("/api/messages/submit", auth, async (req, res) => {
     }
 
     // Update the user's orders and lastUpdate
-    user.orders.push(
-      ...processedMessages.map((processedMessage) => ({
-        productId: processedMessage.orderNumber,
-        current_status: processedMessage.orderStatus,
-        order_type: processedMessage.orderType, // Assuming it's a delivery order
-        full_messages: [
-          {
-            content: processedMessage.content,
-            date: processedMessage.date,
-          },
-        ],
-        company_name: processedMessage.companyName,
-      }))
-    );
+    // user.orders.push(
+    //   ...processedMessages.map((processedMessage) => ({
+    //     productId: processedMessage.orderNumber,
+    //     current_status: processedMessage.orderStatus,
+    //     order_type: processedMessage.orderType, // Assuming it's a delivery order
+    //     full_messages: [
+    //       {
+    //         content: processedMessage.content,
+    //         date: processedMessage.date,
+    //       },
+    //     ],
+    //     company_name: processedMessage.companyName,
+    //   }))
+    // );
+    processedMessages.forEach((processedMessage) => {
+      // Check if an order with the same productId and company_name already exists
+      const existingOrderIndex = user.orders.findIndex(
+        (order) =>
+          order.productId === processedMessage.orderNumber &&
+          order.company_name === processedMessage.companyName
+      );
+
+      if (existingOrderIndex !== -1) {
+        // If the order exists, push the message to its full_messages array
+        user.orders[existingOrderIndex].full_messages.push({
+          content: processedMessage.content,
+          date: processedMessage.date,
+        });
+      } else {
+        // If the order doesn't exist, create a new order object and push it to user.orders
+        user.orders.push({
+          productId: processedMessage.orderNumber,
+          current_status: processedMessage.orderStatus,
+          order_type: processedMessage.orderType, // Assuming it's a delivery order
+          full_messages: [
+            {
+              content: processedMessage.content,
+              date: processedMessage.date,
+            },
+          ],
+          company_name: processedMessage.companyName,
+        });
+      }
+    });
     user.lastUpdate = lastUpdate;
 
     // Save the updated user document
@@ -118,7 +171,6 @@ messageRouter.get("/api/messages/retrieve", auth, async (req, res) => {
 
     const orders = user.orders;
     console.log(orders);
-    // console.log(typeof orders[0].full_messages[0].date);
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });
