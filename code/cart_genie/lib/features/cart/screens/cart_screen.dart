@@ -11,7 +11,8 @@ import 'package:cart_genie/common/widgets/background.dart';
 
 class CartScreen extends StatefulWidget {
   static const String routename = '/cart';
-  const CartScreen({Key? key}) : super(key: key);
+  final bool filter;
+  const CartScreen({super.key, required this.filter});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -129,7 +130,8 @@ class _CartScreenState extends State<CartScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => DetailedScreen(order: orders[i]),
+                                      builder: (context) =>
+                                          DetailedScreen(order: orders[i]),
                                     ),
                                   );
                                 }

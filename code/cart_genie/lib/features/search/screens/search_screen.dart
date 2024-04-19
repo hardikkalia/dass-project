@@ -67,7 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     FilterSection(
                       heading: "Shipping Company",
-                      options: ['Delhivery', 'DTDC', 'BlueDart', 'Amazon'],
+                      options: const ['Delhivery', 'DTDC', 'Blue Dart', 'Amazon'],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedShippingCompany = selectedOption;
@@ -77,7 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     const SizedBox(height: 20),
                     FilterSection(
                       heading: "Order Type",
-                      options: ['Delivery', 'Return'],
+                      options: const ['Delivery', 'Return'],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedOrderType = selectedOption;
@@ -87,7 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     const SizedBox(height: 20),
                     FilterSection(
                       heading: "Order Status",
-                      options: ['Ordered', 'Dispatched', 'Out for Delivery'],
+                      options: const ['Ordered', 'Dispatched', 'Out for Delivery'],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedOrderStatus = selectedOption;

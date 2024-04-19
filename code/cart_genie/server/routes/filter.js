@@ -4,15 +4,17 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 // const filterRouter = require("./filter");
-const createQuery = require("../features/filter/createquery");
+const generateFilterString = require("../features/filter/createquery");
 
 filterRouter.post("/api/filter", auth, async (req, res) => {
   try {
     console.log("hi from filter js");
     const userId = req.user;
     console.log(req.body);
-    const query = createQuery(req.body["queryParams"]);
-    console.log(query);
+    const queryParams=req.body["queryParams"];
+    console.log(queryParams);
+    // const query = createQuery(req.body["queryParams"]);
+    // console.log(query);
     User.findById(userId)
       .then((user) => {
         if (!user) {
@@ -21,7 +23,8 @@ filterRouter.post("/api/filter", auth, async (req, res) => {
           return [];
         }
         
-        const filterString = generateFilterString(req.body["start"], req.body["end"], req.body["company"], req.body["status"], req.body["ordertype"]);
+        const filterString = generateFilterString(queryParams["start"], queryParams["end"], queryParams["company"], queryParams["status"], queryParams["ordertype"]);
+        console.log(filterString)
         const amazonOrders = user.orders.filter(
           (order) => eval(filterString)
         );
