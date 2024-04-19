@@ -21,7 +21,7 @@ class _FilterSectionState extends State<FilterSection> {
   @override
   void initState() {
     super.initState();
-    // Initialize selectedOption with the default choose value
+    // Initialize selectedOption with an empty value
     selectedOption = '';
   }
 
@@ -50,7 +50,12 @@ class _FilterSectionState extends State<FilterSection> {
               isSelected: selectedOption == option,
               onTap: () {
                 setState(() {
-                  selectedOption = option;
+                  if (selectedOption == option) {
+                    // If the same option is tapped again, deselect it
+                    selectedOption = '';
+                  } else {
+                    selectedOption = option;
+                  }
                   // Notify parent widget about the selected option
                   widget.onSelect(selectedOption);
                 });
@@ -62,6 +67,7 @@ class _FilterSectionState extends State<FilterSection> {
     );
   }
 }
+
 
 class FilterButton extends StatelessWidget {
   final String text;

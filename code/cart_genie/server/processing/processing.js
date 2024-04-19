@@ -1,11 +1,11 @@
 function extractOrderInfo(message) {
     const orderNumberPattern = /\b[0-9]+[0-9]+[0-9]+\b/;
     const orderStatusWords = {
-        dispatched: ['dispatched', 'dispatch','shipped'],
-        outForDelivery: ['out for delivery', 'out for deliveries'],
-        delivered: ['delivered', 'delivery completed'],
-        failed: ['failed', 'delivery failed']
-//        ordered: ['successfully placed','ordered','packed']
+        Dispatched: ['dispatched', 'dispatch','shipped'],
+        OutForDelivery: ['out for delivery', 'out for deliveries'],
+        Delivered: ['delivered', 'delivery completed'],
+        Failed: ['failed', 'delivery failed'],
+        Ordered: ['successfully placed','ordered','packed']
     };
     let orderStatus = null;
 

@@ -8,7 +8,8 @@ function createQuery(queryParams) {
 
     if (queryParams.enddate) {
       query["orders.full_messages.enddate"] = queryParams.endDate;
-  
+    }
+
     if (queryParams.company) {
       query["orders.company_name"] = queryParams.company;
     }

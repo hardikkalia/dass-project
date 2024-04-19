@@ -1,8 +1,7 @@
-import 'package:cart_genie/features/cart/widgets/messages.dart';
-import 'package:cart_genie/features/cart/widgets/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/cart/widgets/details.dart';
+import 'package:cart_genie/features/cart/widgets/orders.dart'; // Assuming Orders is a model class
 
 enum Mode {
   ordered,
@@ -12,50 +11,72 @@ enum Mode {
 }
 
 class DetailedScreen extends StatefulWidget {
-  static const String routename = '/detailed';
-  final  Orders order;
-  const DetailedScreen({super.key, required this.order});
+  static const String routeName = '/detailed';
+  final Orders order;
+
+  const DetailedScreen({Key? key, required this.order}) : super(key: key);
 
   @override
   State<DetailedScreen> createState() => _DetailedScreenState();
 }
 
 class _DetailedScreenState extends State<DetailedScreen> {
-  Mode _mode = Mode.dispatched;
+
+  // Mode _mode = Mode.dispatched;
+  late Mode _mode;
   @override
   void initState() {
     super.initState();
+    _setMode();
+  }
 
+
+
+  void _setMode() {
+    switch (widget.order.status) {
+      case 'dispatched':
+        _mode = Mode.dispatched;
+        break;
+      case 'outForDelivery':
+        _mode = Mode.outfordelivery;
+        break;
+      case 'delivered':
+        _mode = Mode.delivered;
+        break;
+      case 'ordered':
+      default:
+        _mode = Mode.ordered;
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Color? colour1;
-    Color? colour2;
-    Color? colour3;
-    Color? colour4;
+    Color colour1 = GlobalVariables.inactivestatus;
+    Color colour2 = GlobalVariables.inactivestatus;
+    Color colour3 = GlobalVariables.inactivestatus;
+    Color colour4 = GlobalVariables.inactivestatus;
 
     // Set colors based on the current mode
-    if (_mode == Mode.ordered) {
-      colour1 = GlobalVariables.locationColor;
-      colour2 = GlobalVariables.inactivestatus;
-      colour3 = GlobalVariables.inactivestatus;
-      colour4 = GlobalVariables.inactivestatus;
-    } else if (_mode == Mode.dispatched) {
-      colour1 = GlobalVariables.locationColor;
-      colour2 = GlobalVariables.locationColor;
-      colour3 = GlobalVariables.inactivestatus;
-      colour4 = GlobalVariables.inactivestatus;
-    } else if (_mode == Mode.outfordelivery) {
-      colour1 = GlobalVariables.locationColor;
-      colour2 = GlobalVariables.locationColor;
-      colour3 = GlobalVariables.locationColor;
-      colour4 = GlobalVariables.inactivestatus;
-    } else if (_mode == Mode.delivered) {
-      colour1 = GlobalVariables.locationColor;
-      colour2 = GlobalVariables.locationColor;
-      colour3 = GlobalVariables.locationColor;
-      colour4 = GlobalVariables.locationColor;
+    switch (_mode) {
+      case Mode.ordered:
+        colour1 = GlobalVariables.locationColor;
+        break;
+      case Mode.dispatched:
+        colour1 = GlobalVariables.locationColor;
+        colour2 = GlobalVariables.locationColor;
+        break;
+      case Mode.outfordelivery:
+        colour1 = GlobalVariables.locationColor;
+        colour2 = GlobalVariables.locationColor;
+        colour3 = GlobalVariables.locationColor;
+        break;
+      case Mode.delivered:
+        colour1 = GlobalVariables.locationColor;
+        colour2 = GlobalVariables.locationColor;
+        colour3 = GlobalVariables.locationColor;
+        colour4 = GlobalVariables.locationColor;
+        break;
     }
 
     return Scaffold(
@@ -104,18 +125,20 @@ class _DetailedScreenState extends State<DetailedScreen> {
                     product: widget.order.productid,
                     delivery: widget.order.ordertype,
                     status: widget.order.status,
-                    colour1: colour1 ?? GlobalVariables.inactivestatus,
-                    colour2: colour2 ?? GlobalVariables.inactivestatus,
-                    colour3: colour3 ?? GlobalVariables.inactivestatus,
-                    colour4: colour4 ?? GlobalVariables.inactivestatus,
+                    colour1: colour1,
+                    colour2: colour2,
+                    colour3: colour3,
+                    colour4: colour4,
                     date: DateTime(2024, 4, 15),
                     time: const TimeOfDay(hour: 10, minute: 30),
-                    messages:widget.order.messages,
+                    messages: widget.order.messages,
                   ),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
+
+
           ),
         ],
       ),
