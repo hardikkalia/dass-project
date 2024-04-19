@@ -15,7 +15,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
     const processedMessages = [];
     messages.forEach((msg) => {
       const { content, date, sender } = msg;
-      const { orderNumber, orderStatus, companyName } =
+      const { orderNumber, orderStatus, companyName, orderType } =
         extractOrderInfo(content);
       if (
         !(orderNumber == null && orderStatus == null && companyName == null)
@@ -23,6 +23,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
         processedMessages.push({
           orderNumber,
           orderStatus,
+          orderType,
           companyName,
           date,
           sender,
@@ -67,6 +68,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
           content: processedMessage.content,
           date: processedMessage.date,
         });
+        user.orders[existingOrderIndex].current_status = processedMessage.orderStatus;
       } else {
         // If the order doesn't exist, create a new order object and push it to user.orders
         user.orders.push({
@@ -91,72 +93,6 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
     res.json({ message: "Orders updated successfully" });
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-messageRouter.post("/api/messages/submit", auth, async (req, res) => {
-  try {
-    const { processedMessages, lastUpdate, userId } = req.body;
-    console.log(processedMessages);
-    // Find the user document
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Update the user's orders and lastUpdate
-    // user.orders.push(
-    //   ...processedMessages.map((processedMessage) => ({
-    //     productId: processedMessage.orderNumber,
-    //     current_status: processedMessage.orderStatus,
-    //     order_type: processedMessage.orderType, // Assuming it's a delivery order
-    //     full_messages: [
-    //       {
-    //         content: processedMessage.content,
-    //         date: processedMessage.date,
-    //       },
-    //     ],
-    //     company_name: processedMessage.companyName,
-    //   }))
-    // );
-    processedMessages.forEach((processedMessage) => {
-      // Check if an order with the same productId and company_name already exists
-      const existingOrderIndex = user.orders.findIndex(
-        (order) =>
-          order.productId === processedMessage.orderNumber &&
-          order.company_name === processedMessage.companyName
-      );
-
-      if (existingOrderIndex !== -1) {
-        // If the order exists, push the message to its full_messages array
-        user.orders[existingOrderIndex].full_messages.push({
-          content: processedMessage.content,
-          date: processedMessage.date,
-        });
-      } else {
-        // If the order doesn't exist, create a new order object and push it to user.orders
-        user.orders.push({
-          productId: processedMessage.orderNumber,
-          current_status: processedMessage.orderStatus,
-          order_type: processedMessage.orderType, // Assuming it's a delivery order
-          full_messages: [
-            {
-              content: processedMessage.content,
-              date: processedMessage.date,
-            },
-          ],
-          company_name: processedMessage.companyName,
-        });
-      }
-    });
-    user.lastUpdate = lastUpdate;
-
-    // Save the updated user document
-    await user.save();
-
-    res.json({ message: "Orders updated successfully" });
-  } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });

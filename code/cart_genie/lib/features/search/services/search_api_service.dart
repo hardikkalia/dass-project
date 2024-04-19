@@ -3,6 +3,8 @@ import "dart:convert";
 import "package:cart_genie/constants/error_handling.dart";
 import "package:cart_genie/constants/global_variables.dart";
 import "package:cart_genie/features/auth/screens/signup_screen.dart";
+import "package:cart_genie/features/cart/widgets/messages.dart";
+import "package:cart_genie/features/cart/widgets/orders.dart";
 import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
 import "package:flutter/material.dart";
@@ -14,7 +16,7 @@ import 'package:cart_genie/features/search/screens/search_screen.dart';
 import 'package:cart_genie/features/search/widgets/options.dart';
 
 class SearchAPIService {
-  void filter({
+  Future<List<Orders>> filter({
     required BuildContext context,
     required Options searchCriteria,
   }) async {
@@ -51,20 +53,36 @@ class SearchAPIService {
           'auth-token': userProvider.user.token,
         },
       );
+      List<Orders> orders = (jsonDecode(res.body) as List<dynamic>)
+          .map(
+            (order) => Orders(
+              ordertype: "Delivery",
+              productid: order["productId"] ?? '',
+              onPressed: () {},
+              id: order["_id"] ?? '',
+              company: order["company_name"] ?? '',
+              status: order["current_status"] ?? '',
+              messages: (order["full_messages"] as List<dynamic>)
+                  .map(
+                    (message) => Messages(
+                        content: message["content"],
+                        date: DateTime.parse(message["date"])),
+                  )
+                  .toList(),
+            ),
+          )
+          .toList();
       print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
-        onSuccess: () {
-          // User user =
-          //     userProvider.user.copyWith(name: jsonDecode(res.body)['name']);
-          // userProvider.setUserFromModel(user);
-          showSnackBar(context, "Query sent successfully");
-        },
+        onSuccess: () {},
       );
+      return orders;
     } catch (e) {
       print(e.toString());
       showSnackBar(context, e.toString());
+      return [];
     }
   }
 }

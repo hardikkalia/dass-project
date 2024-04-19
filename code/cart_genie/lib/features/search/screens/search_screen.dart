@@ -1,4 +1,7 @@
 import 'package:cart_genie/common/widgets/custom_button.dart';
+import 'package:cart_genie/features/cart/screens/detailed_screen.dart';
+import 'package:cart_genie/features/cart/widgets/no_order.dart';
+import 'package:cart_genie/features/cart/widgets/orders.dart';
 import 'package:cart_genie/features/search/widgets/dates.dart';
 import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/drawer.dart';
@@ -22,25 +25,22 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool _isFilterOpened = false;
-
+  List<Orders> orders = [];
   List<Options> selected = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-    // Populate initial messages list
-    // selected = [
-    //   Options(company: "BlueDart",ordertype:  "Delivery", status: "Ordered", start: DateTime(2024, 4, 14), end: DateTime(2024,4,21),),
-    //
-    // ];
-
-    // GlobalKey to access the ScaffoldState for opening the drawer
-
-    // @override
-    // void initState() {
-    //   super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _openFilterScreen(context);
+    });
+  }
+
+  Future<void> fetchOrders() async {
+    var newOrders = await searchAPIService.filter(
+        context: context, searchCriteria: selected[0]);
+    setState(() {
+      orders = newOrders;
     });
   }
 
@@ -67,7 +67,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     FilterSection(
                       heading: "Shipping Company",
-                      options: const ['Delhivery', 'DTDC', 'Blue Dart', 'Amazon'],
+                      options: const [
+                        'Delhivery',
+                        'DTDC',
+                        'Blue Dart',
+                        'Amazon'
+                      ],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedShippingCompany = selectedOption;
@@ -87,7 +92,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     const SizedBox(height: 20),
                     FilterSection(
                       heading: "Order Status",
-                      options: const ['Ordered', 'Dispatched', 'Out for Delivery'],
+                      options: const [
+                        'Ordered',
+                        'Dispatched',
+                        'Out for Delivery'
+                      ],
                       onSelect: (selectedOption) {
                         setState(() {
                           selectedOrderStatus = selectedOption;
@@ -103,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               selectedStart = selectedRange.start;
                               selectedEnd = selectedRange.end;
                             });
-                          } else {}
+                          }
                         }),
                     const SizedBox(height: 20),
                     CustomButton(
@@ -119,23 +128,12 @@ class _SearchScreenState extends State<SearchScreen> {
                             )
                           ];
                         });
-
-                        searchAPIService.filter(
-                            context: context, searchCriteria: selected[0]);
+                        fetchOrders();
+                        print("Search Page");
                         Navigator.pop(context); // Close the bottom sheet
                       },
                       text: 'APPLY',
                     ),
-                    // Text(
-                    //   selected[0].company,
-                    // ),
-                    // Text(
-                    //   selected[0].ordertype,
-                    // ),
-                    // Text(
-                    //   selected[0].status,
-                    // ),
-
                     const SizedBox(height: 20),
                   ],
                 ),
@@ -204,6 +202,40 @@ class _SearchScreenState extends State<SearchScreen> {
               Semicircle(
                 radius: 325,
                 color: GlobalVariables.greyBackgroundColor,
+              ),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+                  child: orders.isNotEmpty
+                      ? Column(
+                          children: [
+                            for (int i = 0; i < orders.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20.0),
+                                child: Orders(
+                                  id: orders[i].id,
+                                  ordertype: orders[i].ordertype,
+                                  onPressed: () {
+                                    if (orders[i].ordertype == "Delivery") {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailedScreen(order: orders[i]),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  productid: orders[i].productid,
+                                  company: orders[i].company,
+                                  status: orders[i].status,
+                                  messages: orders[i].messages,
+                                ),
+                              ),
+                          ],
+                        )
+                      : const NoOrders(),
+                ),
               ),
             ],
           ),
