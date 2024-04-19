@@ -136,7 +136,9 @@ class _DetailsState extends State<Details> {
                 });
               },
               child: Text(
-                _mode == Mode.hide ? "View all Message Updates" : "Hide Message Updates",
+                _mode == Mode.hide
+                    ? "View all Message Updates"
+                    : "Hide Message Updates",
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 18.0,
@@ -177,7 +179,7 @@ class _DetailsState extends State<Details> {
         ),
         SizedBox(height: 8),
         Container(
-          width: 80,
+          width: 70,
           height: 40,
           decoration: BoxDecoration(
             color: color,

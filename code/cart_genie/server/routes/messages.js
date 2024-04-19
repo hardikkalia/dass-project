@@ -118,6 +118,7 @@ messageRouter.get("/api/messages/retrieve", auth, async (req, res) => {
 
     const orders = user.orders;
     console.log(orders);
+    // console.log(typeof orders[0].full_messages[0].date);
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });

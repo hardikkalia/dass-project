@@ -23,46 +23,30 @@ class CartService {
           'auth-token': userProvider.user.token,
         },
       );
-
-      List<dynamic> jsonResponse = jsonDecode(res.body);
-      print(res.body);
-      List<Orders> orders = jsonResponse.map((order) {
-        List<dynamic> messageList = order["full_messages"] ?? [];
-        List<Messages> parsedMessages = messageList.map((message) {
-          return Messages(
-            content: message["content"] ?? '',
-            date: message["date"] != null? DateTime.parse(message["date"]): DateTime.now(),
-              // print("Error"),
-              // 'date': msg.dateSent?.toIso8601String() ??
-              // DateTime.now().toIso8601String(),
-          );
-        }).toList();
-        print("eroorrrrrr");
-        return Orders(
-          ordertype: "Delivery",
-          id: order["productId"] ?? '',
-          onPressed: () {},
-          product: '',
-          delivery: order["company_name"] ?? '',
-          status: order["current_status"] ?? '',
-          messages: parsedMessages,
-        );
-      }).toList();
       // print(res.body);
-      // List<Orders> orders = (jsonDecode(res.body) as List<dynamic>)
-      //     .map(
-      //       (order) => Orders(
-      //           ordertype: "Delivery",
-      //           id: order["productId"] ?? '',
-      //           onPressed: () {},
-      //           product: '',
-      //           delivery: order["company_name"] ?? '',
-      //           status: order["current_status"] ?? ''),
-      //
-      //     )
-      //     .toList();
-      // print("YO");
-      // print(orders[0].id);
+      List<Orders> orders = (jsonDecode(res.body) as List<dynamic>)
+          .map(
+            (order) => Orders(
+              ordertype: "Delivery",
+              productid: order["productId"] ?? '',
+              onPressed: () {},
+              id: order["_id"] ?? '',
+              company: order["company_name"] ?? '',
+              status: order["current_status"] ?? '',
+              messages: (order["full_messages"] as List<dynamic>)
+                  .map(
+                    (message) => Messages(
+                        content: message["content"],
+                        date: DateTime.parse(message["date"])),
+                  )
+                  .toList(),
+            ),
+          )
+          .toList();
+      // print(jsonDecode(res.body)["full_messages"]);
+      print("YO");
+      print(orders[0].messages[0].date);
+      print(orders[0].productid);
       return orders;
       // print(orders.runtimeType);
 

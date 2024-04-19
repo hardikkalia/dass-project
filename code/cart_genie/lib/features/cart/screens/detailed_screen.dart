@@ -13,8 +13,8 @@ enum Mode {
 
 class DetailedScreen extends StatefulWidget {
   static const String routename = '/detailed';
-
-  const DetailedScreen({Key? key}) : super(key: key);
+  final  Orders order;
+  const DetailedScreen({super.key, required this.order});
 
   @override
   State<DetailedScreen> createState() => _DetailedScreenState();
@@ -32,16 +32,17 @@ class _DetailedScreenState extends State<DetailedScreen> {
     //   Messages(content: "Hello", date: DateTime(2024, 8, 14)),
     //   Messages(content: "content", date: DateTime(2014, 8, 14)),
     // ];
-    orders = [
-      Orders(id: "ABC123", ordertype: "Delivery",onPressed: (){},product: "Product A",delivery: "Delhivery",status: "Delivered",
-      messages: [
-        Messages(content: "Hello", date: DateTime(2024, 8, 14)),
-        Messages(content: "content", date: DateTime(2014, 8, 14)),
-      ],
-      )
-    ];
+    // orders = [
+    //   Orders(productid: "ABC123", ordertype: "Delivery",onPressed: (){},company: "Delhivery",status: "Delivered",
+    //   messages: [
+    //     Messages(content: "Hello", date: DateTime(2024, 8, 14)),
+    //     Messages(content: "content", date: DateTime(2014, 8, 14)),
+    //   ],
+    //   )
+    // ];
 
   }
+
   @override
   Widget build(BuildContext context) {
     Color? colour1;
@@ -76,12 +77,12 @@ class _DetailedScreenState extends State<DetailedScreen> {
       appBar: AppBar(
         backgroundColor: GlobalVariables.backgroundColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop(); // Navigate back to the previous screen
           },
         ),
-        title: Text(
+        title: const Text(
           'Detailed Summary',
           style: TextStyle(
             fontSize: 16.0,
@@ -101,7 +102,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                 height: 325,
                 decoration: BoxDecoration(
                   color: GlobalVariables.greyBackgroundColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(325),
                     bottomRight: Radius.circular(325),
                   ),
@@ -115,18 +116,18 @@ class _DetailedScreenState extends State<DetailedScreen> {
               child: Column(
                 children: [
                   Details(
-                    product: orders[0].product,
-                    delivery: orders[0].delivery,
-                    status: orders[0].status,
+                    product: widget.order.productid,
+                    delivery: "Delivery",
+                    status: widget.order.status,
                     colour1: colour1 ?? GlobalVariables.inactivestatus,
                     colour2: colour2 ?? GlobalVariables.inactivestatus,
                     colour3: colour3 ?? GlobalVariables.inactivestatus,
                     colour4: colour4 ?? GlobalVariables.inactivestatus,
                     date: DateTime(2024, 4, 15),
-                    time: TimeOfDay(hour: 10, minute: 30),
-                    messages: orders[0].messages,
+                    time: const TimeOfDay(hour: 10, minute: 30),
+                    messages:widget.order.messages,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

@@ -129,13 +129,13 @@ class _CartScreenState extends State<CartScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => DetailedScreen(),
+                                      builder: (context) => DetailedScreen(order: orders[i]),
                                     ),
                                   );
                                 }
                               },
-                              product: orders[i].product,
-                              delivery: orders[i].delivery,
+                              productid: orders[i].productid,
+                              company: orders[i].company,
                               status: orders[i].status,
                               messages: orders[i].messages,
                             ),

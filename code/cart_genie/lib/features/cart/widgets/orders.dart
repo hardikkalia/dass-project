@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/cart/widgets/messages.dart';
+import 'package:cart_genie/features/cart/widgets/messages.dart';
 
 // class Messages {
 //   final String content;
 //   final DateTime date;
-//
+
 //   Messages({
 //     required this.content,
 //     required this.date,
@@ -16,8 +17,8 @@ class Orders extends StatelessWidget {
   final String id;
   final String ordertype;
   final VoidCallback onPressed;
-  final String product;
-  final String delivery;
+  final String productid;
+  final String company;
   final String status;
   final List<Messages> messages;
 
@@ -26,8 +27,8 @@ class Orders extends StatelessWidget {
     required this.ordertype,
     required this.id,
     required this.onPressed,
-    required this.product,
-    required this.delivery,
+    required this.productid,
+    required this.company,
     required this.status,
     required this.messages,
   }) : super(key: key);
@@ -56,8 +57,8 @@ class Orders extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 8.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 20.0, top: 8.0),
                 child: Text(
                   'Product ID',
                   style: TextStyle(
@@ -73,8 +74,8 @@ class Orders extends StatelessWidget {
                 child: TextButton(
                   onPressed: onPressed,
                   child: Text(
-                    product,
-                    style: TextStyle(
+                    productid,
+                    style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 18.0,
                       fontWeight: FontWeight.w900,
@@ -83,7 +84,7 @@ class Orders extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(
+              const Divider(
                 color: GlobalVariables.textgrey,
                 thickness: 1,
                 indent: 20,
@@ -93,13 +94,13 @@ class Orders extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   children: [
-                    Icon(Icons.local_shipping,
+                    const Icon(Icons.local_shipping,
                         color: GlobalVariables.shippingColor),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'From :',
                           style: TextStyle(
                             fontFamily: 'Cabin',
@@ -109,8 +110,8 @@ class Orders extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          delivery,
-                          style: TextStyle(
+                          company,
+                          style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
@@ -122,18 +123,18 @@ class Orders extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   children: [
-                    Icon(Icons.location_on,
+                    const Icon(Icons.location_on,
                         color: GlobalVariables.locationColor),
                     SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Status :',
                           style: TextStyle(
                             fontFamily: 'Cabin',
@@ -144,7 +145,7 @@ class Orders extends StatelessWidget {
                         ),
                         Text(
                           status,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
@@ -156,8 +157,8 @@ class Orders extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
-              Divider(
+              const SizedBox(height: 10),
+              const Divider(
                 color: GlobalVariables.textgrey,
                 thickness: 1,
                 indent: 20,
