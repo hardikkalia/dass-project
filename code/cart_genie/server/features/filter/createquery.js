@@ -2,10 +2,10 @@ function generateFilterString(startDate, endDate, company, orderStatus, orderTyp
   const filters = [];
   // Add filters for startDate and endDate if provided
   if (startDate) {
-    filters.push(`order.date >= ${startDate}`);
+    filters.push(`order.date >= "${startDate}"`);
   }
   if (endDate) {
-    filters.push(`order.date <= ${endDate}`);
+    filters.push(`order.date <= "${endDate}"`);
   }
  
   // Add filters for company, orderStatus, and orderType if provided
