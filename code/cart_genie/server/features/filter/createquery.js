@@ -7,7 +7,7 @@ function createQuery(queryParams) {
     }
   
     if (queryParams.company) {
-      query["orders.company_name"] = { $regex: queryParams.company, $options: "i" };
+      query["company_name"] = queryParams.company;
     }
   
     if (queryParams.orderStatus) {
