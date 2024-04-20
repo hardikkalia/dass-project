@@ -155,7 +155,7 @@ class SignInService {
 
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
-        smsReaderService.checkPermissionsAndReadSms(context);
+        await smsReaderService.checkPermissionsAndReadSms(context);
       }
     } catch (e) {
       showSnackBar(context, e.toString());

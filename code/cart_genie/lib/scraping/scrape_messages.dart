@@ -14,7 +14,7 @@ import "package:cart_genie/models/user.dart";
 
 
 class SmsReaderService {
-  void checkPermissionsAndReadSms(BuildContext context) async {
+  Future<void> checkPermissionsAndReadSms(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       Map<Permission, PermissionStatus> statuses = await [
@@ -54,17 +54,17 @@ class SmsReaderService {
       messages.sort((a, b) {
         var aDate = a.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
         var bDate = b.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
-        return bDate.compareTo(aDate);
+        return aDate.compareTo(bDate);
       });
       print(messages);
       print("read sms complete");
-      updateLastReadAndMessages(messages: messages, context: context);
+      await updateLastReadAndMessages(messages: messages, context: context);
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
 
-  void updateLastReadAndMessages(
+  Future<void> updateLastReadAndMessages(
       {required List<SmsMessage> messages,
       required BuildContext context}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);

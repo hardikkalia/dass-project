@@ -39,6 +39,7 @@ function extractOrderInfo(message) {
       }
       if (orderStatus) break;
     }
+    let orderType;
     for (const type in orderTypeWords) {
       for (const word of orderTypeWords[type]) {
         if (message.match(word)) {
