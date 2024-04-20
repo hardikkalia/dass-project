@@ -21,6 +21,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   List<Orders> orders = []; // Initialize as empty list
   final CartService cartService = CartService();
+  bool _dataFetched = false;
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _CartScreenState extends State<CartScreen> {
         await cartService.getMessages(context: context);
     setState(() {
       orders = fetchedOrders;
+      _dataFetched = true;
     });
     // Simulated async call to fetch orders from backend
     // Replace this with your actual backend API call
@@ -102,53 +104,71 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
       drawer: const DrawerWidget(),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Semicircle(
-                radius: 325,
-                color: GlobalVariables.greyBackgroundColor,
-              ),
-            ],
-          ),
+      body: _dataFetched
+          ? Stack(
+              children: [
+                Column(
+                  children: [
+                    Semicircle(
+                      radius: 325,
+                      color: GlobalVariables.greyBackgroundColor,
+                    ),
+                  ],
+                ),
 // Background elements or decorations can be placed here
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
-              child: orders.isNotEmpty
-                  ? Column(
-                      children: [
-                        for (int i = 0; i < orders.length; i++)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Orders(
-                              id: orders[i].id,
-                              ordertype: orders[i].ordertype,
-                              onPressed: () {
-                                if (orders[i].ordertype == "Delivery") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailedScreen(order: orders[i]),
-                                    ),
-                                  );
-                                }
-                              },
-                              productid: orders[i].productid,
-                              company: orders[i].company,
-                              status: orders[i].status,
-                              messages: orders[i].messages,
-                            ),
-                          ),
-                      ],
-                    )
-                  : const NoOrders(),
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+                    child: orders.isNotEmpty
+                        ? Column(
+                            children: [
+                              for (int i = 0; i < orders.length; i++)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Orders(
+                                    id: orders[i].id,
+                                    ordertype: orders[i].ordertype,
+                                    onPressed: () {
+                                      if (orders[i].ordertype == "Delivery") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailedScreen(
+                                                    order: orders[i]),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    productid: orders[i].productid,
+                                    company: orders[i].company,
+                                    status: orders[i].status,
+                                    messages: orders[i].messages,
+                                  ),
+                                ),
+                            ],
+                          )
+                        : const NoOrders(),
+                  ),
+                ),
+              ],
+            )
+          : Scaffold(
+              body: Column(
+                children: [
+                  Semicircle(
+                    radius: 325,
+                    color: GlobalVariables.greyBackgroundColor,
+                  ),
+                  const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 4,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ), // Or any other loading widget
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }

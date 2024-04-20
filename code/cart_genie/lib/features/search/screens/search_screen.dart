@@ -25,6 +25,8 @@ class _SearchScreenState extends State<SearchScreen> {
   List<Orders> orders = [];
   List<Options> selected = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _dataFetched = true;
+
   @override
   void initState() {
     super.initState();
@@ -34,10 +36,14 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<void> fetchOrders() async {
+    setState(() {
+      _dataFetched = false;
+    });
     var newOrders = await searchAPIService.filter(
         context: context, searchCriteria: selected[0]);
     setState(() {
       orders = newOrders;
+      _dataFetched = true;
     });
   }
 
@@ -54,98 +60,104 @@ class _SearchScreenState extends State<SearchScreen> {
         return SizedBox(
           height: MediaQuery.of(context).size.height * 1,
           child: StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Column(
+            builder: (BuildContext context, StateSetter setState) {
+              return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                color: Colors.white, // Background color of the bottom sheet
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FilterSection(
-                      heading: "Shipping Company",
-                      options: const [
-                        'Delhivery',
-                        'DTDC',
-                        'Blue Dart',
-                        'Amazon'
-                      ],
-                      onSelect: (selectedOption) {
-                        setState(() {
-                          selectedShippingCompany = selectedOption;
-                        });
-                      },
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 10),
+                        color: Colors
+                            .white, // Background color of the bottom sheet
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            FilterSection(
+                              heading: "Shipping Company",
+                              options: const [
+                                'Delhivery',
+                                'DTDC',
+                                'Blue Dart',
+                                'Amazon'
+                              ],
+                              onSelect: (selectedOption) {
+                                setState(() {
+                                  selectedShippingCompany = selectedOption;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            FilterSection(
+                              heading: "Order Type",
+                              options: const ['Delivery', 'Return'],
+                              onSelect: (selectedOption) {
+                                setState(() {
+                                  selectedOrderType = selectedOption;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            FilterSection(
+                              heading: "Order Status",
+                              options: const [
+                                'Ordered',
+                                'Dispatched',
+                                'Out for Delivery',
+                                'Delivered',
+                              ],
+                              onSelect: (selectedOption) {
+                                setState(() {
+                                  selectedOrderStatus = selectedOption;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            DateRange(
+                                heading: 'Date Range',
+                                onRangeSelected:
+                                    (DateTimeRange? selectedRange) {
+                                  if (selectedRange != null) {
+                                    setState(() {
+                                      selectedStart = selectedRange.start;
+                                      selectedEnd = selectedRange.end;
+                                    });
+                                  }
+                                }),
+                            const SizedBox(height: 10),
+                            CustomButton(
+                              onTap: () {
+                                setState(() {
+                                  selected = [
+                                    Options(
+                                      company: selectedShippingCompany,
+                                      ordertype: selectedOrderType,
+                                      status: selectedOrderStatus,
+                                      start: selectedStart,
+                                      end: selectedEnd,
+                                    )
+                                  ];
+                                });
+                                // setState(() {
+                                //   _dataFetched = false;
+                                // });
+                                fetchOrders();
+                                Navigator.pop(
+                                    context); // Close the bottom sheet
+                              },
+                              text: 'APPLY',
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 10),
-                    FilterSection(
-                      heading: "Order Type",
-                      options: const ['Delivery', 'Return'],
-                      onSelect: (selectedOption) {
-                        setState(() {
-                          selectedOrderType = selectedOption;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    FilterSection(
-                      heading: "Order Status",
-                      options: const [
-                        'Ordered',
-                        'Dispatched',
-                        'Out for Delivery',
-                        'Delivered',
-                      ],
-                      onSelect: (selectedOption) {
-                        setState(() {
-                          selectedOrderStatus = selectedOption;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    DateRange(
-                        heading: 'Date Range',
-                        onRangeSelected: (DateTimeRange? selectedRange) {
-                          if (selectedRange != null) {
-                            setState(() {
-                              selectedStart = selectedRange.start;
-                              selectedEnd = selectedRange.end;
-                            });
-                          }
-                        }),
-                    const SizedBox(height: 10),
-                    CustomButton(
-                      onTap: () {
-                        setState(() {
-                          selected = [
-                            Options(
-                              company: selectedShippingCompany,
-                              ordertype: selectedOrderType,
-                              status: selectedOrderStatus,
-                              start: selectedStart,
-                              end: selectedEnd,
-                            )
-                          ];
-                        });
-                        fetchOrders();
-                        Navigator.pop(context); // Close the bottom sheet
-                      },
-                      text: 'APPLY',
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                ),
-              ),
-            ),
-            ),
-            ],
-            );
-          },
+                  ),
+                ],
+              );
+            },
           ),
         );
       },
@@ -202,52 +214,70 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       drawer: const DrawerWidget(),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Semicircle(
-                radius: 325,
-                color: GlobalVariables.greyBackgroundColor,
-              ),
-            ],
-          ),
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
-                  child: orders.isNotEmpty
-                      ? Column(
-                          children: [
-                            for (int i = 0; i < orders.length; i++)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
-                                child: Orders(
-                                  id: orders[i].id,
-                                  ordertype: orders[i].ordertype,
-                                  onPressed: () {
-                                    if (orders[i].ordertype == "Delivery") {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailedScreen(order: orders[i]),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  productid: orders[i].productid,
-                                  company: orders[i].company,
-                                  status: orders[i].status,
-                                  messages: orders[i].messages,
-                                ),
-                              ),
-                          ],
-                        )
-                      : const NoOrders(),
+      body: _dataFetched
+          ? Stack(
+              children: [
+                Column(
+                  children: [
+                    Semicircle(
+                      radius: 325,
+                      color: GlobalVariables.greyBackgroundColor,
+                    ),
+                  ],
                 ),
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+                    child: orders.isNotEmpty
+                        ? Column(
+                            children: [
+                              for (int i = 0; i < orders.length; i++)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Orders(
+                                    id: orders[i].id,
+                                    ordertype: orders[i].ordertype,
+                                    onPressed: () {
+                                      if (orders[i].ordertype == "Delivery") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailedScreen(
+                                                    order: orders[i]),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    productid: orders[i].productid,
+                                    company: orders[i].company,
+                                    status: orders[i].status,
+                                    messages: orders[i].messages,
+                                  ),
+                                ),
+                            ],
+                          )
+                        : const NoOrders(),
+                  ),
+                ),
+              ],
+            )
+          : Scaffold(
+              body: Column(
+                children: [
+                  Semicircle(
+                    radius: 325,
+                    color: GlobalVariables.greyBackgroundColor,
+                  ),
+                  const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 4,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ), // Or any other loading widget
+                  ),
+                ],
               ),
-            ],
-          ),
-                );
+            ),
+    );
   }
 }

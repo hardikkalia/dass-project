@@ -6,10 +6,10 @@ class ProfileButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const ProfileButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,7 @@ class ProfileButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(screenWidth * 0.6, 50), // Adjust as needed
-        primary: GlobalVariables.secondaryColor, // Background color of button
+        minimumSize: Size(screenWidth * 0.6, 50), backgroundColor: GlobalVariables.secondaryColor, // Background color of button
         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
       ),
       child: Text(

@@ -16,10 +16,10 @@ enum Mode {
 class SignInScreen extends StatefulWidget {
   static const String routeName = '/signin-screen';
 
-  const SignInScreen({Key? key}) : super(key: key);
+  const SignInScreen({super.key});
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {

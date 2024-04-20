@@ -54,7 +54,6 @@ class _MyAppState extends State<MyApp> {
 
   // This widget is the root of your application.
   @override
-  // State<MyApp> createState() => _MyAppState();
   Widget build(BuildContext context) {
     // getUserData(context);
     if (!_dataFetched) {
