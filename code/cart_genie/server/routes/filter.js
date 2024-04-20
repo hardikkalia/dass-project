@@ -1,3 +1,12 @@
+/**
+ * Route for handling the search and filter functionality of the app.
+ * 
+ * Receives a post request with json web tokens in its header and the parameters of the query
+ * as selected from the search and filter page.
+ * 
+ * Returns a list of filtered Orders.
+ */
+
 const express = require("express");
 const filterRouter = express.Router();
 const User = require("../models/user");

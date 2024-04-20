@@ -1,3 +1,17 @@
+/**Route for handling the signup functionality in the application.
+ * 
+ * Receives a post request with json web token for authentication.
+ * Attempts to find a user with existing email and phone in the database.
+ * If found then returns error.
+ * 
+ * Phone verification through twilio server works in two steps. 
+ * The /api/signup/verify sends a request to twilio server to send an OTP for verification.
+ * 
+ * The /api/signup/verify/submit validates the external 
+ * Encrypts and stores password and user information in the database
+ */
+
+
 const express = require("express");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
@@ -28,15 +42,6 @@ signUpRouter.post("/api/signup", async (req, res) => {
         .status(400)
         .json({ msg: "An account with same phone number already exists!" });
     }
-
-    //otp verify status code 401
-    // const verifyResponse = await axios.post(START_VERIFY_URL, { to:"+91"+phone, channel: 'sms' });
-    // if (!verifyResponse.data.success) {
-    //   return res.status(400).json({ msg: "Failed to send OTP", error: verifyResponse.data.error });
-    // }
-
-    // // If OTP sent successfully
-    // res.status(200).json({ msg: "OTP sent successfully. Please verify to continue." });
 
     const hashedPassword = await bcryptjs.hash(password, 8);
 

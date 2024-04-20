@@ -1,3 +1,16 @@
+/** Route for handling the sign in functionality of the application.
+ * 
+ * We use a twilio server for verification.
+ * email sign in receives http post request with json web token for authentication and relevant details
+ * 
+ * Twilio server function works in two stages. 
+ * The /api/signin/phone/verify sends a request to twilio server to generate a otp and send it to 
+ * the user. 
+ * The /api/signin/phone/verify/submit sends the entered otp to the twilio service for verification
+ * the /tokenValid route returns its responde.
+ */
+
+
 const express = require("express");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
@@ -62,26 +75,6 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
   }
 });
 
-// signInRouter.post("/api/signin/phone/verify", async (req, res) => {
-//   try {
-//     const { phone } = req.body;
-//     const user = await User.findOne({ phone });
-//     if (!user) {
-//       return res.status(400).json({ msg: "User not found!" });
-//     }
-
-//     const otp = generateOTP();
-//     await twilioClient.messages.create({
-//       body: `Your OTP is: ${otp}`,
-//       from: "",
-//       to: phone,
-//     });
-
-//     res.status(200).json({ msg: "OTP sent successfully" });
-//   } catch (e) {
-//     res.status(500).json({ error: e.message });
-//   }
-// });
 
 signInRouter.post("/api/signin/phone/verify/submit", async (req, res) => {
   const { phone, code } = req.body;

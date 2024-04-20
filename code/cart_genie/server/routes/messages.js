@@ -1,3 +1,16 @@
+/**
+ * 
+ * Route for handling processing and sending messages to the backend.
+ * 
+ * Receives a post request with json web token in the header and a json corresponding to messages
+ * read from the device. 
+ *
+ *  Calls the extractOrderInfo method on all these messages, then sends only the relevant messages
+ * to the backend. 
+ * 
+ * */
+
+
 const express = require("express");
 const UserAllMessages = require("../models/user_messages");
 const messageRouter = express.Router();

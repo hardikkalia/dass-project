@@ -1,3 +1,16 @@
+/**
+ * Route for handling the profile page and all its associated functionalities.
+ * 
+ * The /api/profile/edit/{detail} route receives the post request from the frontend
+ * to edit whatever detail the user is editing. 
+ * 
+ * The post request encodes a json web token for authentication, and a body encoding whatever
+ * detail is to be edited along with its new value.
+ *  
+ * Asynchronously waits for the database to save these values.
+ * 
+ */
+
 const express = require("express");
 const User = require("../models/user");
 const profileRouter = express.Router();
