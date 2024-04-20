@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
           user.toJson(),
         ),
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 }

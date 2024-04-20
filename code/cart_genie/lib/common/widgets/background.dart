@@ -7,10 +7,10 @@ class Semicircle extends StatelessWidget {
   final Color color;
 
   const Semicircle({
-    Key? key,
+    super.key,
     required this.radius,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,8 @@ class _SemicirclePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final rect = Rect.fromCircle(center: Offset(size.width / 2, 0), radius: radius);
-    final startAngle = 0.0;
-    final sweepAngle = pi; // This makes it a semicircle (π is approximately 3.14)
+    const startAngle = 0.0;
+    const sweepAngle = pi; // This makes it a semicircle (π is approximately 3.14)
 
     canvas.drawArc(rect, startAngle, sweepAngle, true, paint);
   }

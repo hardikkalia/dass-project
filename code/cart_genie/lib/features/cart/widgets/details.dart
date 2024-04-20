@@ -34,10 +34,10 @@ class Details extends StatefulWidget {
   });
 
   @override
-  _DetailsState createState() => _DetailsState();
+  DetailsState createState() => DetailsState();
 }
 
-class _DetailsState extends State<Details> {
+class DetailsState extends State<Details> {
   Mode _mode = Mode.hide;
 
   @override
@@ -166,7 +166,7 @@ class _DetailsState extends State<Details> {
 
   Widget _buildStatusItem(String label, Color color) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           label,

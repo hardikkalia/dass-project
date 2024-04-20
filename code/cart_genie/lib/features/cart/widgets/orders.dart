@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/cart/widgets/messages.dart';
-import 'package:cart_genie/features/cart/widgets/messages.dart';
-
-// class Messages {
-//   final String content;
-//   final DateTime date;
-
-//   Messages({
-//     required this.content,
-//     required this.date,
-//   });
-// }
 
 class Orders extends StatelessWidget {
   final String id;
@@ -23,7 +12,7 @@ class Orders extends StatelessWidget {
   final List<Messages> messages;
 
   const Orders({
-    Key? key,
+    super.key,
     required this.ordertype,
     required this.id,
     required this.onPressed,
@@ -31,7 +20,7 @@ class Orders extends StatelessWidget {
     required this.company,
     required this.status,
     required this.messages,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +41,7 @@ class Orders extends StatelessWidget {
             ),
           ],
         ),
-        child: Container(
+        child: SizedBox(
           width: 400,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

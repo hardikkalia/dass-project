@@ -6,10 +6,10 @@ class CustomBottom extends StatelessWidget {
   final Function onTap;
 
   const CustomBottom({
-    Key? key,
+    super.key,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

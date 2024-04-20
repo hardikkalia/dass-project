@@ -8,13 +8,13 @@ class Options extends StatelessWidget {
   final DateTime? end;
 
   const Options({
-    Key? key,
+    super.key,
     required this.company,
     required this.ordertype,
     required this.status,
     required this.start,
     required this.end,
-}) : super(key: key);
+});
   @override
   Widget build(BuildContext context) {
     // This build method can be implemented based on how you intend to use the Options widget

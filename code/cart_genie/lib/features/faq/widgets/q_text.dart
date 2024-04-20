@@ -8,12 +8,12 @@ class QText extends StatelessWidget {
   // final double height;
 
   const QText({
-    Key? key,
+    super.key,
     required this.question,
     required this.icon,
     required this.onPressed,
     // required this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,11 @@ class QText extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5), // Shadow color
             spreadRadius: 5, // Spread radius
             blurRadius: 7, // Blur radius
-            offset: Offset(0, 3), // Offset from the container
+            offset: const Offset(0, 3), // Offset from the container
           ),
         ],
       ),
-      child: Container(
+      child: SizedBox(
         width: 400,
         child:Padding(
           padding: const EdgeInsets.only(left: 20.0, bottom: 8.0,top: 8.0),
@@ -43,7 +43,7 @@ class QText extends StatelessWidget {
               Expanded(
                 child: Text(
                   question,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class QText extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: IconButton(

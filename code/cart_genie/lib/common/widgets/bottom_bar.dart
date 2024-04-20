@@ -1,6 +1,5 @@
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/cart/screens/cart_screen.dart';
-import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 import 'package:cart_genie/features/profile/screens/profile_screen.dart';
 import 'package:cart_genie/features/search/screens/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'package:flutter/material.dart';
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
 
-  const BottomBar({Key? key}) : super(key: key);
+  const BottomBar({super.key});
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -17,8 +16,6 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int _page = 0; // Current selected page index
   // Constants for bottom bar width and border width
-  static const double bottomBarWidth = 42;
-  static const double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
     const CartScreen(),
@@ -58,8 +55,6 @@ class _BottomBarState extends State<BottomBar> {
             label: 'Account',
           ),
         ],
-
-
       ),
     );
   }

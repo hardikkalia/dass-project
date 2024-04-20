@@ -1,14 +1,19 @@
-function generateFilterString(startDate, endDate, company, orderStatus, orderType) {
+function generateFilterString(
+  startDate,
+  endDate,
+  company,
+  orderStatus,
+  orderType
+) {
   const filters = [];
-  // Add filters for startDate and endDate if provided
+
   if (startDate) {
-    filters.push(`order.date >= "${startDate}"`);
+    filters.push(`order.date >= new Date("${startDate}")`);
   }
   if (endDate) {
-    filters.push(`order.date <= "${endDate}"`);
+    filters.push(`order.date <= new Date("${endDate}")`);
   }
- 
-  // Add filters for company, orderStatus, and orderType if provided
+
   if (company) {
     filters.push(`order.company_name === '${company}'`);
   }
@@ -18,12 +23,10 @@ function generateFilterString(startDate, endDate, company, orderStatus, orderTyp
   if (orderType) {
     filters.push(`order.order_type === '${orderType}'`);
   }
- 
-  // Join all filters with " && " to create the final filter string
+
   const filterString = filters.join(" && ");
-  
+
   return filterString;
 }
- 
- 
- module.exports = generateFilterString;
+
+module.exports = generateFilterString;

@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import "dart:convert";
-import 'package:cart_genie/constants/error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sms_advanced/sms_advanced.dart';
@@ -10,24 +11,21 @@ import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/providers/user_providers.dart';
 import 'package:provider/provider.dart';
 import 'package:cart_genie/constants/utils.dart';
-import "package:cart_genie/models/user.dart";
-
 
 class SmsReaderService {
-  void checkPermissionsAndReadSms(BuildContext context) async {
+  Future<void> checkPermissionsAndReadSms(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      Map<Permission, PermissionStatus> statuses = await [
-        Permission.sms,
-        Permission.contacts,
-      ].request();
+      // Map<Permission, PermissionStatus> statuses = await [
+      //   Permission.sms,
+      //   Permission.contacts,
+      // ].request();
       if (await Permission.sms.request().isGranted &&
           await Permission.contacts.request().isGranted) {
-
-        DateTime lastUpdate = userProvider.user.lastUpdate; // This could be fetched from preferences or your backend
+        DateTime lastUpdate = userProvider.user.lastUpdate;
         await _readSmsMessages(lastUpdate, context);
       } else {
-        print("Necessary permissions not granted");
+        showSnackBar(context, "Necessary permissions not granted");
       }
     } catch (e) {
       showSnackBar(context, e.toString());
@@ -40,11 +38,7 @@ class SmsReaderService {
       SmsQuery query = SmsQuery();
       List<SmsMessage> messages =
           await query.querySms(kinds: [SmsQueryKind.Inbox]);
-      print(messages);
-      print("readsms");
       messages = messages.where((msg) {
-        print(msg.sender);
-        print(msg.body);
         var msgDate = msg.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
         // print(msgDate);
         return msgDate.isAfter(startDate) ||
@@ -56,21 +50,18 @@ class SmsReaderService {
         var bDate = b.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
         return bDate.compareTo(aDate);
       });
-      print(messages);
-      print("read sms complete");
-      updateLastReadAndMessages(messages: messages, context: context);
+
+      await updateLastReadAndMessages(messages: messages, context: context);
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
 
-  void updateLastReadAndMessages(
+  Future<void> updateLastReadAndMessages(
       {required List<SmsMessage> messages,
       required BuildContext context}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      print("reached");
-      print(userProvider.user.token);
       http.Response res = await http.post(
         Uri.parse('$uri/api/messages'),
         body: jsonEncode({
@@ -89,14 +80,11 @@ class SmsReaderService {
           'auth-token': userProvider.user.token,
         },
       );
-      print(res);
-      print(res.statusCode);
       if (res.statusCode == 200) {
         print('Messages and last update timestamp successfully updated.');
       } else {
         print('Failed to update messages and last update timestamp.');
       }
-      print(jsonDecode(res.body)['error']);
       switch (res.statusCode) {
         case 200:
           break;

@@ -5,7 +5,7 @@ class DateRange extends StatefulWidget {
   final ValueChanged<DateTimeRange?> onRangeSelected;
   // final DateTime start;
   // final DateTime end;
-  DateRange({
+  const DateRange({super.key, 
     required this.heading,
     required this.onRangeSelected,
     // required this.start,
@@ -13,10 +13,10 @@ class DateRange extends StatefulWidget {
   });
 
   @override
-  _DateRangeState createState() => _DateRangeState();
+  DateRangeState createState() => DateRangeState();
 }
 
-class _DateRangeState extends State<DateRange> {
+class DateRangeState extends State<DateRange> {
   DateTime? _startDate;
   DateTime? _endDate;
 
@@ -24,8 +24,8 @@ class _DateRangeState extends State<DateRange> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: isStartDate ? (_startDate ?? DateTime.now()) : (_endDate ?? DateTime.now()),
-      firstDate: DateTime.now().subtract(Duration(days: 365)), // One year before today
-      lastDate: DateTime.now().add(Duration(days: 365)), // One year after today
+      firstDate: DateTime.now().subtract(const Duration(days: 365)), // One year before today
+      lastDate: DateTime.now().add(const Duration(days: 365)), // One year after today
     );
 
     if (picked != null) {
@@ -55,7 +55,7 @@ class _DateRangeState extends State<DateRange> {
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
             child: Text(
             widget.heading,
-            style: TextStyle(
+            style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             ),
@@ -78,7 +78,7 @@ class _DateRangeState extends State<DateRange> {
               ),
             ),
           ),
-          SizedBox(width: 16.0), // Add spacing between text fields
+          const SizedBox(width: 16.0), // Add spacing between text fields
           Expanded(
             child: GestureDetector(
               onTap: () => _selectDate(context, false),

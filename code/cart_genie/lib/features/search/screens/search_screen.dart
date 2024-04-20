@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:cart_genie/common/widgets/drawer.dart';
 import 'package:cart_genie/common/widgets/background.dart';
 import 'package:cart_genie/constants/global_variables.dart';
-import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 import 'package:cart_genie/features/search/widgets/filters.dart';
-import 'package:cart_genie/features/search/widgets/dates.dart';
 import 'package:cart_genie/features/search/widgets/options.dart';
 import 'package:cart_genie/features/search/services/search_api_service.dart';
 
@@ -17,21 +15,20 @@ final SearchAPIService searchAPIService = SearchAPIService();
 
 class SearchScreen extends StatefulWidget {
   static const String routename = '/search';
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  bool _isFilterOpened = false;
   List<Orders> orders = [];
   List<Options> selected = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _openFilterScreen(context);
     });
   }
@@ -129,7 +126,6 @@ class _SearchScreenState extends State<SearchScreen> {
                           ];
                         });
                         fetchOrders();
-                        print("Search Page");
                         Navigator.pop(context); // Close the bottom sheet
                       },
                       text: 'APPLY',
@@ -185,7 +181,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 30, right: 10),
               child: IconButton(
-                icon: const Icon(Icons.filter_list),
+                icon: const Icon(Icons.filter_alt_sharp),
                 onPressed: () {
                   _openFilterScreen(context);
                 },
@@ -194,7 +190,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: Stack(
         children: [
           Column(

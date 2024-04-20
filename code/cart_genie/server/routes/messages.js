@@ -32,7 +32,6 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
       }
     });
     console.log(processedMessages);
-
     console.log(req.user);
     const user = await User.findById(req.user);
     if (!user) {
@@ -68,12 +67,14 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
           content: processedMessage.content,
           date: processedMessage.date,
         });
-        user.orders[existingOrderIndex].current_status = processedMessage.orderStatus;
+        user.orders[existingOrderIndex].current_status =
+          processedMessage.orderStatus;
       } else {
         // If the order doesn't exist, create a new order object and push it to user.orders
         user.orders.push({
           productId: processedMessage.orderNumber,
           current_status: processedMessage.orderStatus,
+          date: processedMessage.date,
           order_type: processedMessage.orderType, // Assuming it's a delivery order
           full_messages: [
             {
@@ -86,7 +87,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
       }
     });
     user.lastUpdate = lastUpdate;
-    user.lastUpdate = lastUpdate;
+    console.log(user.orders);
     console.log(lastUpdate);
     await user.save();
 

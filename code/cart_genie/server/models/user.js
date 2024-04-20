@@ -1,38 +1,47 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  productId: { //order id mentioned in the 
+  productId: {
+    //order id mentioned in the
     type: String,
     // required: true,
-    index: true, 
-    unique: true 
+    index: true,
+    unique: true,
   },
-  current_status: { //out for delivery, dispatched, delivered
-    type: String,
-    // required: true,
-  },
-  order_type: { //delivery or return
+  current_status: {
+    //out for delivery, dispatched, delivered
     type: String,
     // required: true,
   },
-  full_messages: [{ //used to display detailed order info
-    content: {
-      type: String,
-      // required: true,
+  order_type: {
+    //delivery or return
+    type: String,
+    // required: true,
+  },
+  full_messages: [
+    {
+      //used to display detailed order info
+      content: {
+        type: String,
+        // required: true,
+      },
+      date: {
+        type: Date,
+        // required: true,
+      },
     },
-    date: {
-      type: Date,
-      // required: true,
-    }
-  }],
+  ],
   company_name: {
     type: String,
     // required: true,
-  }
+  },
+  date: {
+    type: Date,
+  },
 });
 
 const userSchema = new mongoose.Schema({
-  user_ID:{
+  user_ID: {
     // required: true,
     type: String,
   },
@@ -78,8 +87,8 @@ const userSchema = new mongoose.Schema({
   age: {
     type: String,
   },
-  orders: [orderSchema], // written seperately to improve readibilty 
-  lastUpdate: {type: Date}
+  orders: [orderSchema], // written seperately to improve readibilty
+  lastUpdate: { type: Date },
 });
 
 const User = mongoose.model("User", userSchema);

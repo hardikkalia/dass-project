@@ -6,14 +6,12 @@ import "package:cart_genie/common/widgets/bottom_bar.dart";
 import "package:cart_genie/constants/error_handling.dart";
 import "package:cart_genie/constants/global_variables.dart";
 import "package:cart_genie/features/auth/screens/otp_screen.dart";
-import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "package:cart_genie/constants/utils.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
-import "package:cart_genie/scraping/scrape_messages.dart";
 
 class SignUpService {
   void signUpUser({

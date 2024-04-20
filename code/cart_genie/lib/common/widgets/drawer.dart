@@ -3,20 +3,23 @@ import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/features/faq/screens/faq_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
+  const DrawerWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 0), // Adjust the top padding as needed
+      padding:
+          const EdgeInsets.only(top: 0), // Adjust the top padding as needed
       child: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: GlobalVariables.backgroundColor,
+                color: GlobalVariables.greyBackgroundColor,
               ),
-              child: Text(
-                'Drawer Header',
+              child: const Text(
+                '',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -24,11 +27,11 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('FAQs'),
+              title: const Text('FAQs'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FAQScreen()),
+                  MaterialPageRoute(builder: (context) => const FAQScreen()),
                 );
               },
             ),

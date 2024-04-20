@@ -5,17 +5,17 @@ class FilterSection extends StatefulWidget {
   final List<String> options;
   final ValueChanged<String> onSelect;
 
-  FilterSection({
+  const FilterSection({super.key, 
     required this.heading,
     required this.options,
     required this.onSelect,
   });
 
   @override
-  _FilterSectionState createState() => _FilterSectionState();
+  FilterSectionState createState() => FilterSectionState();
 }
 
-class _FilterSectionState extends State<FilterSection> {
+class FilterSectionState extends State<FilterSection> {
   late String selectedOption;
 
   @override
@@ -34,7 +34,7 @@ class _FilterSectionState extends State<FilterSection> {
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
             widget.heading,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -74,7 +74,7 @@ class FilterButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  FilterButton({
+  const FilterButton({super.key, 
     required this.text,
     required this.isSelected,
     required this.onTap,
@@ -85,7 +85,7 @@ class FilterButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blue : Colors.grey[300],
           borderRadius: BorderRadius.circular(20),
