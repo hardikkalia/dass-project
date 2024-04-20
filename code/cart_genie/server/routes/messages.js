@@ -31,8 +31,8 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
         });
       }
     });
-    console.log(processedMessages);
-    console.log(req.user);
+    // console.log(processedMessages);
+    // console.log(req.user);
     const user = await User.findById(req.user);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -87,13 +87,13 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
       }
     });
     user.lastUpdate = lastUpdate;
-    console.log(user.orders);
-    console.log(lastUpdate);
+    // console.log(user.orders);
+    // console.log(lastUpdate);
     await user.save();
 
     res.json({ message: "Orders updated successfully" });
   } catch (e) {
-    console.log(e.message);
+    // console.log(e.message);
     res.status(500).json({ error: e.message });
   }
 });
@@ -107,7 +107,7 @@ messageRouter.get("/api/messages/retrieve", auth, async (req, res) => {
     }
 
     const orders = user.orders;
-    console.log(orders);
+    // console.log(orders);
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });
