@@ -48,7 +48,7 @@ class SmsReaderService {
       messages.sort((a, b) {
         var aDate = a.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
         var bDate = b.dateSent ?? DateTime.fromMillisecondsSinceEpoch(0);
-        return bDate.compareTo(aDate);
+        return aDate.compareTo(bDate);
       });
 
       await updateLastReadAndMessages(messages: messages, context: context);

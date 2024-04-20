@@ -9,11 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+  // runApp(MultiProvider(providers: [
+  //   ChangeNotifierProvider(
+  //     create: (context) => UserProvider(),
+  //   ),
+  // ], child: const MyApp()));
+  runApp(MaterialApp(
+    home: MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+      ],
+      child: const MyApp(),
     ),
-  ], child: const MyApp()));
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -24,8 +34,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _dataFetched = false;
   final SignInService signInService = SignInService();
   final SmsReaderService smsReaderService = SmsReaderService();
+
   @override
   void initState() {
     super.initState();
@@ -35,31 +47,41 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getUserData(BuildContext context) async {
     await signInService.getUserData(context);
+    print("InitState");
+    setState(() {
+      _dataFetched = true;
+    });
   }
-  // Future<void> readMessages() async{
-  //   await smsReaderService.checkPermissionsAndReadSms(context);
-
-  // }
 
   // This widget is the root of your application.
   @override
   // State<MyApp> createState() => _MyAppState();
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cart Genie',
-      theme: ThemeData(
-        scaffoldBackgroundColor: GlobalVariables.backgroundColor,
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: Colors.black,
+    // getUserData(context);
+    print("App");
+    if (!_dataFetched) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(), // Or any other loading widget
+        ),
+      );
+    } else {
+      return MaterialApp(
+        title: 'Cart Genie',
+        theme: ThemeData(
+          scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+          appBarTheme: const AppBarTheme(
+            elevation: 0,
+            iconTheme: IconThemeData(
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      onGenerateRoute: (settings) => generateRoute(settings),
-      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const BottomBar()
-          : const SignUpScreen(),
-    );
+        onGenerateRoute: (settings) => generateRoute(settings),
+        home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+            ? const BottomBar()
+            : const SignUpScreen(),
+      );
+    }
   }
 }
