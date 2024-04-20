@@ -1,0 +1,8 @@
+Message: Your order 123-4567890-1234567 from Amazon has been dispatched
+Expected: {"orderNumber": "123-4567890-1234567", "orderStatus": "Dispatched", "companyName": "Amazon", "orderType": "Delivery"}
+
+Message: Your Blue Dart AWB# 12345678901 order is out for delivery
+Expected: {"orderNumber": "AWB# 12345678901", "orderStatus": "Out for Delivery", "companyName": "Blue Dart", "orderType": "Delivery"}
+
+Message: Your Delhivery AWB 98765432101 order has been delivered
+Expected: {"orderNumber": "AWB 98765432101", "orderStatus": "Delivered", "companyName": "Delhivery", "orderType": "Delivery"}
