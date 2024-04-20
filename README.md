@@ -11,8 +11,8 @@ Before you begin, ensure you have the following installed:
 
 - Flutter (Version: 3.16.9)
 - Dart (Version: 3.2.6)
-- Node.js (Version: [specify version if required])
-- npm (Version: [specify version if required])
+- Node.js (Version: 21.7.2)
+- npm (Version: 10.5.0)
 - Twilio (Version: 5.0.3)
 
 ### Dependencies:
