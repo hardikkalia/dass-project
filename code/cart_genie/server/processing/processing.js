@@ -4,10 +4,15 @@ function extractOrderInfo(message) {
     const delhiveryPattern = /\bAWB \d{11}\b/;
     const orderStatusWords = {
       Dispatched: ['dispatched', 'dispatch', 'shipped'],
-      "Out for Delivery": ['out for delivery', 'out for deliveries'],
+      "Out for Delivery": ['out for delivery', 'out for deliveries','will be delivered'],
       Delivered: ['delivered', 'delivery completed'],
       Failed: ['failed', 'delivery failed'],
-      Ordered: ['successfully placed', 'ordered', 'packed']
+      Ordered: ['successfully placed', 'ordered', 'packed'],
+      Pickup: ['picked', 'picked successfully','returned','return successful']
+    };
+    const orderTypeWords = {
+      Delivery:['Dispatched' , 'Out for Delivery', 'Failed' ,'Ordered' ],
+      Return:['Pickup']
     };
     let orderStatus = null;
     const companyNamePattern = /(Amazon|Delhivery|Blue\sDart|DTDC)/;
@@ -34,11 +39,19 @@ function extractOrderInfo(message) {
       }
       if (orderStatus) break;
     }
-  
-    const orderTypeMatch = message.match(orderTypePattern);
+    for (const type in orderTypeWords) {
+      for (const word of orderTypeWords[type]) {
+        if (message.match(word)) {
+          orderType = type;
+          break;
+        }
+      }
+      if (orderType) break;
+    }
+    // const orderTypeMatch = message.match(orderTypePattern);
   
     const orderNumber = orderNumberMatch ? orderNumberMatch[0] : null;
-    const orderType = orderTypeMatch ? orderTypeMatch[0] : null;
+    // const orderType = orderTypeMatch ? orderTypeMatch[0] : null;
   
     return { orderNumber, orderStatus, companyName, orderType };
   }
