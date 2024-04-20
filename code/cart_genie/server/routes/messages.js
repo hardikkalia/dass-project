@@ -12,7 +12,6 @@
 
 
 const express = require("express");
-const UserAllMessages = require("../models/user_messages");
 const messageRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");

@@ -257,7 +257,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                             ],
                           )
-                        : const NoOrders(),
+                        : const NoOrders(
+                            displayText: "No orders match the given criteria"),
                   ),
                 ),
               ],
@@ -269,10 +270,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     radius: 325,
                     color: GlobalVariables.greyBackgroundColor,
                   ),
+                  const SizedBox(height: 20),
                   const Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 4,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ), // Or any other loading widget
                   ),
                 ],

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 
 class NoOrders extends StatelessWidget {
-  const NoOrders({super.key});
+  final String displayText;
+  const NoOrders({
+    super.key,
+    required this.displayText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +49,10 @@ class NoOrders extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'You don\'t have any active orders',
-              style: TextStyle(
-                fontSize: 12.0,
+            Text(
+              displayText,
+              style: const TextStyle(
+                fontSize: 14.0,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w900,
               ),

@@ -76,7 +76,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           title: const Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 40, right: 50),
+              padding: EdgeInsets.only(top: 30, right: 50),
               child: Text(
                 'Order Summary',
                 style: TextStyle(
@@ -89,7 +89,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(top: 30, left: 10),
+            padding: const EdgeInsets.only(top: 25, left: 10),
             child: Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -148,7 +148,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                             ],
                           )
-                        : const NoOrders(),
+                        : const NoOrders(displayText: "You don't have any active orders"),
                   ),
                 ),
               ],
@@ -160,10 +160,11 @@ class _CartScreenState extends State<CartScreen> {
                     radius: 325,
                     color: GlobalVariables.greyBackgroundColor,
                   ),
+                  const SizedBox(height: 20),
                   const Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 4,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ), // Or any other loading widget
                   ),
                 ],
