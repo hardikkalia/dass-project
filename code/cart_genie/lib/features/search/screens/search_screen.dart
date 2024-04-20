@@ -51,12 +51,18 @@ class _SearchScreenState extends State<SearchScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 1,
+          child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return SingleChildScrollView(
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 color: Colors.white, // Background color of the bottom sheet
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     FilterSection(
                       heading: "Order Type",
                       options: const ['Delivery', 'Return'],
@@ -86,7 +92,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     FilterSection(
                       heading: "Order Status",
                       options: const [
@@ -101,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     DateRange(
                         heading: 'Date Range',
                         onRangeSelected: (DateTimeRange? selectedRange) {
@@ -112,7 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             });
                           }
                         }),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     CustomButton(
                       onTap: () {
                         setState(() {
@@ -131,12 +137,16 @@ class _SearchScreenState extends State<SearchScreen> {
                       },
                       text: 'APPLY',
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
+            ),
+            ),
+            ],
             );
           },
+          ),
         );
       },
     );
@@ -200,6 +210,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 radius: 325,
                 color: GlobalVariables.greyBackgroundColor,
               ),
+            ],
+          ),
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
@@ -236,8 +248,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ],
           ),
-        ],
-      ),
-    );
+                );
   }
 }
