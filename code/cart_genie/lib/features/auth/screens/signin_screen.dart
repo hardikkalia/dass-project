@@ -1,12 +1,12 @@
-import 'package:cart_genie/common/widgets/custom_bottom.dart';
-import 'package:cart_genie/common/widgets/custom_button.dart';
-import 'package:cart_genie/common/widgets/custom_textfield.dart';
+import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/constants/form_validator.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
+import 'package:cart_genie/common/widgets/custom_bottom.dart';
+import 'package:cart_genie/common/widgets/custom_button.dart';
+import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/common/widgets/custom_hidefield.dart';
-import 'package:flutter/material.dart';
 
 enum Mode {
   email,
@@ -15,10 +15,11 @@ enum Mode {
 
 class SignInScreen extends StatefulWidget {
   static const String routeName = '/signin-screen';
-  const SignInScreen({super.key});
+
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
@@ -42,30 +43,38 @@ class _SignInScreenState extends State<SignInScreen> {
   void signInUser() {
     if (_mode == Mode.email) {
       signInService.signInUserEmail(
-          context: context,
-          email: _emailController.text,
-          password: _passwordController.text);
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     } else {
       signInService.signInUserPhone(
-          context: context, phone: _phoneController.text);
+        context: context,
+        phone: _phoneController.text,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 600;
+
     return Scaffold(
       backgroundColor: GlobalVariables.backgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 80),
-              const Center(
+              Center(
                 child: Text(
                   'Sign In',
                   style: TextStyle(
-                    fontSize: 40.0,
+                    fontSize: isSmallScreen ? 32.0 : 40.0,
                     fontFamily: 'Inter',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w900,
@@ -76,111 +85,97 @@ class _SignInScreenState extends State<SignInScreen> {
               Center(
                 child: Text(
                   _mode == Mode.email
-                      ? 'Enter your email id and password'
+                      ? 'Enter your email ID and password'
                       : 'Enter your phone number',
-                  style: const TextStyle(
-                    fontSize: 16.0,
+                  style: TextStyle(
+                    fontSize: isSmallScreen ? 14.0 : 16.0,
                     fontFamily: 'Nunito',
                     color: GlobalVariables.grey,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                child: Form(
-                  key: _signInFormKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 100),
-                      if (_mode == Mode.email)
-                        CustomTextField(
-                          controller: _emailController,
-                          hintText: 'Email',
-                          keyboardType: TextInputType.emailAddress,
-                          validator: FormValidate.validateEmail,
+              const SizedBox(height: 40),
+              Form(
+                key: _signInFormKey,
+                child: Column(
+                  children: [
+                    if (_mode == Mode.email)
+                      CustomTextField(
+                        controller: _emailController,
+                        hintText: 'Email',
+                        keyboardType: TextInputType.emailAddress,
+                        validator: FormValidate.validateEmail,
+                      ),
+                    if (_mode == Mode.email) const SizedBox(height: 20),
+                    if (_mode == Mode.email)
+                      CustomHideField(
+                        controller: _passwordController,
+                        hintText: 'Password',
+                        keyboardType: TextInputType.visiblePassword,
+                        validator: FormValidate.validatePassword,
+                      ),
+                    if (_mode == Mode.phone)
+                      CustomTextField(
+                        controller: _phoneController,
+                        hintText: 'Phone No',
+                        keyboardType: TextInputType.phone,
+                        validator: FormValidate.validatePhoneNo,
+                      ),
+                    const SizedBox(height: 30),
+                    CustomButton(
+                      text: 'SIGN IN',
+                      onTap: () {
+                        if (_signInFormKey.currentState!.validate()) {
+                          signInUser();
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _mode == Mode.email
+                              ? 'Sign in using phone number instead?'
+                              : 'Sign in using email instead?',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: isSmallScreen ? 12.0 : 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      if (_mode == Mode.email) const SizedBox(height: 20),
-                      if (_mode == Mode.email)
-                        CustomHideField(
-                          controller: _passwordController,
-                          hintText: 'Password',
-                          keyboardType: TextInputType.visiblePassword,
-                          validator: FormValidate.validatePassword,
-                        ),
-                      if (_mode == Mode.phone)
-                        CustomTextField(
-                          controller: _phoneController,
-                          hintText: 'Phone No',
-                          keyboardType: TextInputType.phone,
-                          validator: FormValidate.validatePhoneNo,
-                        ),
-                      const SizedBox(height: 50),
-                      CustomButton(
-                          text: 'SIGN IN',
+                        CustomBottom(
+                          text: 'Click here',
                           onTap: () {
-                            if (_signInFormKey.currentState!.validate()) {
-                              signInUser();
-                            }
-                          }),
-                      const SizedBox(height: 20),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Dont have an account?',
-                              style: TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            CustomBottom(
-                              text: 'Sign Up',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignUpScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                            setState(() {
+                              _mode = _mode == Mode.email ? Mode.phone : Mode.email;
+                            });
+                          },
                         ),
-                      ),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              _mode == Mode.email
-                                  ? 'Sign in using phone number instead?'
-                                  : 'Sign in using email instead?',
-                              style: const TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            CustomBottom(
-                              text: 'Click here',
-                              onTap: () {
-                                setState(() {
-                                  if (_mode == Mode.email) {
-                                    _mode = Mode.phone;
-                                  } else {
-                                    _mode = Mode.email;
-                                  }
-                                });
-                              },
-                            ),
-                          ],
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have an account?',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: isSmallScreen ? 12.0 : 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        CustomBottom(
+                          text: 'Sign Up',
+                          onTap: () {
+                            Navigator.pushNamed(context, SignUpScreen.routeName);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
