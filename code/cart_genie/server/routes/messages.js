@@ -11,7 +11,6 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
   try {
     const lastUpdate = req.body["lastUpdate"];
     const messages = JSON.parse(req.body["messages"]);
-    // console.log(messages);
     const processedMessages = [];
     messages.forEach((msg) => {
       const { content, date, sender } = msg;
@@ -31,28 +30,11 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
         });
       }
     });
-    // console.log(processedMessages);
-    // console.log(req.user);
     const user = await User.findById(req.user);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // user.orders.push(
-    //   ...processedMessages.map((processedMessage) => ({
-    //     productId: processedMessage.orderNumber,
-    //     current_status: processedMessage.orderStatus,
-    //     order_type: processedMessage.orderType, // Assuming it's a delivery order
-    //     full_messages: [
-    //       {
-    //         content: processedMessage.content,
-    //         date: processedMessage.date,
-    //       },
-    //     ],
-    //     company_name: processedMessage.companyName,
-    //     // lastUpdate:processedMessage.date,
-    //   }))
-    // );
     processedMessages.forEach((processedMessage) => {
       // Check if an order with the same productId and company_name already exists
       const existingOrderIndex = user.orders.findIndex(
@@ -75,7 +57,7 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
           productId: processedMessage.orderNumber,
           current_status: processedMessage.orderStatus,
           date: processedMessage.date,
-          order_type: processedMessage.orderType, // Assuming it's a delivery order
+          order_type: processedMessage.orderType,
           full_messages: [
             {
               content: processedMessage.content,
@@ -87,13 +69,10 @@ messageRouter.post("/api/messages", auth, async (req, res) => {
       }
     });
     user.lastUpdate = lastUpdate;
-    // console.log(user.orders);
-    // console.log(lastUpdate);
     await user.save();
 
     res.json({ message: "Orders updated successfully" });
   } catch (e) {
-    // console.log(e.message);
     res.status(500).json({ error: e.message });
   }
 });
@@ -107,7 +86,6 @@ messageRouter.get("/api/messages/retrieve", auth, async (req, res) => {
     }
 
     const orders = user.orders;
-    // console.log(orders);
     res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });

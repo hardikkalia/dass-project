@@ -39,8 +39,7 @@ class DateRangeState extends State<DateRange> {
         // Ensure both start and end dates are selected and start date is before end date
         if (_startDate != null && _endDate != null && _startDate!.isBefore(_endDate!)) {
           widget.onRangeSelected(DateTimeRange(start: _startDate!, end: _endDate!)); // Invoke callback with date range
-          print('Start Date: ${_formatDate(_startDate!)}');
-          print('End Date: ${_formatDate(_endDate!)}');
+          
         }
       });
     }

@@ -30,7 +30,6 @@ profileRouter.post("/api/profile/edit/email", auth, async (req, res) => {
     }
     user.email = email;
     const newUser = await user.save();
-    // console.log(user)
     res.json(newUser);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -39,7 +38,6 @@ profileRouter.post("/api/profile/edit/email", auth, async (req, res) => {
 
 profileRouter.post("/api/profile/edit/password", auth, async (req, res) => {
   try {
-    // const { id, password } = req.body;
     const { id, oldPassword, newPassword } = req.body; 
 
     const user = await User.findById(id);

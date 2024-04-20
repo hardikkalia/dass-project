@@ -39,7 +39,6 @@ signInRouter.post("/api/signin/email", async (req, res) => {
 
 signInRouter.post("/api/signin/phone/verify", async (req, res) => {
   try {
-    // console.log(req.body);
     const { phone } = req.body;
     const user = await User.findOne({ phone });
     if (!user) {
@@ -56,11 +55,9 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
         .status(400)
         .json({ msg: "Failed to send OTP", error: verifyResponse.data.error });
     }
-    // console.log(verifyResponse.data);
     // If OTP sent successfully
     res.json({ msg: "OTP sent successfully. Please verify to continue." });
   } catch (e) {
-    // console.log(e);
     res.status(500).json({ error: e.message });
   }
 });
@@ -88,7 +85,6 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
 
 signInRouter.post("/api/signin/phone/verify/submit", async (req, res) => {
   const { phone, code } = req.body;
-  // console.log(req.body);
   try {
     // Call the check-verify Twilio Function
     const checkResponse = await axios.post(CHECK_VERIFY_URL, {

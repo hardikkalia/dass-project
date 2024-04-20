@@ -11,7 +11,6 @@ const CHECK_VERIFY_URL =
 
 signUpRouter.post("/api/signup", async (req, res) => {
   try {
-    // console.log(req.body);
 
     const { name, email, phone, password } = req.body;
 
@@ -50,7 +49,6 @@ signUpRouter.post("/api/signup", async (req, res) => {
     user = await user.save();
     const token = jwt.sign({ id: user._id }, "passwordKey");
     res.json({ token, ...user._doc });
-    // res.json(user);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -115,7 +113,6 @@ signUpRouter.post("/api/signup/verify/submit", async (req, res) => {
       phone,
     });
     user = await user.save();
-    // console.log(user);
     const token = jwt.sign({ id: user._id }, "passwordKey");
     res.json({ token, ...user._doc });
   } catch (e) {

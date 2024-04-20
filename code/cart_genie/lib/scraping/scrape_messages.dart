@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import "dart:convert";
+import 'package:cart_genie/constants/error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sms_advanced/sms_advanced.dart';
@@ -80,25 +81,10 @@ class SmsReaderService {
           'auth-token': userProvider.user.token,
         },
       );
-      if (res.statusCode == 200) {
-        print('Messages and last update timestamp successfully updated.');
-      } else {
-        print('Failed to update messages and last update timestamp.');
-      }
-      switch (res.statusCode) {
-        case 200:
-          break;
-        case 400:
-          print(jsonDecode(res.body)['msg']);
-          break;
-        case 500:
-          print(jsonDecode(res.body)['error']);
-          break;
-        default:
-          print(res.body);
-      }
+      httpErrorHandle(response: res, context: context, onSuccess: () {});
     } catch (e) {
-      print(e);
+      // print(e);
+      showSnackBar(context, e.toString());
     }
   }
 }
