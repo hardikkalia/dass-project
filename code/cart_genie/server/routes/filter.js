@@ -20,18 +20,18 @@ filterRouter.post("/api/filter", auth, async (req, res) => {
         if (!user) {
           // Handle case where user doesn't exist
           console.log("User Not found");
-          return [];
+          res.status(404).json({message:"User not found"})
         }
         
         const filterString = generateFilterString(queryParams["start"], queryParams["end"], queryParams["company"], queryParams["status"], queryParams["ordertype"]);
         console.log(filterString)
-        const amazonOrders = user.orders.filter(
+        const filteredOrders = user.orders.filter(
           (order) => eval(filterString)
         );
 
         // Do something with amazonOrders, like return or log them
-        console.log(amazonOrders);
-        res.json(amazonOrders);
+        console.log(filteredOrders);
+        res.json(filteredOrders);
       })
       .catch((error) => {
         // Handle any errors

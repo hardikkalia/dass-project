@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class FormValidate {
   static String? validateEmail(String? email) {
@@ -37,15 +36,14 @@ class FormValidate {
     return null;
   }
 
-  static String? validatePassword(String? password) 
-  {
+  static String? validatePassword(String? password) {
     if (password?.isEmpty ?? true) {
       return 'Password required';
     }
     if (password!.length < 8) {
       return 'Password must be at least 8 characters long';
     }
-    
+
     final hasLetter = RegExp(r'[A-Za-z]').hasMatch(password);
     if (!hasLetter) {
       return 'Password must contain at least one letter';
@@ -64,9 +62,6 @@ class FormValidate {
   }
 
   static String? validateAge(String? ageStr) {
-    // if (ageStr?.isEmpty ?? true) {
-    //   return 'Age required';
-    // }
     int? age;
     try {
       age = int.parse(ageStr!);
@@ -91,9 +86,6 @@ class FormValidate {
   }
 
   static String? validateAddress(String? address) {
-    // if (address?.isEmpty ?? true) {
-    //   return 'Address required';
-    // }
     return null;
   }
 }

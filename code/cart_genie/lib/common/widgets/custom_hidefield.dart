@@ -10,20 +10,20 @@ class CustomHideField extends StatefulWidget {
   final VoidCallback? onSuffixIconPressed;
 
   const CustomHideField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     required this.keyboardType,
     this.validator,
     this.suffixIcon,
     this.onSuffixIconPressed,
-  }) : super(key: key);
+  });
 
   @override
-  _CustomHideFieldState createState() => _CustomHideFieldState();
+  CustomHideFieldState createState() => CustomHideFieldState();
 }
 
-class _CustomHideFieldState extends State<CustomHideField> {
+class CustomHideFieldState extends State<CustomHideField> {
   bool _obscureText = true;
 
   @override
@@ -45,20 +45,20 @@ class _CustomHideFieldState extends State<CustomHideField> {
             ),
             suffixIcon: widget.suffixIcon != null
                 ? IconButton(
-              icon: widget.suffixIcon!,
-              onPressed: widget.onSuffixIconPressed,
-            )
+                    icon: widget.suffixIcon!,
+                    onPressed: widget.onSuffixIconPressed,
+                  )
                 : IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
-                color: GlobalVariables.appBarColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            ),
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: GlobalVariables.appBarColor,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
           ),
           validator: widget.validator,
         ),

@@ -42,15 +42,12 @@ class CartService {
           )
           .toList();
       // print(jsonDecode(res.body)["full_messages"]);
-      print("YO");
-      print(userProvider.user.lastUpdate);
       // print(orders[0].messages[0].date);
       // print(orders[0].productid);
 
       return orders;
       // print(orders.runtimeType);
     } catch (e) {
-      print(e.toString());
       showSnackBar(context, e.toString());
       return [];
     }

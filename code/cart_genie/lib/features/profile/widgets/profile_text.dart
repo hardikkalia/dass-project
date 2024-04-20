@@ -9,17 +9,17 @@ class ProfileText extends StatelessWidget {
   final Color colour;
 
   const ProfileText({
-    Key? key,
+    super.key,
     required this.text,
     required this.data,
     required this.icon,
     required this.onPressed,
     required this.colour,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 400,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class ProfileText extends StatelessWidget {
                 Expanded(
                   child: Text(
                     text,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class ProfileText extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: IconButton(

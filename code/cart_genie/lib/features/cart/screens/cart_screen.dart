@@ -101,7 +101,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: Stack(
         children: [
           Column(

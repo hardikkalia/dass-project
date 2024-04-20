@@ -3,7 +3,6 @@ import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/constants/form_validator.dart';
-import 'package:cart_genie/features/auth/screens/otp_screen.dart';
 import 'package:cart_genie/features/auth/screens/signin_screen.dart';
 import 'package:cart_genie/features/auth/services/signup_service.dart';
 import 'package:cart_genie/common/widgets/custom_hidefield.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = '/signup-screen';
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -155,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 CustomBottom(text: 'Login', onTap: () {
                                   Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => SignInScreen()));
+                                      builder: (context) => const SignInScreen()));
                                 },),
 
                               ],

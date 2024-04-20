@@ -9,13 +9,13 @@ class EditProfileText extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const EditProfileText({
-    Key? key,
+    super.key,
     required this.text,
     required this.controller,
     required this.hintText,
     required this.keyboardType,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

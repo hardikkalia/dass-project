@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 
 class NoOrders extends StatelessWidget {
-  const NoOrders({Key? key}) : super(key: key);
+  const NoOrders({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class NoOrders extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: Container(
+      child: SizedBox(
         width: 400,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +36,7 @@ class NoOrders extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'NO ORDERS FOUND',
               style: TextStyle(
                 fontSize: 22.0,
@@ -45,7 +45,7 @@ class NoOrders extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'You don\'t have any active orders',
               style: TextStyle(
                 fontSize: 12.0,

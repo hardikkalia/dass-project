@@ -14,14 +14,13 @@ class DetailedScreen extends StatefulWidget {
   static const String routeName = '/detailed';
   final Orders order;
 
-  const DetailedScreen({Key? key, required this.order}) : super(key: key);
+  const DetailedScreen({super.key, required this.order});
 
   @override
   State<DetailedScreen> createState() => _DetailedScreenState();
 }
 
 class _DetailedScreenState extends State<DetailedScreen> {
-
   // Mode _mode = Mode.dispatched;
   late Mode _mode;
   @override
@@ -30,20 +29,18 @@ class _DetailedScreenState extends State<DetailedScreen> {
     _setMode();
   }
 
-
-
   void _setMode() {
     switch (widget.order.status) {
-      case 'dispatched':
+      case 'Dispatched':
         _mode = Mode.dispatched;
         break;
-      case 'outForDelivery':
+      case 'Out for Delivery':
         _mode = Mode.outfordelivery;
         break;
-      case 'delivered':
+      case 'Delivered':
         _mode = Mode.delivered;
         break;
-      case 'ordered':
+      case 'Ordered':
       default:
         _mode = Mode.ordered;
         break;
@@ -137,8 +134,6 @@ class _DetailedScreenState extends State<DetailedScreen> {
                 ],
               ),
             ),
-
-
           ),
         ],
       ),

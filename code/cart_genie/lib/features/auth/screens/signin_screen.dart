@@ -3,7 +3,6 @@ import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/common/widgets/custom_textfield.dart';
 import 'package:cart_genie/constants/global_variables.dart';
 import 'package:cart_genie/constants/form_validator.dart';
-import 'package:cart_genie/features/auth/screens/otp_screen.dart';
 import 'package:cart_genie/features/auth/screens/signup_screen.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
 import 'package:cart_genie/common/widgets/custom_hidefield.dart';
@@ -16,7 +15,7 @@ enum Mode {
 
 class SignInScreen extends StatefulWidget {
   static const String routeName = '/signin-screen';
-  const SignInScreen({Key? key}) : super(key: key);
+  const SignInScreen({super.key});
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();

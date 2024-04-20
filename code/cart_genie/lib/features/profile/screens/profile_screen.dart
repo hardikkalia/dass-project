@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (_mode == Mode.saved) {
       return Builder(builder: (BuildContext context) {
         return IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: Stack(
         children: [
           Column(

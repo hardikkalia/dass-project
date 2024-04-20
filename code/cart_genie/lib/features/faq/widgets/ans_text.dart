@@ -9,13 +9,13 @@ class AnsText extends StatelessWidget {
   // final double height;
 
   const AnsText({
-    Key? key,
+    super.key,
     required this.question,
     required this.answer,
     required this.icon,
     required this.onPressed,
     // required this.height,
-}) : super(key: key);
+});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,11 +30,11 @@ class AnsText extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5), // Shadow color
               spreadRadius: 5, // Spread radius
               blurRadius: 7, // Blur radius
-              offset: Offset(0, 3), // Offset from the container
+              offset: const Offset(0, 3), // Offset from the container
             ),
           ],
     ),
-      child: Container(
+      child: SizedBox(
       width: 400,
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class AnsText extends StatelessWidget {
               Expanded(
                 child: Text(
                   question,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class AnsText extends StatelessWidget {
                   ),
                 ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: IconButton(
@@ -73,7 +73,7 @@ class AnsText extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                     answer,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Nunito',
                       fontSize: 16.0,
                       fontWeight: FontWeight.normal,
@@ -81,7 +81,7 @@ class AnsText extends StatelessWidget {
                       ),
                       ),
                   ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
                 ],
                 ),
                 ),

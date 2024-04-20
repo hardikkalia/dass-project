@@ -2,17 +2,13 @@
 import "dart:convert";
 import "package:cart_genie/constants/error_handling.dart";
 import "package:cart_genie/constants/global_variables.dart";
-import "package:cart_genie/features/auth/screens/signup_screen.dart";
 import "package:cart_genie/features/cart/widgets/messages.dart";
 import "package:cart_genie/features/cart/widgets/orders.dart";
-import "package:cart_genie/models/user.dart";
 import "package:cart_genie/providers/user_providers.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "package:cart_genie/constants/utils.dart";
 import "package:provider/provider.dart";
-import "package:shared_preferences/shared_preferences.dart";
-import 'package:cart_genie/features/search/screens/search_screen.dart';
 import 'package:cart_genie/features/search/widgets/options.dart';
 
 class SearchAPIService {
@@ -21,9 +17,7 @@ class SearchAPIService {
     required Options searchCriteria,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    try {
-      print("filter function was called");
-
+    try {      
       // List<Map<String, dynamic>> searchCriteriaMapList =
       //     searchCriteria.map((option) {
       //   return {
@@ -72,7 +66,7 @@ class SearchAPIService {
             ),
           )
           .toList();
-      print(res.body);
+
       httpErrorHandle(
         response: res,
         context: context,
@@ -80,7 +74,6 @@ class SearchAPIService {
       );
       return orders;
     } catch (e) {
-      print(e.toString());
       showSnackBar(context, e.toString());
       return [];
     }

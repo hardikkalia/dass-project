@@ -2,7 +2,6 @@ import 'package:cart_genie/common/widgets/custom_button.dart';
 import 'package:cart_genie/features/auth/services/signin_service.dart';
 import 'package:cart_genie/features/auth/services/signup_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:cart_genie/common/widgets/custom_bottom.dart';
 import 'package:cart_genie/constants/global_variables.dart';
@@ -16,13 +15,13 @@ class OTPScreen extends StatefulWidget {
   final String name;
 
   const OTPScreen({
-    Key? key,
+    super.key,
     required this.phone,
     this.email = '',
     this.password = '',
     this.signup = false,
     this.name = '',
-  }) : super(key: key);
+  });
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();

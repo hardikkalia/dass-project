@@ -46,7 +46,7 @@ class _FAQScreenState extends State<FAQScreen> {
                 height: 100,
                 padding: const EdgeInsets.only(top: 40, left: 110, right: 50),
                 alignment: Alignment.topLeft,
-                child: Text(
+                child: const Text(
                   'FAQs',
                   style: TextStyle(
                     fontSize: 20.0,
