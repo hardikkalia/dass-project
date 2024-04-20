@@ -55,6 +55,7 @@ class DateRangeState extends State<DateRange> {
             child: Text(
             widget.heading,
             style: const TextStyle(
+              fontFamily: 'Inter',
             fontSize: 18,
             fontWeight: FontWeight.bold,
             ),

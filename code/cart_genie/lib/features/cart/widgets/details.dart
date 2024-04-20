@@ -20,7 +20,7 @@ class Details extends StatefulWidget {
   final List<Messages> messages;
 
   const Details({
-    super.key,
+    Key? key,
     required this.product,
     required this.delivery,
     required this.status,
@@ -31,7 +31,7 @@ class Details extends StatefulWidget {
     required this.date,
     required this.time,
     required this.messages,
-  });
+  }) : super(key: key);
 
   @override
   DetailsState createState() => DetailsState();
@@ -42,8 +42,11 @@ class DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 600;
+
     return Container(
-      width: 400,
+      width: screenWidth * 1, // Use 90% of the screen width
       decoration: BoxDecoration(
         color: GlobalVariables.backgroundColor,
         borderRadius: BorderRadius.circular(15),
@@ -61,11 +64,11 @@ class DetailsState extends State<Details> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Product ID',
               style: TextStyle(
                 fontFamily: 'Cabin',
-                fontSize: 14.0,
+                fontSize: isSmallScreen ? 12.0 : 14.0,
                 fontWeight: FontWeight.bold,
                 color: GlobalVariables.textgrey,
               ),
@@ -73,9 +76,9 @@ class DetailsState extends State<Details> {
             const SizedBox(height: 8),
             Text(
               widget.product,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Inter',
-                fontSize: 18.0,
+                fontSize: isSmallScreen ? 16.0 : 18.0,
                 fontWeight: FontWeight.w900,
                 color: Colors.black,
               ),
@@ -86,12 +89,12 @@ class DetailsState extends State<Details> {
               height: 30,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatusItem('Ordered', widget.colour1),
-                _buildStatusItem('Dispatched', widget.colour2),
-                _buildStatusItem('Out for Delivery', widget.colour3),
-                _buildStatusItem(' Delivered', widget.colour4),
+                _buildStatusItem('Ordered\n', widget.colour1,12),
+                _buildStatusItem('Dispatched\n', widget.colour2,12),
+                _buildStatusItem('Out for\nDelivery', widget.colour3,12),
+                _buildStatusItem('Delivered\n', widget.colour4,12),
               ],
             ),
             const Divider(
@@ -117,7 +120,7 @@ class DetailsState extends State<Details> {
                     ),
                     Text(
                       widget.status,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -139,23 +142,26 @@ class DetailsState extends State<Details> {
                 _mode == Mode.hide
                     ? "View all Message Updates"
                     : "Hide Message Updates",
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Inter',
-                  fontSize: 18.0,
+                  fontSize: isSmallScreen ? 14.0 : 18.0,
                   fontWeight: FontWeight.w900,
                   color: Colors.black,
                 ),
               ),
             ),
             if (_mode == Mode.display)
-              SingleChildScrollView(
-                child: Column(
-                  children: widget.messages.map((message) {
-                    return Messages(
-                      content: message.content,
-                      date: message.date,
-                    );
-                  }).toList(),
+              Container(
+                height: isSmallScreen ? 200 : 300, // Adjust height for smaller screens
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: widget.messages.map((message) {
+                      return Messages(
+                        content: message.content,
+                        date: message.date,
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
           ],
@@ -164,23 +170,23 @@ class DetailsState extends State<Details> {
     );
   }
 
-  Widget _buildStatusItem(String label, Color color) {
+  Widget _buildStatusItem(String label, Color color, double size) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Cabin',
-            fontSize: 12.0,
+            fontSize: size,
             fontWeight: FontWeight.normal,
             color: GlobalVariables.textgrey,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Container(
-          width: 70,
-          height: 40,
+          width: 60,
+          height: 32,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(10),
