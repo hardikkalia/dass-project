@@ -4,24 +4,31 @@ import 'package:flutter/material.dart';
 class ProfileButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
-  const ProfileButton({super.key, required this.text, required this.onTap});
+
+  const ProfileButton({
+    Key? key,
+    required this.text,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size(100, 50),
-        foregroundColor: Colors.white, // change background color of button
-        backgroundColor: GlobalVariables.secondaryColor,
-        padding: const EdgeInsets.symmetric(horizontal: 100),
+        minimumSize: Size(screenWidth * 0.6, 50), // Adjust as needed
+        primary: GlobalVariables.secondaryColor, // Background color of button
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
       ),
       child: Text(
         text,
-        style :const TextStyle(
+        style: TextStyle(
           fontFamily: 'Nunito',
-          fontSize: 22.0,
+          fontSize: screenWidth * 0.045, // Responsive font size
           fontWeight: FontWeight.w600,
+          color: Colors.white, // Text color
         ),
       ),
     );
