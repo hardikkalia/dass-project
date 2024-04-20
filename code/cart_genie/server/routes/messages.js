@@ -17,7 +17,7 @@ const messageRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const bcryptjs = require("bcryptjs");
-const extractOrderInfo = require("../processing/processing");
+const extractOrderInfo = require("../middleware/processing");
 const User = require("../models/user");
 
 messageRouter.post("/api/messages", auth, async (req, res) => {
