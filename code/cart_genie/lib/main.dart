@@ -47,7 +47,6 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> getUserData(BuildContext context) async {
     await signInService.getUserData(context);
-    print("InitState");
     setState(() {
       _dataFetched = true;
     });
@@ -58,7 +57,6 @@ class _MyAppState extends State<MyApp> {
   // State<MyApp> createState() => _MyAppState();
   Widget build(BuildContext context) {
     // getUserData(context);
-    print("App");
     if (!_dataFetched) {
       return const Scaffold(
         body: Center(
