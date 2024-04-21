@@ -106,7 +106,7 @@ signUpRouter.post("/api/signup/verify/submit", async (req, res) => {
     });
 
     if (!checkResponse.data.success) {
-      res.status(400).json({ msg: "Incorrect OTP. Please try again." });
+      return res.status(400).json({ msg: "Incorrect OTP. Please try again." });
     }
 
     const hashedPassword = await bcryptjs.hash(password, 8);
@@ -119,6 +119,7 @@ signUpRouter.post("/api/signup/verify/submit", async (req, res) => {
     });
     user = await user.save();
     const token = jwt.sign({ id: user._id }, "passwordKey");
+    console.log(token);
     res.json({ token, ...user._doc });
   } catch (e) {
     res.status(500).json({ error: e.message });

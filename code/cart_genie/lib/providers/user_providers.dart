@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
     age: null,
     address: null,
     gender: null,
-    lastUpdate:DateTime.now(),
+    lastUpdate: DateTime.now(),
   );
   User get user => _user;
   void setUser(String user) {

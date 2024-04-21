@@ -15,13 +15,13 @@ class OTPScreen extends StatefulWidget {
   final String name;
 
   const OTPScreen({
-    Key? key,
+    super.key,
     required this.phone,
     this.email = '',
     this.password = '',
     this.signup = false,
     this.name = '',
-  }) : super(key: key);
+  });
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -79,7 +79,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 child: Text(
                   'Enter OTP sent on your registered mobile no.',
                   style: TextStyle(
-                    fontSize: screenSize.width * 0.035,
+                    fontSize: screenSize.width * 0.025,
                     fontFamily: 'Nunito',
                     color: GlobalVariables.grey,
                     fontWeight: FontWeight.w600,

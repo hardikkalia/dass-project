@@ -23,7 +23,7 @@ class SmsReaderService {
       // ].request();
       if (await Permission.sms.request().isGranted &&
           await Permission.contacts.request().isGranted) {
-        DateTime lastUpdate = userProvider.user.lastUpdate;
+        DateTime lastUpdate = userProvider.user.lastUpdate ?? DateTime.now();
         await _readSmsMessages(lastUpdate, context);
       } else {
         showSnackBar(context, "Necessary permissions not granted");
