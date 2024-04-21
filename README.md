@@ -5,7 +5,7 @@
 
 Cart Genie is a mobile application designed to streamline the shopping experience by allowing users to manage shopping carts and orders effortlessly. This guide will provide instructions for setting up and running the Cart Genie application.
 
-## Prerequisites
+## Prerequisites to run on emulator
 
 Before you begin, ensure you have the following installed:
 
@@ -54,6 +54,10 @@ Navigate to the server directory and install the necessary Node.js packages, the
 - npm install
 - npm run dev
 
+## Pre-requesites to run the apk
+- Android 12+
+- Download and install the apk from the code folder and you're ready to go
+
 ## Usage
 
-Once the application is running, you can explore the application through the intuitive UI and use various features offered by Cart Genie.\ Enjoy adding items to your cart and managing orders!
+Once the application is running, you can explore the application through the intuitive UI and use various features offered by Cart Genie. Enjoy adding items to your cart and managing orders!
