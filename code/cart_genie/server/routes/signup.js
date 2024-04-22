@@ -30,7 +30,8 @@ signUpRouter.post("/api/signup", async (req, res) => {
 
     const existingEmail = await User.findOne({ email });
     const existingPhone = await User.findOne({ phone });
-
+    const lastUpdatetime = Date.now();
+    const lastUpdate = new Date(lastUpdatetime).toISOString();
     if (existingEmail && existingPhone) {
       return res.status(400).json({ msg: "Account already exists!" });
     } else if (existingEmail) {
@@ -50,6 +51,7 @@ signUpRouter.post("/api/signup", async (req, res) => {
       email,
       password: hashedPassword,
       phone,
+      lastUpdate,
     });
     user = await user.save();
     const token = jwt.sign({ id: user._id }, "passwordKey");
@@ -110,12 +112,15 @@ signUpRouter.post("/api/signup/verify/submit", async (req, res) => {
     }
 
     const hashedPassword = await bcryptjs.hash(password, 8);
+    const lastUpdatetime = Date.now();
+    const lastUpdate = new Date(lastUpdatetime).toISOString();
 
     let user = new User({
       name,
       email,
       password: hashedPassword,
       phone,
+      lastUpdate,
     });
     user = await user.save();
     const token = jwt.sign({ id: user._id }, "passwordKey");
