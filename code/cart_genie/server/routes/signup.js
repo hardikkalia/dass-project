@@ -124,7 +124,6 @@ signUpRouter.post("/api/signup/verify/submit", async (req, res) => {
     });
     user = await user.save();
     const token = jwt.sign({ id: user._id }, "passwordKey");
-    console.log(token);
     res.json({ token, ...user._doc });
   } catch (e) {
     res.status(500).json({ error: e.message });

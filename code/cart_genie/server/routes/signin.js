@@ -114,6 +114,8 @@ signInRouter.post("/tokenValid", async (req, res) => {
 
 signInRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
+  const modifiedLastUpdate = moment(user.lastUpdate).subtract(5, 'hours').subtract(30, 'minutes').format();
+  user.lastUpdate = modifiedLastUpdate;
   res.json({ ...user._doc, token: req.token });
 });
 
