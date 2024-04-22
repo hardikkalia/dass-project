@@ -1,15 +1,14 @@
 /** Route for handling the sign in functionality of the application.
- * 
+ *
  * We use a twilio server for verification.
  * email sign in receives http post request with json web token for authentication and relevant details
- * 
- * Twilio server function works in two stages. 
- * The /api/signin/phone/verify sends a request to twilio server to generate a otp and send it to 
- * the user. 
+ *
+ * Twilio server function works in two stages.
+ * The /api/signin/phone/verify sends a request to twilio server to generate a otp and send it to
+ * the user.
  * The /api/signin/phone/verify/submit sends the entered otp to the twilio service for verification
  * the /tokenValid route returns its responde.
  */
-
 
 const express = require("express");
 const User = require("../models/user");
@@ -75,13 +74,12 @@ signInRouter.post("/api/signin/phone/verify", async (req, res) => {
   }
 });
 
-
 signInRouter.post("/api/signin/phone/verify/submit", async (req, res) => {
   const { phone, code } = req.body;
   try {
     // Call the check-verify Twilio Function
     const checkResponse = await axios.post(CHECK_VERIFY_URL, {
-      to: "+91"+phone,
+      to: "+91" + phone,
       code,
     });
     if (checkResponse.data.success) {
@@ -114,8 +112,11 @@ signInRouter.post("/tokenValid", async (req, res) => {
 
 signInRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
-  const modifiedLastUpdate = moment(user.lastUpdate).subtract(5, 'hours').subtract(30, 'minutes').format();
-  user.lastUpdate = modifiedLastUpdate;
+  const userLastUpdate = new Date(user.lastUpdate);
+  userLastUpdate.setHours(userLastUpdate.getHours() - 5);
+  userLastUpdate.setMinutes(userLastUpdate.getMinutes() - 30);
+  user.lastUpdate = userLastUpdate.toISOString();
+  console.log(user.lastUpdate);
   res.json({ ...user._doc, token: req.token });
 });
 
