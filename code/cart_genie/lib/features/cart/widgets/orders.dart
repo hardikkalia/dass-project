@@ -30,7 +30,10 @@ class Orders extends StatelessWidget {
         width: 400,
         height: 250,
         decoration: BoxDecoration(
-          color: GlobalVariables.backgroundColor,
+          color: (status == "Delayed")
+              // ? const Color.fromARGB(255, 239, 91, 81)
+              ? Colors.red
+              : GlobalVariables.backgroundColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -46,15 +49,17 @@ class Orders extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 20.0, top: 8.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 8.0),
                 child: Text(
                   'Product ID',
                   style: TextStyle(
                     fontFamily: 'Cabin',
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
-                    color: GlobalVariables.textgrey,
+                    color: (status == "Delayed")
+                        ? Colors.white
+                        : GlobalVariables.textgrey,
                   ),
                 ),
               ),
@@ -73,8 +78,10 @@ class Orders extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(
-                color: GlobalVariables.textgrey,
+              Divider(
+                color: (status == "Delayed")
+                    ? Colors.white
+                    : GlobalVariables.textgrey,
                 thickness: 1,
                 indent: 20,
                 endIndent: 20,
@@ -89,13 +96,15 @@ class Orders extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'From :',
                           style: TextStyle(
                             fontFamily: 'Cabin',
                             fontSize: 12.0,
                             fontWeight: FontWeight.normal,
-                            color: GlobalVariables.textgrey,
+                            color: (status == "Delayed")
+                                ? Colors.white
+                                : GlobalVariables.textgrey,
                           ),
                         ),
                         Text(
@@ -123,13 +132,15 @@ class Orders extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Status :',
                           style: TextStyle(
                             fontFamily: 'Cabin',
                             fontSize: 12.0,
                             fontWeight: FontWeight.normal,
-                            color: GlobalVariables.textgrey,
+                            color: (status == "Delayed")
+                                ? Colors.white
+                                : GlobalVariables.textgrey,
                           ),
                         ),
                         Text(
@@ -147,8 +158,10 @@ class Orders extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Divider(
-                color: GlobalVariables.textgrey,
+              Divider(
+                color: (status == "Delayed")
+                    ? Colors.white
+                    : GlobalVariables.textgrey,
                 thickness: 1,
                 indent: 20,
                 endIndent: 20,

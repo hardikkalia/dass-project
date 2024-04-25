@@ -8,6 +8,7 @@ enum Mode {
   dispatched,
   outfordelivery,
   delivered,
+  delayed,
 }
 
 class DetailedScreen extends StatefulWidget {
@@ -31,6 +32,9 @@ class _DetailedScreenState extends State<DetailedScreen> {
 
   void _setMode() {
     switch (widget.order.status) {
+      case 'Delayed':
+        _mode = Mode.delayed;
+        break;
       case 'Dispatched':
         _mode = Mode.dispatched;
         break;
@@ -56,6 +60,12 @@ class _DetailedScreenState extends State<DetailedScreen> {
 
     // Set colors based on the current mode
     switch (_mode) {
+      case Mode.delayed:
+        colour1 = const Color.fromARGB(255, 239, 91, 81);
+        colour2 = const Color.fromARGB(255, 239, 91, 81);
+        colour3 = const Color.fromARGB(255, 239, 91, 81);
+        colour4 = const Color.fromARGB(255, 239, 91, 81);
+        break;
       case Mode.ordered:
         colour1 = GlobalVariables.locationColor;
         break;

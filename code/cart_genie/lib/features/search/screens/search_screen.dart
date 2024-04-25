@@ -107,6 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 'Dispatched',
                                 'Out for Delivery',
                                 'Delivered',
+                                'Delayed',
                               ],
                               onSelect: (selectedOption) {
                                 setState(() {

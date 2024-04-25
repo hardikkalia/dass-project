@@ -116,7 +116,6 @@ signInRouter.get("/", auth, async (req, res) => {
   userLastUpdate.setHours(userLastUpdate.getHours() - 5);
   userLastUpdate.setMinutes(userLastUpdate.getMinutes() - 30);
   user.lastUpdate = userLastUpdate.toISOString();
-  console.log(user.lastUpdate);
   res.json({ ...user._doc, token: req.token });
 });
 

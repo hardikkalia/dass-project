@@ -3,6 +3,7 @@ function extractOrderInfo(message) {
   const blueDartPattern = /\bAWB# \d{11}\b/;
   const delhiveryPattern = /\bAWB \d{11}\b/;
   const orderStatusWords = {
+    Delayed: ["Delayed", "delayed"],
     Dispatched: ["dispatched", "dispatch", "shipped"],
     "Out for Delivery": [
       "out for delivery",
@@ -16,6 +17,8 @@ function extractOrderInfo(message) {
   };
   const orderTypeWords = {
     Delivery: [
+      "Delayed",
+      "delayed",
       "dispatched",
       "dispatch",
       "shipped",
@@ -57,7 +60,7 @@ function extractOrderInfo(message) {
     }
     if (orderStatus) break;
   }
-  let orderType ;
+  let orderType;
   for (const type in orderTypeWords) {
     for (const word of orderTypeWords[type]) {
       if (message.match(word)) {
